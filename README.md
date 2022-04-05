@@ -1,4 +1,6 @@
-## 景星 JStar
+## 景星 | JStar
+
+**胸有大海星辰，不负青春。**
 
 > 慎獨自省，高懸平鏡。
 坦萬慮，心赤誠。
@@ -10,8 +12,14 @@
 - 🌱 I’m currently in high school
 - 📫 Contact me with i@mcxin.top
 
-> 落叶三月秋，兰香郁郁，青山依旧。
-Declare an Epilogue.
-What's Past is Prologue.
-
 [![jstar0's GitHub stats](https://github-readme-stats.vercel.app/api?username=jstar0)](https://github.com/anuraghazra/github-readme-stats)
+
+> 落叶三月秋，兰香郁郁，青山依旧。
+
+> Declare an Epilogue.
+
+> What's Past is Prologue.
+
+---
+
+*Now I should wake up and it should sleep...*
