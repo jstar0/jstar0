@@ -17,7 +17,7 @@
 - 🌱 Studying in a High School
 - 📫 Contact me with i@mcxin.top
 
-[![jstar0's GitHub stats](https://github-readme-stats.vercel.app/api?username=jstar0)](https://github.com/anuraghazra/github-readme-stats)
+[![jstar0's GitHub stats](https://github-readme-stats.vercel.app/api?username=jstar0&count_private=true)](https://github.com/anuraghazra/github-readme-stats)
 
 > 坦萬慮，心赤誠。  
 慎獨自省，高懸平鏡。  
