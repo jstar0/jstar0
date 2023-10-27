@@ -14,7 +14,7 @@
 **雄心壮志，心比天高。**
 
 - 👀 Contributing to Xin Era Project ([心纪元](https://www.mcxin.top))
-- 🌱 Studying in a High School
+- 🌱 Studying in University
 - 📫 Contact me with i@mcxin.top
 
 [![jstar0's GitHub stats](https://github-readme-stats.vercel.app/api?username=jstar0&count_private=true)](https://github.com/anuraghazra/github-readme-stats)
@@ -23,7 +23,7 @@
 慎獨自省，高懸平鏡。  
 荒謬其星，深空啟明。
 
-> Declare an Epilogue.  
+> Declare an Epilogue.
 What's Past is Prologue.
 
 ---
