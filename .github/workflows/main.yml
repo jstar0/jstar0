@@ -37,7 +37,7 @@ jobs:
           plugin_introduction_title: yes
           repositories_forks: yes
           config_padding: 0, 8 + 11%
-          config_order: base.header, introduction, isocalendar, habits
+          config_order: introduction, isocalendar, habits
 
       - name: Most used (with details)
         uses: lowlighter/metrics@latest
