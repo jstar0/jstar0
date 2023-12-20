@@ -4,9 +4,9 @@
 
 ### 看自己：放浪形骸！
 
-> 雪落灌醉、如此许愿与珍贵。
-> 极夜涤荡了朴素的晴天。
-> 平安顺遂在你我的冬天。
+> 雪落灌醉、如此许愿与珍贵。 
+极夜涤荡了朴素的晴天。 
+平安顺遂在你我的冬天。
 
 *Bonjour ma princesse.*
 
@@ -20,7 +20,7 @@
 
 [![jstar0's GitHub stats](https://github-readme-stats.vercel.app/api?username=jstar0&count_private=true)](https://github.com/anuraghazra/github-readme-stats)
 
-> 摒弃内耗，万山莫阻。 
+> 摒弃内耗，万山莫阻。  
 > What's Past is Prologue.
 
 ---
