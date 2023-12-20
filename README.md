@@ -4,10 +4,11 @@
 
 ### 看自己：放浪形骸！
 
-> 落叶三月秋，兰香郁郁，青山依旧。  
-寒霜里走来，你夏深沉，我近黄昏。
+> 雪落灌醉、如此许愿与珍贵。
+极夜涤荡了朴素的晴天。
+平安顺遂在你我的冬天。
 
-*Now I should wake up and it should sleep...*
+*Bonjour ma princesse.*
 
 ### 向前走：出类拔萃！
 
@@ -19,13 +20,9 @@
 
 [![jstar0's GitHub stats](https://github-readme-stats.vercel.app/api?username=jstar0&count_private=true)](https://github.com/anuraghazra/github-readme-stats)
 
-> 坦萬慮，心赤誠。  
-慎獨自省，高懸平鏡。  
-荒謬其星，深空啟明。
-
-> Declare an Epilogue.
-What's Past is Prologue.
+> 摒弃内耗，万山莫阻。 
+> What's Past is Prologue.
 
 ---
 
-粉碎了全部希望以后，希望就在这里萌芽生长。
+待噩梦吵醒希望，明天依然有光，这是我平安顺遂的梦想。
