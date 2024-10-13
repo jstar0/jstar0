@@ -47,7 +47,7 @@
 - 🌱 Studying in University
 - 📫 Contact me with i@mcxin.top
 
-[![jstar0's GitHub stats](https://github-readme-stats.vercel.app/api?username=jstar0&count_private=true)](https://github.com/anuraghazra/github-readme-stats)
+[![jstar0's GitHub stats](https://gh-stats.jstar.vip/api?username=jstar0&count_private=true)](https://github.com/anuraghazra/github-readme-stats)
 
 > 摒弃内耗，万山莫阻。   
 平安顺遂在你我的冬天。
