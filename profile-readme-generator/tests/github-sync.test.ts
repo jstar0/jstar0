@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import {
   normalizeGithubSearchItem,
   parseContributionCalendarHtml,
+  publicMergedPullRequestQuery,
   summarizeContributionCalendar
 } from "../src/github-sync.ts";
 
@@ -61,5 +62,14 @@ assert.deepEqual(normalized, {
   closed_at: "2026-09-03T00:00:00Z"
 });
 assert.throws(() => normalizeGithubSearchItem({ ...normalized, number: 0 }), /invalid pull-request number/);
+
+assert.equal(
+  publicMergedPullRequestQuery("jstar0"),
+  "author:jstar0 type:pr is:merged is:public"
+);
+assert.equal(
+  publicMergedPullRequestQuery("jstar0", "2026-01-01..2026-09-04"),
+  "author:jstar0 type:pr is:merged is:public merged:2026-01-01..2026-09-04"
+);
 
 console.log("GitHub sync parser tests passed");

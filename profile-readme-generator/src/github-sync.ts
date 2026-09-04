@@ -343,6 +343,16 @@ export function normalizeGithubSearchItem(value: unknown): GithubSearchItem {
   };
 }
 
+export function publicMergedPullRequestQuery(username: string, dateRange?: string): string {
+  return [
+    `author:${username}`,
+    "type:pr",
+    "is:merged",
+    "is:public",
+    ...(dateRange ? [`merged:${dateRange}`] : [])
+  ].join(" ");
+}
+
 async function mapConcurrent<T, R>(items: T[], concurrency: number, mapper: (item: T) => Promise<R>): Promise<R[]> {
   const results: R[] = [];
   let cursor = 0;
@@ -517,10 +527,12 @@ export async function syncGithubProfile(options: {
 
   const repositories = await fetchRepositories(client, options.username);
   const languageResult = await collectLanguages(client, repositories);
-  const allMerged = await fetchSearchItems(client, `author:${options.username} type:pr is:merged`);
+  const allMergedQuery = publicMergedPullRequestQuery(options.username);
+  const allMerged = await fetchSearchItems(client, allMergedQuery);
   const year = fetchedAt.getUTCFullYear();
   const today = fetchedAt.toISOString().slice(0, 10);
-  const mergedThisYear = await fetchSearchItems(client, `author:${options.username} type:pr is:merged merged:${year}-01-01..${today}`);
+  const mergedThisYearQuery = publicMergedPullRequestQuery(options.username, `${year}-01-01..${today}`);
+  const mergedThisYear = await fetchSearchItems(client, mergedThisYearQuery);
   const repositoryUrls = [...new Set(allMerged.items.map((item) => item.repository_url))];
   const repositoryDetails = await mapConcurrent(repositoryUrls, REPOSITORY_CONCURRENCY, async (url) => {
     try {
@@ -573,7 +585,7 @@ export async function syncGithubProfile(options: {
     sources: {
       profile: `${GITHUB_API}/users/${options.username}`,
       repositories: `${GITHUB_API}/users/${options.username}/repos?type=owner&per_page=100`,
-      mergedPullRequests: `${GITHUB_API}/search/issues?q=author:${options.username}+type:pr+is:merged`,
+      mergedPullRequests: `${GITHUB_API}/search/issues?q=${encodeURIComponent(allMergedQuery).replaceAll("%20", "+")}`,
       contributions: `https://github.com/users/${options.username}/contributions`,
       languageScope: "active owned public repositories"
     },

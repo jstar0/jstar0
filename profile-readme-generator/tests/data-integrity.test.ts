@@ -18,6 +18,7 @@ assert.equal(snapshot.contributionCalendar.total, data.stats.contributionsLastYe
 assert.ok(snapshot.sources.profile.startsWith("https://api.github.com/users/"));
 assert.ok(snapshot.sources.repositories.startsWith("https://api.github.com/users/"));
 assert.ok(snapshot.sources.mergedPullRequests.startsWith("https://api.github.com/search/issues"));
+assert.ok(new URL(snapshot.sources.mergedPullRequests).searchParams.get("q")?.split(/\s+/).includes("is:public"));
 assert.ok(snapshot.sources.contributions.startsWith("https://github.com/users/"));
 assert.ok(data.personalProjects.length > 0);
 assert.ok(data.personalProjects.every((project) => project.placeholder || project.url?.startsWith("https://github.com/")));

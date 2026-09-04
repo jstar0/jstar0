@@ -131,7 +131,7 @@ The editor's `Sync GitHub` action refreshes public statistics, languages, and co
 
 The generated statistics are no longer mock values after a sync:
 
-- `mergedPrs` and `mergedThisYear` come from GitHub's public merged-PR search for the configured login.
+- `mergedPrs` and `mergedThisYear` come from GitHub's merged-PR search with an explicit `is:public` qualifier, so a local token with private-repository access cannot change the public count.
 - `publicRepositories` comes from the public user endpoint.
 - `repositoriesOver1kStars` is the count of unique public target repositories in the merged-PR result set whose current star count is at least 1,000.
 - Language percentages aggregate language bytes from active, owned, non-fork public repositories; only the top three languages plus `Other` are shown to preserve the approved four-row composition.
