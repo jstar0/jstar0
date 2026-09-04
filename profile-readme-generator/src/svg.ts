@@ -248,7 +248,7 @@ export function svgDocument(options: {
   const viewBox = options.viewBox ?? { x: 0, y: 0, width: options.width, height: options.height };
   return [
     `<?xml version="1.0" encoding="UTF-8"?>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${options.width}" height="${options.height}" viewBox="${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}" role="img" aria-labelledby="svg-title svg-description">`,
+    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${options.width}" height="${options.height}" viewBox="${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}" role="img" aria-labelledby="svg-title svg-description" style="background:#ffffff">`,
     element("title", { id: "svg-title" }, options.title),
     element("desc", { id: "svg-description" }, options.description),
     element("style", {}, documentStyles(options.motion)),

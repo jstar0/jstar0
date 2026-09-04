@@ -44,6 +44,9 @@ const WAVE_SHAPE_LEAD_DISTANCE = 105;
 const WAVE_SHAPE_TROUGH_OFFSET = 96;
 const WAVE_SHAPE_TAIL_DISTANCE = 210;
 const WAVE_REFERENCE_WIDTH = wide.right - wide.margin;
+// A small bleed compensates for the narrow image being centered or cropped
+// independently from the PNG overview on small GitHub content columns.
+const WAVE_NARROW_CLIP_BLEED = 0.5;
 const WAVE_CENTER_FRACTIONS = [
   WAVE_LEAD_DISTANCE / WAVE_REFERENCE_WIDTH,
   0.349,
@@ -185,6 +188,7 @@ export function renderDefs(coordinates: LayoutCoordinates, motion = false): stri
   const wideMode = coordinates.mode === "wide";
   const waveSpec = waveMotionSpec(coordinates.margin, coordinates.right, wideMode);
   const waveGradientId = `wave-accent-line-${coordinates.mode}`;
+  const waveClipLeft = wideMode ? coordinates.margin : coordinates.margin - WAVE_NARROW_CLIP_BLEED;
   return element("defs", {}, [
     avatarHref
       ? selfClosing("image", {
@@ -215,9 +219,9 @@ export function renderDefs(coordinates: LayoutCoordinates, motion = false): stri
     ].join("")),
     renderWaveGradient(waveGradientId, waveSpec.frames[2].centerX, waveSpec, false),
     element("clipPath", { id: `wave-span-${coordinates.mode}` }, rect(
-      coordinates.margin,
+      waveClipLeft,
       0,
-      coordinates.right - coordinates.margin,
+      coordinates.right - waveClipLeft,
       coordinates.height
     )),
     motion
