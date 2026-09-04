@@ -1,59 +1,53 @@
-<h1 align="center" style="color:black"> 我名 景星 - JStar </h1>
+<div align="center"><a href="https://github.com/jstar0" aria-label="Profile identity"><picture><source media="(max-width: 640px) and (prefers-reduced-data: reduce)" type="image/png" srcset="./assets/profile-narrow-split-header-static.png"><source media="(min-width: 641px) and (prefers-reduced-data: reduce)" type="image/png" srcset="./assets/profile-wide-split-header-static.png"><source media="(max-width: 640px) and (prefers-reduced-motion: reduce)" type="image/svg+xml" srcset="./assets/profile-narrow-split-header-static.svg"><source media="(min-width: 641px) and (prefers-reduced-motion: reduce)" type="image/svg+xml" srcset="./assets/profile-wide-split-header-static.svg"><source media="(max-width: 640px)" type="image/svg+xml" srcset="./assets/profile-narrow-split-header.svg"><source media="(min-width: 641px)" type="image/svg+xml" srcset="./assets/profile-wide-split-header.svg"><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-header-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-header-static.png"><img src="./assets/profile-wide-split-header-static.png" width="100%" alt="Profile identity" loading="eager" decoding="async" align="top"></picture></a></div>
+<div align="center"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-overview-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-overview-static.png"><img src="./assets/profile-wide-split-overview-static.png" width="100%" alt="What I work on and open-source summary" loading="lazy" decoding="async" align="top"></picture></div>
+<div align="center"><a href="https://github.com/openai/openai-agents-python" aria-label="Repository openai/openai-agents-python"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-open-01-repo-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-open-01-repo-static.png"><img src="./assets/profile-wide-split-open-01-repo-static.png" width="49.9469%" alt="Repository openai/openai-agents-python" loading="lazy" decoding="async" align="top"></picture></a><a href="https://github.com/openai/openai-agents-python/pull/3939" aria-label="Pull request openai/openai-agents-python #3939"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-open-01-pr-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-open-01-pr-static.png"><img src="./assets/profile-wide-split-open-01-pr-static.png" width="50.0531%" alt="Pull request openai/openai-agents-python #3939" loading="lazy" decoding="async" align="top"></picture></a></div>
+<div align="center"><a href="https://github.com/microsoft/semantic-kernel" aria-label="Repository microsoft/semantic-kernel"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-open-02-repo-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-open-02-repo-static.png"><img src="./assets/profile-wide-split-open-02-repo-static.png" width="49.9469%" alt="Repository microsoft/semantic-kernel" loading="lazy" decoding="async" align="top"></picture></a><a href="https://github.com/microsoft/semantic-kernel/pull/14166" aria-label="Pull request microsoft/semantic-kernel #14166"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-open-02-pr-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-open-02-pr-static.png"><img src="./assets/profile-wide-split-open-02-pr-static.png" width="50.0531%" alt="Pull request microsoft/semantic-kernel #14166" loading="lazy" decoding="async" align="top"></picture></a></div>
+<div align="center"><a href="https://github.com/modelcontextprotocol/rust-sdk" aria-label="Repository modelcontextprotocol/rust-sdk"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-open-03-repo-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-open-03-repo-static.png"><img src="./assets/profile-wide-split-open-03-repo-static.png" width="49.9469%" alt="Repository modelcontextprotocol/rust-sdk" loading="lazy" decoding="async" align="top"></picture></a><a href="https://github.com/modelcontextprotocol/rust-sdk/pull/914" aria-label="Pull request modelcontextprotocol/rust-sdk #914"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-open-03-pr-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-open-03-pr-static.png"><img src="./assets/profile-wide-split-open-03-pr-static.png" width="50.0531%" alt="Pull request modelcontextprotocol/rust-sdk #914" loading="lazy" decoding="async" align="top"></picture></a></div>
+<div align="center"><a href="https://github.com/open-telemetry/opentelemetry-go" aria-label="Repository open-telemetry/opentelemetry-go"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-open-04-repo-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-open-04-repo-static.png"><img src="./assets/profile-wide-split-open-04-repo-static.png" width="49.9469%" alt="Repository open-telemetry/opentelemetry-go" loading="lazy" decoding="async" align="top"></picture></a><a href="https://github.com/open-telemetry/opentelemetry-go/pull/8836" aria-label="Pull request open-telemetry/opentelemetry-go #8836"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-open-04-pr-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-open-04-pr-static.png"><img src="./assets/profile-wide-split-open-04-pr-static.png" width="50.0531%" alt="Pull request open-telemetry/opentelemetry-go #8836" loading="lazy" decoding="async" align="top"></picture></a></div>
+<div align="center"><a href="https://github.com/zeroclaw-labs/zeroclaw" aria-label="Repository zeroclaw-labs/zeroclaw"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-open-05-repo-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-open-05-repo-static.png"><img src="./assets/profile-wide-split-open-05-repo-static.png" width="49.9469%" alt="Repository zeroclaw-labs/zeroclaw" loading="lazy" decoding="async" align="top"></picture></a><a href="https://github.com/zeroclaw-labs/zeroclaw/pull/9574" aria-label="Pull request zeroclaw-labs/zeroclaw #9574"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-open-05-pr-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-open-05-pr-static.png"><img src="./assets/profile-wide-split-open-05-pr-static.png" width="50.0531%" alt="Pull request zeroclaw-labs/zeroclaw #9574" loading="lazy" decoding="async" align="top"></picture></a></div>
+<div align="center"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-projects-heading-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-projects-heading-static.png"><img src="./assets/profile-wide-split-projects-heading-static.png" width="100%" alt="Personal projects heading" loading="lazy" decoding="async" align="top"></picture></div>
+<div align="center"><a href="https://github.com/jstar0/Vermory" aria-label="Personal project Vermory"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-project-01-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-project-01-static.png"><img src="./assets/profile-wide-split-project-01-static.png" width="100%" alt="Personal project Vermory" loading="lazy" decoding="async" align="top"></picture></a></div>
+<div align="center"><a href="https://github.com/jstar0/codexfold" aria-label="Personal project CodexFold"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-project-02-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-project-02-static.png"><img src="./assets/profile-wide-split-project-02-static.png" width="100%" alt="Personal project CodexFold" loading="lazy" decoding="async" align="top"></picture></a></div>
+<div align="center"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-project-03-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-project-03-static.png"><img src="./assets/profile-wide-split-project-03-static.png" width="100%" alt="Personal project ExecTrust" loading="lazy" decoding="async" align="top"></picture></div>
+<div align="center"><a href="https://github.com/jstar0/AcadHydra" aria-label="Personal project AcadHydra"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-project-04-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-project-04-static.png"><img src="./assets/profile-wide-split-project-04-static.png" width="100%" alt="Personal project AcadHydra" loading="lazy" decoding="async" align="top"></picture></a></div>
+<div align="center"><picture><source media="(max-width: 640px) and (prefers-reduced-data: reduce)" type="image/png" srcset="./assets/profile-narrow-split-metrics-static.png"><source media="(min-width: 641px) and (prefers-reduced-data: reduce)" type="image/png" srcset="./assets/profile-wide-split-metrics-static.png"><source media="(max-width: 640px) and (prefers-reduced-motion: reduce)" type="image/svg+xml" srcset="./assets/profile-narrow-split-metrics-static.svg"><source media="(min-width: 641px) and (prefers-reduced-motion: reduce)" type="image/svg+xml" srcset="./assets/profile-wide-split-metrics-static.svg"><source media="(max-width: 640px)" type="image/svg+xml" srcset="./assets/profile-narrow-split-metrics.svg"><source media="(min-width: 641px)" type="image/svg+xml" srcset="./assets/profile-wide-split-metrics.svg"><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-metrics-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-metrics-static.png"><img src="./assets/profile-wide-split-metrics-static.png" width="100%" alt="Language and contribution metrics" loading="lazy" decoding="async" align="top"></picture></div>
+<div align="center"><picture><source media="(max-width: 640px)" type="image/png" srcset="./assets/profile-narrow-split-footer-static.png"><source media="(min-width: 641px)" type="image/png" srcset="./assets/profile-wide-split-footer-static.png"><img src="./assets/profile-wide-split-footer-static.png" width="100%" alt="Generated profile footer" loading="lazy" decoding="async" align="top"></picture></div>
 
-<h3 align="center">  
-  <a href="https://www.jstar.vip">
-    Index
-  </a> •
-  <a href="http://blog.jstar.vip/">
-    Blog
-  </a>
-  •
-  <a href="mailto:i@mcxin.top/">
-    Email
-  </a> 
-</h3>
+<!-- profile-text-fallback -->
 
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=jstar0&style=flat-square&color=grey" />
-</p>
-  
-<p align="center">
-  <a href="#">
-      <img width="400" align="center" src="https://github.com/jstar0/jstar0/blob/main/github-metrics.svg" />
-  </a>
-  <a href="#">
-    <img width="400" align="center" src="https://github.com/jstar0/jstar0/blob/main/metrics.plugin.isocalendar.fullyear.svg" />
-  </a>
-    &emsp;
-</p>
+# JSTAR
 
-<h3 align="center" style="color:black">胸有大海星辰，不负青春</h3>
+_SOFTWARE INFRASTRUCTURE / RELIABILITY / APPLIED AI_
 
-### 看自己：放浪形骸！
+I build and harden systems that are reliable, observable, and secure by design.
 
-> 雪落灌醉、如此许愿与珍贵。   
-极夜涤荡了朴素的晴天。   
+### What I work on
 
-*Bonjour ma princesse.*
+- **RUNTIME & RELIABILITY**: process lifecycle / retries / reloads / observability
+- **PROTOCOLS & AI SYSTEMS**: transport compatibility / streaming / context continuity
+- **SECURITY & REGRESSION ENGINEERING**: boundary validation / safe errors / regression coverage
 
-<img width="400" align="center" src="https://github.com/jstar0/jstar0/blob/main/metrics.plugin.languages.details.svg" />
+### Open-source record
 
+139 merged PRs / 204 public repositories / as of 04 Sep 2026.
 
-### 向前走：出类拔萃！
+- [openai/openai-agents-python](<https://github.com/openai/openai-agents-python>) [#3939](<https://github.com/openai/openai-agents-python/pull/3939>)
+- [microsoft/semantic-kernel](<https://github.com/microsoft/semantic-kernel>) [#14166](<https://github.com/microsoft/semantic-kernel/pull/14166>)
+- [modelcontextprotocol/rust-sdk](<https://github.com/modelcontextprotocol/rust-sdk>) [#914](<https://github.com/modelcontextprotocol/rust-sdk/pull/914>)
+- [open-telemetry/opentelemetry-go](<https://github.com/open-telemetry/opentelemetry-go>) [#8836](<https://github.com/open-telemetry/opentelemetry-go/pull/8836>)
+- [zeroclaw-labs/zeroclaw](<https://github.com/zeroclaw-labs/zeroclaw>) [#9574](<https://github.com/zeroclaw-labs/zeroclaw/pull/9574>)
 
-**雄心壮志，心比天高。**
+### Personal projects
 
-- 👀 Contributing to Xin Era Project ([心纪元](https://www.mcxin.top))
-- 🌱 Studying in University
-- 📫 Contact me with i@mcxin.top
+- [Vermory](<https://github.com/jstar0/Vermory>) / reality-first memory and context continuity for AI clients
+- [CodexFold](<https://github.com/jstar0/codexfold>) / local-first deduplication, storage analysis, and recovery for Codex sessions
+- ExecTrust / execution governance, approvals, and evidence for AI agents
+- [AcadHydra](<https://github.com/jstar0/AcadHydra>) / full-stack academic operations prototype
 
-[![jstar0's GitHub stats](https://gh-stats.jstar.vip/api?username=jstar0&count_private=true)](https://github.com/anuraghazra/github-readme-stats)
+### Metrics
 
-> 摒弃内耗，万山莫阻。   
-平安顺遂在你我的冬天。
+Languages: TypeScript 74.22% / JavaScript 9.56% / Go 9.07% / Other 7.15%.
 
-*What's Past is Prologue.*
+1,348 contributions are summarized by month in the generated visual above.
 
----
-
-待噩梦吵醒希望，明天依然有光，这是我平安顺遂的梦想。
+[GitHub profile](<https://github.com/jstar0>)

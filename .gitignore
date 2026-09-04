@@ -1,0 +1,4 @@
+profile-readme-generator/node_modules/
+profile-readme-generator/generated/
+profile-readme-generator/qa/output/
+.DS_Store

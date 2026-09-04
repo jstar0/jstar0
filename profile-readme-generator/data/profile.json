@@ -1,0 +1,197 @@
+{
+  "profileUrl": "https://github.com/jstar0",
+  "identity": {
+    "name": "JSTAR",
+    "descriptor": [
+      "SOFTWARE INFRASTRUCTURE /",
+      "RELIABILITY / APPLIED AI"
+    ],
+    "intro": "I build and harden systems that are reliable, observable, and secure by design."
+  },
+  "workstreams": [
+    {
+      "index": "01",
+      "label": "RUNTIME & RELIABILITY",
+      "detail": "process lifecycle / retries / reloads / observability",
+      "accent": "blue"
+    },
+    {
+      "index": "02",
+      "label": "PROTOCOLS & AI SYSTEMS",
+      "detail": "transport compatibility / streaming / context continuity",
+      "accent": "cyan"
+    },
+    {
+      "index": "03",
+      "label": "SECURITY & REGRESSION ENGINEERING",
+      "detail": "boundary validation / safe errors / regression coverage",
+      "accent": "mint"
+    }
+  ],
+  "stats": {
+    "mergedPrs": 139,
+    "publicRepositories": 204,
+    "mergedThisYear": 125,
+    "repositoriesOver1kStars": 44,
+    "year": 2026,
+    "asOf": "04 Sep 2026",
+    "contributionsLastYear": 1348
+  },
+  "upstreamExamples": [
+    {
+      "repository": "openai/openai-agents-python",
+      "pr": "#3939",
+      "accent": "blue",
+      "repositoryUrl": "https://github.com/openai/openai-agents-python",
+      "prUrl": "https://github.com/openai/openai-agents-python/pull/3939"
+    },
+    {
+      "repository": "microsoft/semantic-kernel",
+      "pr": "#14166",
+      "accent": "mint",
+      "repositoryUrl": "https://github.com/microsoft/semantic-kernel",
+      "prUrl": "https://github.com/microsoft/semantic-kernel/pull/14166"
+    },
+    {
+      "repository": "modelcontextprotocol/rust-sdk",
+      "pr": "#914",
+      "accent": "cyan",
+      "repositoryUrl": "https://github.com/modelcontextprotocol/rust-sdk",
+      "prUrl": "https://github.com/modelcontextprotocol/rust-sdk/pull/914"
+    },
+    {
+      "repository": "open-telemetry/opentelemetry-go",
+      "pr": "#8836",
+      "accent": "orange",
+      "repositoryUrl": "https://github.com/open-telemetry/opentelemetry-go",
+      "prUrl": "https://github.com/open-telemetry/opentelemetry-go/pull/8836"
+    },
+    {
+      "repository": "zeroclaw-labs/zeroclaw",
+      "pr": "#9574",
+      "accent": "yellow",
+      "repositoryUrl": "https://github.com/zeroclaw-labs/zeroclaw",
+      "prUrl": "https://github.com/zeroclaw-labs/zeroclaw/pull/9574"
+    }
+  ],
+  "personalProjects": [
+    {
+      "title": "Vermory",
+      "description": "reality-first memory and context continuity for AI clients",
+      "accent": "cyan",
+      "url": "https://github.com/jstar0/Vermory"
+    },
+    {
+      "title": "CodexFold",
+      "description": "local-first deduplication, storage analysis, and recovery for Codex sessions",
+      "accent": "blue",
+      "url": "https://github.com/jstar0/codexfold"
+    },
+    {
+      "title": "ExecTrust",
+      "description": "execution governance, approvals, and evidence for AI agents",
+      "accent": "mint",
+      "placeholder": true
+    },
+    {
+      "title": "AcadHydra",
+      "description": "full-stack academic operations prototype",
+      "accent": "orange",
+      "url": "https://github.com/jstar0/AcadHydra"
+    }
+  ],
+  "languages": [
+    {
+      "name": "TypeScript",
+      "percentage": 74.22,
+      "accent": "blue"
+    },
+    {
+      "name": "JavaScript",
+      "percentage": 9.56,
+      "accent": "yellow"
+    },
+    {
+      "name": "Go",
+      "percentage": 9.07,
+      "accent": "cyan"
+    },
+    {
+      "name": "Other",
+      "percentage": 7.15,
+      "accent": "orange"
+    }
+  ],
+  "contribution": {
+    "months": [
+      "FEB",
+      "MAR",
+      "APR",
+      "MAY",
+      "JUN",
+      "JUL",
+      "AUG",
+      "SEP"
+    ],
+    "streams": [
+      {
+        "label": [
+          "Total",
+          "contributions"
+        ],
+        "accent": "blue",
+        "values": [
+          11,
+          17,
+          6,
+          20,
+          34,
+          68,
+          52,
+          4
+        ]
+      },
+      {
+        "label": [
+          "Active",
+          "days"
+        ],
+        "accent": "cyan",
+        "values": [
+          7,
+          23,
+          19,
+          42,
+          63,
+          63,
+          68,
+          9
+        ]
+      },
+      {
+        "label": [
+          "Peak",
+          "day"
+        ],
+        "accent": "mint",
+        "values": [
+          41,
+          34,
+          10,
+          26,
+          26,
+          68,
+          62,
+          16
+        ]
+      }
+    ]
+  },
+  "dataSource": {
+    "provider": "github",
+    "username": "jstar0",
+    "fetchedAt": "2026-09-04T09:30:45.216Z",
+    "contributionSource": "public contribution calendar",
+    "languageScope": "active owned public repositories"
+  }
+}

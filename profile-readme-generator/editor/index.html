@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>JSTAR Profile README Generator</title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">J</span>
+        <div>
+          <div class="brand-name">JSTAR</div>
+          <div class="brand-subtitle">PROFILE README GENERATOR</div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <span id="save-status" class="status" role="status">Loading profile...</span>
+        <button id="sync-button" class="button button-secondary" type="button">
+          <span aria-hidden="true">&#8635;</span> Sync GitHub
+        </button>
+        <button id="save-button" class="button button-primary" type="submit" form="profile-form">
+          <span aria-hidden="true">&#10003;</span> Save &amp; generate
+        </button>
+        <a class="button button-quiet" href="/preview" target="_blank" rel="noreferrer">
+          <span aria-hidden="true">&#8599;</span> Open preview
+        </a>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="editor-column" aria-label="Profile data editor">
+        <form id="profile-form" novalidate>
+          <section class="section-block">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">IDENTITY</p>
+                <h1>Profile</h1>
+              </div>
+              <span class="section-index">01</span>
+            </div>
+            <div id="identity-fields" class="field-grid"></div>
+          </section>
+
+          <section class="section-block">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">CURRENT FOCUS</p>
+                <h2>What I work on</h2>
+              </div>
+              <span class="section-index">02</span>
+            </div>
+            <div id="workstream-list" class="stack"></div>
+          </section>
+
+          <section class="section-block">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">PUBLIC RECORD</p>
+                <h2>Open-source record</h2>
+              </div>
+              <span class="section-index">03</span>
+            </div>
+            <div id="stats-grid" class="stats-grid"></div>
+            <div class="subsection-heading">
+              <h3>Selected examples</h3>
+              <span class="field-note">Repository and PR links are independently clickable.</span>
+            </div>
+            <div id="upstream-list" class="stack"></div>
+          </section>
+
+          <section class="section-block section-block-accent">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">YOUR WORK</p>
+                <h2>Personal projects</h2>
+              </div>
+              <span class="section-index">04</span>
+            </div>
+            <p class="section-lead">Add the projects that should appear in the generated profile. A valid HTTPS URL makes the row clickable.</p>
+            <div id="project-list" class="stack"></div>
+            <button id="add-project" class="add-button" type="button">
+              <span aria-hidden="true">+</span> Add personal project
+            </button>
+          </section>
+
+          <section class="section-block">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">GENERATED DATA</p>
+                <h2>Languages</h2>
+              </div>
+              <span class="section-index">05</span>
+            </div>
+            <div id="language-list" class="language-list"></div>
+            <p class="field-note">Language composition and contribution totals come from the last GitHub sync.</p>
+          </section>
+        </form>
+      </section>
+
+      <aside class="preview-column" aria-label="Generated README preview">
+        <div class="preview-sticky">
+          <div class="preview-heading">
+            <div>
+              <p class="eyebrow">OUTPUT</p>
+              <h2>README preview</h2>
+            </div>
+            <button id="copy-readme" class="icon-button" type="button" title="Copy generated README" aria-label="Copy generated README">&#9112;</button>
+          </div>
+          <div class="source-strip" id="source-strip"></div>
+          <div class="preview-frame-wrap">
+            <iframe id="preview-frame" title="Generated GitHub profile README preview" src="/preview"></iframe>
+          </div>
+          <div class="preview-footer">
+            <span id="asset-status">Generated assets are served locally.</span>
+            <a href="/api/readme" target="_blank" rel="noreferrer">View README source</a>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <template id="project-template"></template>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
