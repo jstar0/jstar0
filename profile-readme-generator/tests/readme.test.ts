@@ -39,7 +39,13 @@ assert.equal((imageLayer.match(/<a\b/g) || []).length, expectedLinkedFragments.l
 assert.deepEqual(anchorHrefs(imageLayer), expectedLinkedFragments);
 assert.doesNotMatch(imageLayer, /profile-text-fallback/, "published README must not append a visible text layer");
 const imageTags = [...imageLayer.matchAll(/<img\b([^>]*)>/g)].map((match) => match[1]);
+const imageWidths = imageTags.map((attributes) => attributes.match(/\bwidth="([^"]+)"/)?.[1] || "");
 assert.ok(imageTags.every((attributes) => /\balt="[^"]+"/.test(attributes)), "every image needs a native alt fallback");
+const expectedImageWidths = layouts.wide.fragments.map((fragment) => {
+  if (fragment.width === layouts.wide.width) return "100%";
+  return `${(fragment.width / layouts.wide.width * 100).toFixed(4).replace(/0+$/, "").replace(/\.$/, "")}%`;
+});
+assert.deepEqual(imageWidths, expectedImageWidths, "split image width contract changed");
 assert.doesNotMatch(renderSingleImageReadmeSnippet(data), /profile-text-fallback/, "single-image publication must not append a visible text layer");
 
 // Each repository/PR pair is one line with no whitespace node between the
@@ -67,6 +73,16 @@ assert.match(headerBlock, /prefers-reduced-motion: reduce[^>]*profile-narrow-spl
 assert.match(headerBlock, /srcset="\.\/assets\/profile-wide-split-header\.svg"/);
 assert.match(headerBlock, /src="\.\/assets\/profile-wide-split-header-static\.png"[^>]*loading="eager"/);
 assert.match(metricsBlock, /srcset="\.\/assets\/profile-wide-split-metrics\.svg"/);
+
+// The narrow work heading crosses a fragment boundary with the header wave;
+// keep its SVG anchor on the same baseline as the body and horizontal rules.
+const narrowOverview = layouts.narrow.fragments.find((fragment) => fragment.key === "overview");
+if (!narrowOverview) throw new Error("narrow overview fragment is missing");
+const narrowOverviewSvg = renderSplitFragmentSvg(data, narrowOverview, false);
+assert.match(
+  narrowOverviewSvg,
+  new RegExp(`<text x="${layouts.narrow.coordinates.margin}" y="220"[^>]*>WHAT I WORK ON</text>`)
+);
 
 // Non-animated fragments use only PNG for their normal path. Their SVG files
 // remain generated for explicit SVG-only publication and QA, but are not a

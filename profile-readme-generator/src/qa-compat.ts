@@ -17,12 +17,12 @@ function sleep(milliseconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-function harnessHtml(snippet: string): string {
+function harnessHtml(snippet: string, maxWidth = 941): string {
   return `<!doctype html>
 <html><head><meta charset="utf-8"><style>
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; width: 100%; min-height: 100%; background: #fff; }
-main { width: 100%; max-width: 941px; margin: 0 auto; }
+main { width: 100%; max-width: ${maxWidth}px; margin: 0 auto; }
 main > div { width: 100%; text-align: center; }
 main > a, main > picture { display: block; width: 100%; }
 main > div > a, main > div > picture { vertical-align: top; }
@@ -373,6 +373,13 @@ async function checkSplitGeometry(
       });
 
       assert.equal(state.length, expectedRows, `${width}px row count changed`);
+      const fullRow = state.find((row: { images: unknown[] }) => row.images.length === 1);
+      assert.ok(fullRow, `${width}px has no full-width reference row`);
+      const fullRowRight = fullRow.x + fullRow.width;
+      for (const row of state) {
+        assert.ok(Math.abs(row.x - fullRow.x) <= 1.5, `${width}px row left edge drifted by ${row.x - fullRow.x}px`);
+        assert.ok(Math.abs(row.x + row.width - fullRowRight) <= 1.5, `${width}px row right edge drifted by ${(row.x + row.width) - fullRowRight}px`);
+      }
       let imageIndex = 0;
       let previousBottom = 0;
       const imageReports: Array<Record<string, unknown>> = [];
@@ -407,6 +414,8 @@ async function checkSplitGeometry(
         assert.ok(first);
         if (rowImages.length === 1) {
           assert.ok(Math.abs(first.width - row.width) <= 1.5, `${width}px full row is not flush with its container`);
+          assert.ok(Math.abs(first.x - row.x) <= 1.5, `${width}px full row image is offset from its container`);
+          assert.ok(Math.abs(first.x + first.width - (row.x + row.width)) <= 1.5, `${width}px full row image right edge is offset from its container`);
         } else {
           const second = rowImages[1];
           assert.ok(second);
@@ -415,6 +424,8 @@ async function checkSplitGeometry(
           assert.ok(Math.abs(gap) <= 1.5, `${width}px split halves have a ${gap}px gap/overlap`);
           const contentWidth = second.x + second.width - first.x;
           assert.ok(Math.abs(contentWidth - row.width) <= 1.5, `${width}px split halves do not span the row`);
+          assert.ok(Math.abs(first.x - row.x) <= 1.5, `${width}px split row left edge is offset from its container`);
+          assert.ok(Math.abs(second.x + second.width - (row.x + row.width)) <= 1.5, `${width}px split row right edge is offset from its container`);
           assert.equal(row.anchors.length, 2, `${width}px split row does not expose two independent hit areas`);
           for (let anchorIndex = 0; anchorIndex < 2; anchorIndex += 1) {
             const anchor = row.anchors[anchorIndex];
@@ -449,6 +460,62 @@ async function checkSplitGeometry(
   }
   assert.equal(expectedKeys.length, layouts.wide.fragments.length);
   return reports;
+}
+
+async function checkWideMarkdownContainer(
+  browser: any,
+  server: TestServer,
+  snippet: string
+): Promise<Record<string, unknown>> {
+  // GitHub's edit preview can be wider than the 941-unit design canvas. A
+  // full row must still reach the same outer edges as the split rows there.
+  const containerWidth = 1012;
+  server.setDocument(harnessHtml(snippet.replaceAll('loading="lazy"', 'loading="eager"'), containerWidth));
+  const page = await browser.newPage({ viewport: { width: 1200, height: 1200 }, deviceScaleFactor: 1 });
+  try {
+    await page.goto(server.url, { waitUntil: "load" });
+    await waitForAllImages(page);
+    const state = await page.evaluate(() => [...document.querySelectorAll("#image-layer > div")].map((row) => {
+      const rowRect = row.getBoundingClientRect();
+      const images = [...row.querySelectorAll("img")].map((image) => {
+        const rect = image.getBoundingClientRect();
+        return { x: rect.x, width: rect.width, right: rect.right, y: rect.y, height: rect.height };
+      });
+      return { x: rowRect.x, width: rowRect.width, right: rowRect.right, images };
+    })) as Array<{
+      x: number;
+      width: number;
+      right: number;
+      images: Array<{ x: number; width: number; right: number; y: number; height: number }>;
+    }>;
+    const fullRow = state.find((row) => row.images.length === 1);
+    if (!fullRow) throw new Error("wide Markdown container has no full-width reference row");
+    const left = fullRow.x;
+    const right = fullRow.right;
+    for (const row of state) {
+      assert.ok(Math.abs(row.x - left) <= 0.5, `wide Markdown container row starts ${row.x - left}px off-axis`);
+      assert.ok(Math.abs(row.right - right) <= 0.5, `wide Markdown container row ends ${row.right - right}px off-axis`);
+      const first = row.images[0];
+      assert.ok(first);
+      if (row.images.length === 1) {
+        assert.ok(Math.abs(first.x - left) <= 0.5, "wide full row image is inset");
+        assert.ok(Math.abs(first.right - right) <= 0.5, "wide full row image ends short");
+      } else {
+        const second = row.images[1];
+        assert.ok(second);
+        assert.ok(Math.abs(second.x - first.right) <= 0.5, "wide split row has a visible gap");
+        assert.ok(Math.abs(second.right - right) <= 0.5, "wide split row ends short");
+      }
+    }
+    return {
+      viewportWidth: 1200,
+      containerWidth: fullRow.width,
+      rowCount: state.length,
+      fullRowImageWidth: fullRow.images[0]?.width
+    };
+  } finally {
+    await page.close();
+  }
 }
 
 async function checkReducedMotion(browser: any, server: TestServer, snippet: string): Promise<Array<Record<string, unknown>>> {
@@ -848,6 +915,7 @@ async function main(): Promise<void> {
     const report = {
       responsive: await checkResponsive(browser, server, snippet),
       splitGeometry: await checkSplitGeometry(browser, server, snippet, data),
+      wideMarkdownContainer: await checkWideMarkdownContainer(browser, server, snippet),
       imageHitAreas: await checkImageHitAreas(browser, server, snippet, data),
       reducedMotion: await checkReducedMotion(browser, server, snippet),
       sourceFallbacks: await checkSourceFallbacks(browser, server, snippet),

@@ -285,6 +285,8 @@ export function renderSplitFragmentSvg(data: ProfileData, fragment: SplitFragmen
 }
 
 function splitImageWidth(fragment: SplitFragment, canvasWidth: number): string {
+  // Full rows must follow the rendered Markdown container. A numeric width
+  // would become an inset, centered row in GitHub's wider edit preview.
   if (fragment.width === canvasWidth) return "100%";
   return `${(fragment.width / canvasWidth * 100).toFixed(4).replace(/0+$/, "").replace(/\.$/, "")}%`;
 }
