@@ -1,7 +1,7 @@
 import fs from "node:fs";
+import http from "node:http";
 import path from "node:path";
 import { createRequire } from "node:module";
-import { pathToFileURL } from "node:url";
 import { PROJECT_ROOT } from "./model.ts";
 import { layout } from "./theme.ts";
 import { browserLaunchOptions, loadPlaywright } from "./qa-browser.ts";
@@ -10,6 +10,61 @@ const generatedDir = path.join(PROJECT_ROOT, "generated");
 const outputDir = path.join(PROJECT_ROOT, "qa", "output", "motion-keyframes");
 const require = createRequire(import.meta.url);
 const { PNG } = require("pngjs");
+
+interface AssetServer {
+  baseUrl: string;
+  close: () => Promise<void>;
+}
+
+function contentType(filename: string): string {
+  return filename.endsWith(".svg") ? "image/svg+xml" : "application/octet-stream";
+}
+
+async function startAssetServer(): Promise<AssetServer> {
+  const server = http.createServer((request, response) => {
+    const pathname = new URL(request.url || "/", "http://127.0.0.1").pathname;
+    const prefix = "/generated/";
+    if (!pathname.startsWith(prefix)) {
+      response.writeHead(404);
+      response.end();
+      return;
+    }
+
+    const filename = pathname.slice(prefix.length);
+    if (!/^[A-Za-z0-9._-]+$/.test(filename)) {
+      response.writeHead(400);
+      response.end();
+      return;
+    }
+
+    const filePath = path.join(generatedDir, filename);
+    if (!fs.existsSync(filePath)) {
+      response.writeHead(404);
+      response.end();
+      return;
+    }
+
+    response.writeHead(200, {
+      "Content-Type": contentType(filename),
+      "Cache-Control": "no-store"
+    });
+    response.end(fs.readFileSync(filePath));
+  });
+
+  await new Promise<void>((resolve, reject) => {
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", () => resolve());
+  });
+  const address = server.address();
+  if (!address || typeof address === "string") throw new Error("Could not start the motion QA asset server");
+
+  return {
+    baseUrl: `http://127.0.0.1:${address.port}`,
+    close: () => new Promise<void>((resolve, reject) => {
+      server.close((error) => error ? reject(error) : resolve());
+    })
+  };
+}
 
 function readSvg(filename: string): string {
   return fs.readFileSync(path.join(generatedDir, filename), "utf8");
@@ -22,18 +77,15 @@ function writeHtml(filename: string, svg: string): string {
   return htmlPath;
 }
 
-function writeExternalHtml(filename: string, svgFilename: string): string {
+function writeExternalHtml(filename: string, svgUrl: string): string {
   const htmlPath = path.join(outputDir, `${filename}.html`);
-  const svgUrl = pathToFileURL(path.join(generatedDir, svgFilename)).href;
   const html = `<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;padding:0;background:#fff;overflow:hidden}img{display:block}</style></head><body><img src="${svgUrl}" alt=""></body></html>`;
   fs.writeFileSync(htmlPath, html, "utf8");
   return htmlPath;
 }
 
-function writeReducedMotionPictureHtml(filename: string, motionFilename: string, staticFilename: string): string {
+function writeReducedMotionPictureHtml(filename: string, motionUrl: string, staticUrl: string): string {
   const htmlPath = path.join(outputDir, `${filename}.html`);
-  const motionUrl = pathToFileURL(path.join(generatedDir, motionFilename)).href;
-  const staticUrl = pathToFileURL(path.join(generatedDir, staticFilename)).href;
   const html = `<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;padding:0;background:#fff;overflow:hidden}img{display:block}</style></head><body><picture><source media="(prefers-reduced-motion: reduce)" srcset="${staticUrl}"><img src="${motionUrl}" alt=""></picture></body></html>`;
   fs.writeFileSync(htmlPath, html, "utf8");
   return htmlPath;
@@ -110,19 +162,20 @@ async function renderStatic(
 async function waitForExternalImage(page: any): Promise<void> {
   await page.waitForFunction(() => {
     const image = document.querySelector("img") as HTMLImageElement | null;
-    return image?.complete === true;
+    return image?.complete === true && image.naturalWidth > 0;
   });
   await page.evaluate(() => document.fonts?.ready);
 }
 
 async function renderExternalMotion(
   browser: any,
+  assetBaseUrl: string,
   svgFilename: string,
   prefix: string,
   width: number,
   height: number
 ): Promise<{ initial: string; snapshot: string }> {
-  const htmlPath = writeExternalHtml(prefix, svgFilename);
+  const htmlPath = writeExternalHtml(prefix, `${assetBaseUrl}/generated/${svgFilename}`);
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
   await page.goto(`file://${htmlPath}`, { waitUntil: "load" });
   await waitForExternalImage(page);
@@ -138,13 +191,14 @@ async function renderExternalMotion(
 
 async function renderExternalSnapshot(
   browser: any,
+  assetBaseUrl: string,
   svgFilename: string,
   prefix: string,
   width: number,
   height: number,
   reducedMotion = false
 ): Promise<string> {
-  const htmlPath = writeExternalHtml(prefix, svgFilename);
+  const htmlPath = writeExternalHtml(prefix, `${assetBaseUrl}/generated/${svgFilename}`);
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
   if (reducedMotion) await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(`file://${htmlPath}`, { waitUntil: "load" });
@@ -158,13 +212,18 @@ async function renderExternalSnapshot(
 
 async function renderReducedMotionPicture(
   browser: any,
+  assetBaseUrl: string,
   motionFilename: string,
   staticFilename: string,
   prefix: string,
   width: number,
   height: number
 ): Promise<string> {
-  const htmlPath = writeReducedMotionPictureHtml(prefix, motionFilename, staticFilename);
+  const htmlPath = writeReducedMotionPictureHtml(
+    prefix,
+    `${assetBaseUrl}/generated/${motionFilename}`,
+    `${assetBaseUrl}/generated/${staticFilename}`
+  );
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(`file://${htmlPath}`, { waitUntil: "load" });
@@ -408,6 +467,7 @@ async function main(): Promise<void> {
   fs.mkdirSync(outputDir, { recursive: true });
   const { chromium } = loadPlaywright();
   const browser = await chromium.launch(browserLaunchOptions());
+  let assetServer: AssetServer | undefined;
   const times = [0, 1000, 2652, 3467, 4198, 5508, 8160];
   let wideKeyframes: string[] = [];
   let narrowKeyframes: string[] = [];
@@ -419,16 +479,18 @@ async function main(): Promise<void> {
   let narrowExternalReduced = "";
 
   try {
+    assetServer = await startAssetServer();
     wideKeyframes = await renderKeyframes(browser, "profile-wide-mockup.svg", "wide-mockup", 941, 1672, times);
     narrowKeyframes = await renderKeyframes(browser, "profile-narrow.svg", "narrow-body", 680, 2140, times);
     await renderStatic(browser, "profile-wide-mockup-static.svg", "wide-static-inline", 941, 1672);
     await renderStatic(browser, "profile-narrow-static.svg", "narrow-static-inline", 680, 2140);
-    wideExternal = await renderExternalMotion(browser, "profile-wide-mockup.svg", "wide-external", 941, 1672);
-    narrowExternal = await renderExternalMotion(browser, "profile-narrow.svg", "narrow-external", 680, 2140);
-    wideExternalStatic = await renderExternalSnapshot(browser, "profile-wide-mockup-static.svg", "wide-external-static", 941, 1672);
-    narrowExternalStatic = await renderExternalSnapshot(browser, "profile-narrow-static.svg", "narrow-external-static", 680, 2140);
+    wideExternal = await renderExternalMotion(browser, assetServer.baseUrl, "profile-wide-mockup.svg", "wide-external", 941, 1672);
+    narrowExternal = await renderExternalMotion(browser, assetServer.baseUrl, "profile-narrow.svg", "narrow-external", 680, 2140);
+    wideExternalStatic = await renderExternalSnapshot(browser, assetServer.baseUrl, "profile-wide-mockup-static.svg", "wide-external-static", 941, 1672);
+    narrowExternalStatic = await renderExternalSnapshot(browser, assetServer.baseUrl, "profile-narrow-static.svg", "narrow-external-static", 680, 2140);
     wideExternalReduced = await renderReducedMotionPicture(
       browser,
+      assetServer.baseUrl,
       "profile-wide-mockup.svg",
       "profile-wide-mockup-static.svg",
       "wide-external-reduced",
@@ -437,6 +499,7 @@ async function main(): Promise<void> {
     );
     narrowExternalReduced = await renderReducedMotionPicture(
       browser,
+      assetServer.baseUrl,
       "profile-narrow.svg",
       "profile-narrow-static.svg",
       "narrow-external-reduced",
@@ -445,6 +508,7 @@ async function main(): Promise<void> {
     );
   } finally {
     await browser.close();
+    await assetServer?.close();
   }
 
   const summarize = (keyframes: string[]) => ({
