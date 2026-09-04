@@ -29,13 +29,13 @@
     }
   ],
   "stats": {
-    "mergedPrs": 139,
+    "mergedPrs": 116,
     "publicRepositories": 204,
-    "mergedThisYear": 125,
+    "mergedThisYear": 103,
     "repositoriesOver1kStars": 44,
     "year": 2026,
     "asOf": "04 Sep 2026",
-    "contributionsLastYear": 1348
+    "contributionsLastYear": 1356
   },
   "upstreamExamples": [
     {
@@ -103,22 +103,22 @@
   "languages": [
     {
       "name": "TypeScript",
-      "percentage": 74.22,
+      "percentage": 74.58,
       "accent": "blue"
     },
     {
       "name": "JavaScript",
-      "percentage": 9.56,
+      "percentage": 9.46,
       "accent": "yellow"
     },
     {
       "name": "Go",
-      "percentage": 9.07,
+      "percentage": 8.85,
       "accent": "cyan"
     },
     {
       "name": "Other",
-      "percentage": 7.15,
+      "percentage": 7.11,
       "accent": "orange"
     }
   ],
@@ -148,7 +148,7 @@
           34,
           68,
           52,
-          4
+          5
         ]
       },
       {
@@ -182,7 +182,7 @@
           26,
           68,
           62,
-          16
+          17
         ]
       }
     ]
@@ -190,7 +190,7 @@
   "dataSource": {
     "provider": "github",
     "username": "jstar0",
-    "fetchedAt": "2026-09-04T09:30:45.216Z",
+    "fetchedAt": "2026-09-04T11:05:08.015Z",
     "contributionSource": "public contribution calendar",
     "languageScope": "active owned public repositories"
   }

@@ -29,7 +29,7 @@ I build and harden systems that are reliable, observable, and secure by design.
 
 ### Open-source record
 
-139 merged PRs / 204 public repositories / as of 04 Sep 2026.
+116 merged PRs / 204 public repositories / as of 04 Sep 2026.
 
 - [openai/openai-agents-python](<https://github.com/openai/openai-agents-python>) [#3939](<https://github.com/openai/openai-agents-python/pull/3939>)
 - [microsoft/semantic-kernel](<https://github.com/microsoft/semantic-kernel>) [#14166](<https://github.com/microsoft/semantic-kernel/pull/14166>)
@@ -46,8 +46,8 @@ I build and harden systems that are reliable, observable, and secure by design.
 
 ### Metrics
 
-Languages: TypeScript 74.22% / JavaScript 9.56% / Go 9.07% / Other 7.15%.
+Languages: TypeScript 74.58% / JavaScript 9.46% / Go 8.85% / Other 7.11%.
 
-1,348 contributions are summarized by month in the generated visual above.
+1,356 contributions are summarized by month in the generated visual above.
 
 [GitHub profile](<https://github.com/jstar0>)
