@@ -20,7 +20,6 @@ export function browserLaunchOptions(): Record<string, unknown> {
   const executablePath = explicitBrowserPath();
   return {
     headless: true,
-    ...(executablePath ? { executablePath } : {}),
-    args: ["--disable-gpu"]
+    ...(executablePath ? { executablePath } : {})
   };
 }
