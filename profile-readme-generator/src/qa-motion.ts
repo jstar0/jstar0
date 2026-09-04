@@ -191,10 +191,10 @@ async function renderExternalMotion(
   await waitForExternalImage(page);
   await page.waitForTimeout(20);
   const initial = path.join(outputDir, `${prefix}-load.png`);
-  await page.screenshot({ path: initial, fullPage: true });
+  await page.screenshot({ path: initial });
   await page.waitForTimeout(1300);
   const snapshot = path.join(outputDir, `${prefix}-snapshot.png`);
-  await page.screenshot({ path: snapshot, fullPage: true });
+  await page.screenshot({ path: snapshot });
   await page.close();
   return { initial, snapshot };
 }
@@ -215,7 +215,7 @@ async function renderExternalSnapshot(
   await waitForExternalImage(page);
   await page.waitForTimeout(1300);
   const screenshotPath = path.join(outputDir, `${prefix}.png`);
-  await page.screenshot({ path: screenshotPath, fullPage: true });
+  await page.screenshot({ path: screenshotPath });
   await page.close();
   return screenshotPath;
 }
@@ -240,7 +240,7 @@ async function renderReducedMotionPicture(
   await waitForExternalImage(page);
   await page.waitForTimeout(1300);
   const screenshotPath = path.join(outputDir, `${prefix}.png`);
-  await page.screenshot({ path: screenshotPath, fullPage: true });
+  await page.screenshot({ path: screenshotPath });
   await page.close();
   return screenshotPath;
 }
