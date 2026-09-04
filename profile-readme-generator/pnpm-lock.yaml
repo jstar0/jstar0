@@ -22,8 +22,8 @@ importers:
         version: 7.0.0
     devDependencies:
       '@types/node':
-        specifier: ^24.0.0
-        version: 24.13.3
+        specifier: ^26.4.0
+        version: 26.4.0
       playwright:
         specifier: ^1.60.0
         version: 1.62.1
@@ -39,8 +39,8 @@ packages:
   '@fontsource/ibm-plex-sans@5.3.0':
     resolution: {integrity: sha512-CbE4CbbEEZJX860XyUiRpsksXIQR8Rp2XDva2VO53NJox9tVNtusrysd2x5YkUEY3ErQ66W1IiiQL8/wihhw5w==}
 
-  '@types/node@24.13.3':
-    resolution: {integrity: sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==}
+  '@types/node@26.4.0':
+    resolution: {integrity: sha512-faiGnoIrLH/V8cibOMEAZ8pMw6oXqSukl29ra4mN8GdaB2ZewzeaLj+INpV5N+Z1eKWzY+IzaIZH2EIR6YZRNQ==}
 
   fsevents@2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
@@ -70,8 +70,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  undici-types@7.18.2:
-    resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
+  undici-types@8.3.0:
+    resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
 
 snapshots:
 
@@ -79,9 +79,9 @@ snapshots:
 
   '@fontsource/ibm-plex-sans@5.3.0': {}
 
-  '@types/node@24.13.3':
+  '@types/node@26.4.0':
     dependencies:
-      undici-types: 7.18.2
+      undici-types: 8.3.0
 
   fsevents@2.3.2:
     optional: true
@@ -102,4 +102,4 @@ snapshots:
 
   typescript@5.9.3: {}
 
-  undici-types@7.18.2: {}
+  undici-types@8.3.0: {}
