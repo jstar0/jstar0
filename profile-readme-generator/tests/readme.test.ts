@@ -4,6 +4,7 @@ import { loadProfileData } from "../src/model.ts";
 import {
   renderProfile,
   renderReadmeSnippet,
+  renderSingleImageReadmeSnippet,
   renderSplitFragmentSvg,
   renderTextFallback,
   TEXT_FALLBACK_MARKER
@@ -12,7 +13,7 @@ import {
 const data = loadProfileData();
 const layouts = computeSplitLayouts(data);
 const snippet = renderReadmeSnippet(data);
-const imageLayer = snippet.split(`\n\n${TEXT_FALLBACK_MARKER}`, 1)[0];
+const imageLayer = snippet;
 const textFallback = renderTextFallback(data);
 
 function escapedRegExp(value: string): string {
@@ -36,6 +37,10 @@ assert.equal((imageLayer.match(/<picture>/g) || []).length, expectedFragments);
 assert.equal((imageLayer.match(/<img\b/g) || []).length, expectedFragments);
 assert.equal((imageLayer.match(/<a\b/g) || []).length, expectedLinkedFragments.length);
 assert.deepEqual(anchorHrefs(imageLayer), expectedLinkedFragments);
+assert.doesNotMatch(imageLayer, /profile-text-fallback/, "published README must not append a visible text layer");
+const imageTags = [...imageLayer.matchAll(/<img\b([^>]*)>/g)].map((match) => match[1]);
+assert.ok(imageTags.every((attributes) => /\balt="[^"]+"/.test(attributes)), "every image needs a native alt fallback");
+assert.doesNotMatch(renderSingleImageReadmeSnippet(data), /profile-text-fallback/, "single-image publication must not append a visible text layer");
 
 // Each repository/PR pair is one line with no whitespace node between the
 // adjacent anchors; this is what prevents GitHub's inline layout from wrapping
@@ -158,6 +163,7 @@ evolving.languages = [{ name: "Rust", percentage: 100, accent: "orange" }];
 
 const evolvingSvg = renderProfile(evolving, "wide", false);
 const evolvingReadme = renderReadmeSnippet(evolving);
+const evolvingTextFallback = renderTextFallback(evolving);
 assert.match(evolvingSvg, /NOVA/);
 assert.match(evolvingSvg, /7 merged PRs across 4 public repositories/);
 assert.match(evolvingSvg, /merged in 2031/);
@@ -168,8 +174,9 @@ assert.ok(!evolvingSvg.includes("99 merged PRs") && !evolvingSvg.includes("merge
 assert.match(evolvingReadme, /example\/engine/);
 assert.match(evolvingReadme, /#7/);
 assert.match(evolvingReadme, /Atlas/);
-assert.match(evolvingReadme, /Rust 100\.00%/);
-assert.deepEqual(anchorHrefs(evolvingReadme.split(`\n\n${TEXT_FALLBACK_MARKER}`, 1)[0]), [
+assert.doesNotMatch(evolvingReadme, /Rust 100\.00%/, "published README must not contain the full text layer");
+assert.match(evolvingTextFallback, /Rust 100\.00%/);
+assert.deepEqual(anchorHrefs(evolvingReadme), [
   evolving.profileUrl,
   "https://github.com/example/engine",
   "https://github.com/example/engine/pull/7",

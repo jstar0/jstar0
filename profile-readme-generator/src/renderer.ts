@@ -212,7 +212,10 @@ export function renderSingleImageReadmeSnippet(data: ProfileData, options: Readm
     ? `<a href="${escapeHtml(data.profileUrl)}" aria-label="Open ${escapeHtml(data.identity.name)} GitHub profile">\n${picture}\n</a>`
     : picture;
 
-  return `${linkedPicture}\n\n${renderTextFallback(data)}`;
+  // A full Markdown text layer cannot be conditionally revealed by GitHub
+  // when an image request fails. The native <img alt> is the reliable
+  // per-image fallback, so keep the published snippet image-only.
+  return linkedPicture;
 }
 
 function renderSplitFragmentContent(data: ProfileData, fragment: SplitFragment, motion: boolean): string {
@@ -418,7 +421,10 @@ export function renderSplitReadmeSnippet(data: ProfileData, options: ReadmeSnipp
   rows.push(renderSplitRow(wideFragments, narrowFragments, ["metrics"], options, animatedKeys, canvasWidths));
   rows.push(renderSplitRow(wideFragments, narrowFragments, ["footer"], options, animatedKeys, canvasWidths));
 
-  return `${rows.join("\n")}\n\n${renderTextFallback(data)}`;
+  // Keep the published README free of a permanently visible duplicate text
+  // layer. Consumers that need a text-only export can call renderTextFallback
+  // directly.
+  return rows.join("\n");
 }
 
 export function renderReadmeSnippet(data: ProfileData, options: ReadmeSnippetOptions = {}): string {

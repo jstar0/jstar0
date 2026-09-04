@@ -102,13 +102,13 @@ The current README snippet uses 19 independent `<picture>` blocks. The five repo
 4. For all other units, every normal and preference path is a precise static PNG crop.
 5. A static PNG `<img>` fallback with a meaningful `alt` attribute; SVG-only mode uses two responsive static-SVG sources instead.
 
-The Markdown text layer is kept directly below the visual layer. It starts with the profile identity as a Markdown H1, then mirrors the focus areas, selected open-source work, projects, and live metrics. It does not depend on JavaScript, image decoding, or a successful image request, so it remains available while an image is loading and when every image source fails. It also provides individual Markdown links for repositories, pull requests, personal projects with real URLs, and the GitHub profile. A project row becomes clickable only when its `url` is a valid HTTPS URL; a draft row without a URL stays plain text instead of receiving a fake link.
+The published README intentionally contains no permanently visible Markdown text layer. GitHub's sanitized Markdown environment has no reliable native mechanism to reveal an arbitrary second Markdown document only after an image request fails; JavaScript event handlers and CSS-based workarounds are not a production contract there. Every published `<img>` therefore carries a non-empty `alt` value, which the browser displays natively when that image cannot be loaded or decoded. The complete text-only export remains available through `renderTextFallback(data)` for an explicit text view or downstream export; it is not appended to the normal visual README. A project row becomes clickable only when its `url` is a valid HTTPS URL; a draft row without a URL stays plain text instead of receiving a fake link.
 
 `prefers-reduced-data` is not implemented consistently across browsers. The generator emits the standard media query; compatibility QA uses a deterministic media-query shim for that branch and records the limitation in the report.
 
 ## Links
 
-The outer README image links open their corresponding targets: the header opens the GitHub profile, each repository/PR half opens its own URL, and real personal-project rows open their own URLs. A standalone SVG also contains internal links for the profile identity, selected repositories, selected pull requests, and linked personal projects, with both `href` and `xlink:href` for older SVG consumers. An SVG embedded through Markdown as an external `<img>` cannot expose those internal hit areas; the split HTML anchors are therefore the primary per-fragment hit areas, with the Markdown text layer as the non-image fallback.
+The outer README image links open their corresponding targets: the header opens the GitHub profile, each repository/PR half opens its own URL, and real personal-project rows open their own URLs. A standalone SVG also contains internal links for the profile identity, selected repositories, selected pull requests, and linked personal projects, with both `href` and `xlink:href` for older SVG consumers. An SVG embedded through Markdown as an external `<img>` cannot expose those internal hit areas; the split HTML anchors are therefore the primary per-fragment hit areas. When an image is unavailable, the corresponding native `alt` text remains available instead of a duplicate full-page text layer.
 
 ## Personal Projects
 
@@ -154,7 +154,7 @@ The published SVG has no runtime `<script>`, `<foreignObject>`, or `<filter>`. O
 
 ## GitHub Actions
 
-The public workflow in `.github/workflows/main.yml` runs the portable QA on pull requests. A push to `main`, the daily schedule, or a manual run on `main` regenerates the profile; scheduled and manual runs first refresh the public GitHub snapshot. The publish job commits only generated profile data, the root `README.md`, the managed `assets/` files, and `.profile-readme-assets.json`, using the `jstar0` GitHub noreply identity.
+The public workflow in `.github/workflows/main.yml` runs the portable QA on pull requests. A push to `main`, the daily schedule (`17 2 * * *`, or `02:17 UTC / 10:17 Asia/Taipei` once per day), or a manual run on `main` regenerates the profile; scheduled and manual runs first refresh the public GitHub snapshot. GitHub may delay scheduled jobs during platform-wide load. The publish job commits only generated profile data, the root `README.md`, the managed `assets/` files, and `.profile-readme-assets.json`, using the `jstar0` GitHub noreply identity.
 
 The repository or organization Actions setting must allow workflows to write repository contents. The workflow requests `contents: write` only for the publish job; pull-request verification remains read-only. Generated commits include `[skip ci]` so a refresh cannot recursively trigger another refresh.
 
@@ -165,7 +165,7 @@ The repository or organization Actions setting must allow workflows to write rep
 - TypeScript, layout/readme, and offline GitHub-calendar parser tests.
 - Regeneration of motion, static, and PNG assets.
 - Wide, narrow, boundary-width, reduced-motion, reduced-data, and no-SVG source selection.
-- Broken-image and delayed-image Markdown fallback behavior.
+- No duplicate text layer during normal or delayed image loading, plus native `alt` visibility after a broken-image failure.
 - Standalone SVG link count and HTTPS target validation.
 - Static SVG to generated PNG pixel comparison.
 - Motion direction, constant travel speed, flat entry/exit frames, single-stroke geometry, and reduced-motion pixel equality.
@@ -182,7 +182,7 @@ qa/output/wide-body.png
 qa/output/narrow-body.png
 ```
 
-The browser-level checks currently run in local Chromium with a local HTTP test server. They verify all 19 pictures, the 5 seamless half-row pairs, responsive source selection, independent hit areas, and exact PNG reassembly. GitHub's sanitizer behavior should be rechecked after any markup change: it may insert a `<themed-picture>` wrapper and strip progressive attributes such as `loading` and `decoding`, so those attributes are not treated as part of the fallback contract.
+The browser-level checks currently run in local Chromium with a local HTTP test server. They verify all 19 pictures, the 5 seamless half-row pairs, responsive source selection, independent hit areas, exact PNG reassembly, absence of a default text layer, and native `alt` rendering after a broken image. GitHub's sanitizer behavior should be rechecked after any markup change: it may insert a `<themed-picture>` wrapper and strip progressive attributes such as `loading` and `decoding`, so those attributes are not treated as part of the fallback contract.
 
 The compatibility QA also samples the center and two inset corners of every linked image and verifies that each point resolves to its owning anchor. This tests the actual image hit path rather than merely counting `<a>` tags.
 

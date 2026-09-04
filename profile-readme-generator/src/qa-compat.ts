@@ -4,7 +4,7 @@ import http from "node:http";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { loadProfileData, PROJECT_ROOT } from "./model.ts";
-import { renderReadmeSnippet, renderTextFallback, TEXT_FALLBACK_MARKER } from "./renderer.ts";
+import { renderReadmeSnippet, renderTextFallback } from "./renderer.ts";
 import { computeSplitLayouts, splitAssetFilename } from "./split-layout.ts";
 import { browserLaunchOptions, loadPlaywright } from "./qa-browser.ts";
 
@@ -17,21 +17,7 @@ function sleep(milliseconds: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
-
-function imageLayer(snippet: string): string {
-  const marker = `\n\n${TEXT_FALLBACK_MARKER}`;
-  const end = snippet.indexOf(marker);
-  return end >= 0 ? snippet.slice(0, end) : snippet;
-}
-
-function harnessHtml(snippet: string, textFallback: string): string {
+function harnessHtml(snippet: string): string {
   return `<!doctype html>
 <html><head><meta charset="utf-8"><style>
 * { box-sizing: border-box; }
@@ -41,8 +27,7 @@ main > div { width: 100%; text-align: center; }
 main > a, main > picture { display: block; width: 100%; }
 main > div > a, main > div > picture { vertical-align: top; }
 img { max-width: 100%; height: auto; }
-#text-fallback { margin: 24px 0 0; padding: 16px; white-space: pre-wrap; overflow-wrap: anywhere; font: 14px/1.5 sans-serif; color: #53627a; }
-</style></head><body><main><section id="image-layer">${imageLayer(snippet)}</section><pre id="text-fallback">${escapeHtml(textFallback)}</pre></main></body></html>`;
+</style></head><body><main><section id="image-layer">${snippet}</section></main></body></html>`;
 }
 
 function directImageHtml(filename: string): string {
@@ -220,6 +205,7 @@ function assertReadmeContract(readme: string, data: ReturnType<typeof loadProfil
   const pictures = [...readme.matchAll(/<picture>([\s\S]*?)<\/picture>/g)].map((match) => match[1]);
   const sources = [...readme.matchAll(/<source\b[^>]*>/g)].map((match) => match[0]);
   const anchors = [...readme.matchAll(/<a\s+href="([^"]+)"[^>]*>/g)].map((match) => match[1]);
+  const imageTags = [...readme.matchAll(/<img\b([^>]*)>/g)].map((match) => match[1]);
   const expectedFragments = layouts.wide.fragments.length;
   const expectedUrls = [
     data.profileUrl,
@@ -228,7 +214,12 @@ function assertReadmeContract(readme: string, data: ReturnType<typeof loadProfil
   ].filter((url): url is string => Boolean(url));
 
   assert.equal(pictures.length, expectedFragments, "README picture count changed");
-  assert.equal((readme.match(/<img\b/g) || []).length, expectedFragments, "README image count changed");
+  assert.equal(imageTags.length, expectedFragments, "README image count changed");
+  assert.ok(imageTags.every((attributes) => {
+    const alt = attributes.match(/\balt="([^"]*)"/)?.[1] || "";
+    return alt.trim().length > 0;
+  }), "every published image must have a non-empty native alt fallback");
+  assert.doesNotMatch(readme, /profile-text-fallback/, "full Markdown fallback must not be visible in the published README");
   assert.deepEqual(anchors, expectedUrls, "README image-link order changed");
   assert.equal(sources.length, 2 * 8 + (expectedFragments - 2) * 2, "README source count changed");
   assert.match(pictures[0], /prefers-reduced-data: reduce[^>]*type="image\/png"/);
@@ -269,7 +260,7 @@ function assertReadmeContract(readme: string, data: ReturnType<typeof loadProfil
   };
 }
 
-function assertMarkdownFallbackContract(textFallback: string, data: ReturnType<typeof loadProfileData>): Record<string, unknown> {
+function assertTextOnlyExportContract(textFallback: string, data: ReturnType<typeof loadProfileData>): Record<string, unknown> {
   const links = [...textFallback.matchAll(/\[([^\]]+)\]\(<(https:\/\/[^>]+)>\)/g)]
     .map((match) => ({ label: match[1], href: match[2] }));
   const expected = [
@@ -283,10 +274,10 @@ function assertMarkdownFallbackContract(textFallback: string, data: ReturnType<t
   return { count: links.length, hrefs: links.map((link) => link.href) };
 }
 
-async function checkResponsive(browser: any, server: TestServer, snippet: string, textFallback: string): Promise<Array<Record<string, unknown>>> {
+async function checkResponsive(browser: any, server: TestServer, snippet: string): Promise<Array<Record<string, unknown>>> {
   const results: Array<Record<string, unknown>> = [];
   for (const width of [320, 375, 390, 430, 640, 641, 768, 838, 941, 1440]) {
-    server.setDocument(harnessHtml(snippet.replaceAll('loading="lazy"', 'loading="eager"'), textFallback));
+    server.setDocument(harnessHtml(snippet.replaceAll('loading="lazy"', 'loading="eager"')));
     const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
     try {
       await page.goto(server.url, { waitUntil: "load" });
@@ -302,7 +293,8 @@ async function checkResponsive(browser: any, server: TestServer, snippet: string
           scrollWidth: document.documentElement.scrollWidth,
           viewportWidth: window.innerWidth,
           alt: image.alt,
-          anchorHref: anchor?.href || null
+          anchorHref: anchor?.href || null,
+          visibleText: document.body.innerText.trim()
         };
       });
       const expected = width <= 640 ? "profile-narrow-split-header.svg" : "profile-wide-split-header.svg";
@@ -310,6 +302,7 @@ async function checkResponsive(browser: any, server: TestServer, snippet: string
       assert.ok(state.width <= width + 0.5, `${width}px image overflows its viewport`);
       assert.ok(state.scrollWidth <= width + 1, `${width}px page has horizontal overflow`);
       assert.ok(state.height > 0 && state.alt.length > 0, `${width}px image has no accessible dimensions/alt`);
+      assert.equal(state.visibleText, "", "page exposes an unexpected default text layer");
       assert.equal(state.anchorHref, "https://github.com/jstar0");
       results.push({ width, selected: basename(state.currentSrc), renderedWidth: state.width, renderedHeight: state.height });
     } finally {
@@ -323,7 +316,6 @@ async function checkSplitGeometry(
   browser: any,
   server: TestServer,
   snippet: string,
-  textFallback: string,
   data: ReturnType<typeof loadProfileData>
 ): Promise<Array<Record<string, unknown>>> {
   const layouts = computeSplitLayouts(data);
@@ -344,7 +336,7 @@ async function checkSplitGeometry(
   const qaSnippet = snippet.replaceAll('loading="lazy"', 'loading="eager"');
 
   for (const width of [320, 390, 640, 641, 768, 838, 941, 1440]) {
-    server.setDocument(harnessHtml(qaSnippet, textFallback));
+    server.setDocument(harnessHtml(qaSnippet));
     const page = await browser.newPage({ viewport: { width, height: 1200 }, deviceScaleFactor: 1 });
     try {
       await page.goto(server.url, { waitUntil: "load" });
@@ -459,10 +451,10 @@ async function checkSplitGeometry(
   return reports;
 }
 
-async function checkReducedMotion(browser: any, server: TestServer, snippet: string, textFallback: string): Promise<Array<Record<string, unknown>>> {
+async function checkReducedMotion(browser: any, server: TestServer, snippet: string): Promise<Array<Record<string, unknown>>> {
   const results: Array<Record<string, unknown>> = [];
   for (const width of [390, 768]) {
-    server.setDocument(harnessHtml(snippet.replaceAll('loading="lazy"', 'loading="eager"'), textFallback));
+    server.setDocument(harnessHtml(snippet.replaceAll('loading="lazy"', 'loading="eager"')));
     const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
     try {
       await page.emulateMedia({ reducedMotion: "reduce" });
@@ -483,10 +475,9 @@ async function checkImageHitAreas(
   browser: any,
   server: TestServer,
   snippet: string,
-  textFallback: string,
   data: ReturnType<typeof loadProfileData>
 ): Promise<Record<string, unknown>> {
-  server.setDocument(harnessHtml(snippet.replaceAll('loading="lazy"', 'loading="eager"'), textFallback));
+  server.setDocument(harnessHtml(snippet.replaceAll('loading="lazy"', 'loading="eager"')));
   const page = await browser.newPage({ viewport: { width: 941, height: 700 }, deviceScaleFactor: 1 });
   try {
     await page.goto(server.url, { waitUntil: "load" });
@@ -545,8 +536,7 @@ function noSvgShim(snippet: string): string {
 async function checkSourceFallbacks(
   browser: any,
   server: TestServer,
-  snippet: string,
-  textFallback: string
+  snippet: string
 ): Promise<Record<string, unknown>> {
   const checks: Record<string, string> = {};
   for (const [name, variant, widths, expected] of [
@@ -555,7 +545,7 @@ async function checkSourceFallbacks(
   ] as Array<[string, string, number[], string[]]>) {
     for (let index = 0; index < widths.length; index += 1) {
       const width = widths[index];
-      server.setDocument(harnessHtml(variant.replaceAll('loading="lazy"', 'loading="eager"'), textFallback));
+      server.setDocument(harnessHtml(variant.replaceAll('loading="lazy"', 'loading="eager"')));
       const page = await browser.newPage({ viewport: { width, height: 900 }, deviceScaleFactor: 1 });
       try {
         await page.goto(server.url, { waitUntil: "load" });
@@ -574,13 +564,12 @@ async function checkSourceFallbacks(
 async function checkSvgOnly(
   browser: any,
   server: TestServer,
-  data: ReturnType<typeof loadProfileData>,
-  textFallback: string
+  data: ReturnType<typeof loadProfileData>
 ): Promise<Record<string, string>> {
   const checks: Record<string, string> = {};
   const snippet = renderReadmeSnippet(data, { includePngFallback: false }).replaceAll('loading="lazy"', 'loading="eager"');
   for (const width of [390, 768]) {
-    server.setDocument(harnessHtml(snippet, textFallback));
+    server.setDocument(harnessHtml(snippet));
     const page = await browser.newPage({ viewport: { width, height: 1200 }, deviceScaleFactor: 1 });
     try {
       await page.goto(server.url, { waitUntil: "load" });
@@ -603,15 +592,14 @@ async function checkSvgOnly(
 async function checkNormalRequestPlan(
   browser: any,
   server: TestServer,
-  snippet: string,
-  textFallback: string
+  snippet: string
 ): Promise<Record<string, unknown>> {
   const requestsByWidth: Record<string, string[]> = {};
   const qaSnippet = snippet.replaceAll('loading="lazy"', 'loading="eager"');
   const expectedImageCount = (qaSnippet.match(/<img\b/g) || []).length;
   for (const width of [390, 941]) {
     server.clearRequests();
-    server.setDocument(harnessHtml(qaSnippet, textFallback));
+    server.setDocument(harnessHtml(qaSnippet));
     const page = await browser.newPage({ viewport: { width, height: 1200 }, deviceScaleFactor: 1 });
     try {
       await page.goto(server.url, { waitUntil: "load" });
@@ -636,44 +624,66 @@ async function checkNormalRequestPlan(
   return requestsByWidth;
 }
 
-async function checkBrokenImage(browser: any, server: TestServer, snippet: string, textFallback: string): Promise<Record<string, unknown>> {
+async function checkBrokenImage(browser: any, server: TestServer, snippet: string): Promise<Record<string, unknown>> {
   const broken = snippet
     .replaceAll(".svg", "-missing.svg")
     .replaceAll(".png", "-missing.png");
-  server.setDocument(harnessHtml(broken, textFallback));
+  server.setDocument(harnessHtml(broken));
   const page = await browser.newPage({ viewport: { width: 390, height: 900 }, deviceScaleFactor: 1 });
   try {
     await page.goto(server.url, { waitUntil: "load" });
     await waitForImage(page, true);
-    const state = await page.evaluate(() => {
-      const image = document.querySelector("img") as HTMLImageElement;
-      const fallback = document.querySelector("#text-fallback") as HTMLElement;
-      return { naturalWidth: image.naturalWidth, alt: image.alt, fallbackHeight: fallback.getBoundingClientRect().height };
+    const image = page.locator("img").first();
+    await image.evaluate((node: HTMLImageElement) => {
+      // Give the native broken-image renderer a stable box for the pixel
+      // assertion below; this does not change the published markup.
+      node.style.display = "block";
+      node.style.width = "700px";
+      node.style.height = "80px";
+      node.style.font = "16px sans-serif";
+      node.style.color = "#132238";
     });
+    const withAltPath = path.join(outputDir, "broken-image-with-alt.png");
+    const withoutAltPath = path.join(outputDir, "broken-image-without-alt.png");
+    await image.screenshot({ path: withAltPath });
+    const state = await image.evaluate((node: HTMLImageElement) => ({
+      naturalWidth: node.naturalWidth,
+      alt: node.alt,
+      complete: node.complete,
+      structuredFallbackPresent: Boolean(document.querySelector("#text-fallback"))
+    }));
+    await image.evaluate((node: HTMLImageElement) => { node.alt = ""; });
+    await image.screenshot({ path: withoutAltPath });
+    const altPixels = comparePng(withAltPath, withoutAltPath, 0);
     assert.equal(state.naturalWidth, 0, "broken image unexpectedly loaded");
-    assert.ok(state.alt.length > 0 && state.fallbackHeight > 0, "text fallback is not visible after image failure");
-    return state;
+    assert.equal(state.complete, true, "broken image did not settle");
+    assert.ok(state.alt.length > 0, "broken image has no native alt fallback");
+    assert.equal(state.structuredFallbackPresent, false, "full text layer is present in the broken-image harness");
+    assert.ok(altPixels.changedPixels > 0, "native alt text did not change the broken-image pixels");
+    return { ...state, altPixelsChanged: altPixels.changedPixels };
   } finally {
     await page.close();
   }
 }
 
-async function checkSlowNetwork(browser: any, server: TestServer, snippet: string, textFallback: string): Promise<Record<string, unknown>> {
+async function checkSlowNetwork(browser: any, server: TestServer, snippet: string): Promise<Record<string, unknown>> {
   server.setDelay(700);
-  server.setDocument(harnessHtml(snippet, textFallback));
+  server.setDocument(harnessHtml(snippet));
   const page = await browser.newPage({ viewport: { width: 941, height: 900 }, deviceScaleFactor: 1 });
   try {
     await page.goto(server.url, { waitUntil: "domcontentloaded" });
     await sleep(80);
     const duringLoad = await page.evaluate(() => {
       const image = document.querySelector("img") as HTMLImageElement;
-      const fallback = document.querySelector("#text-fallback") as HTMLElement;
       return {
         imageComplete: image.complete,
-        fallbackVisible: fallback.getBoundingClientRect().height > 0
+        altAvailable: image.alt.length > 0,
+        structuredFallbackPresent: Boolean(document.querySelector("#text-fallback"))
       };
     });
-    assert.ok(duringLoad.fallbackVisible, "text fallback is hidden while the image is loading");
+    assert.equal(duringLoad.imageComplete, false, "delayed image completed before the in-flight check");
+    assert.equal(duringLoad.structuredFallbackPresent, false, "full text layer is visible while images are loading");
+    assert.equal(duringLoad.altAvailable, true, "the image has no native alt fallback while loading");
     await waitForImage(page);
     return duringLoad;
   } finally {
@@ -810,10 +820,10 @@ async function main(): Promise<void> {
   const textFallback = renderTextFallback(data);
   assert.equal(readme, snippet, "generated README is stale; run the generator before compatibility QA");
   assertReadmeContract(readme, data);
-  const markdownFallback = assertMarkdownFallbackContract(textFallback, data);
+  const textOnlyExport = assertTextOnlyExportContract(textFallback, data);
   fs.writeFileSync(
     path.join(outputDir, "split-preview.html"),
-    harnessHtml(renderReadmeSnippet(data, { assetPrefix: "../../../generated/" }), textFallback),
+    harnessHtml(renderReadmeSnippet(data, { assetPrefix: "../../../generated/" })),
     "utf8"
   );
   assert.ok(fs.existsSync(path.join(generatedDir, "profile-wide-static.png")));
@@ -836,20 +846,20 @@ async function main(): Promise<void> {
 
   try {
     const report = {
-      responsive: await checkResponsive(browser, server, snippet, textFallback),
-      splitGeometry: await checkSplitGeometry(browser, server, snippet, textFallback, data),
-      imageHitAreas: await checkImageHitAreas(browser, server, snippet, textFallback, data),
-      reducedMotion: await checkReducedMotion(browser, server, snippet, textFallback),
-      sourceFallbacks: await checkSourceFallbacks(browser, server, snippet, textFallback),
-      svgOnly: await checkSvgOnly(browser, server, data, textFallback),
-      normalRequestPlan: await checkNormalRequestPlan(browser, server, snippet, textFallback),
-      brokenImage: await checkBrokenImage(browser, server, snippet, textFallback),
-      slowNetwork: await checkSlowNetwork(browser, server, snippet, textFallback),
+      responsive: await checkResponsive(browser, server, snippet),
+      splitGeometry: await checkSplitGeometry(browser, server, snippet, data),
+      imageHitAreas: await checkImageHitAreas(browser, server, snippet, data),
+      reducedMotion: await checkReducedMotion(browser, server, snippet),
+      sourceFallbacks: await checkSourceFallbacks(browser, server, snippet),
+      svgOnly: await checkSvgOnly(browser, server, data),
+      normalRequestPlan: await checkNormalRequestPlan(browser, server, snippet),
+      brokenImage: await checkBrokenImage(browser, server, snippet),
+      slowNetwork: await checkSlowNetwork(browser, server, snippet),
       staticVisuals: await checkStaticVisuals(browser, server),
       splitStaticVisuals: await checkSplitStaticVisuals(browser, server, data),
       splitPixels,
       inlineSvgLinks: await checkInlineSvgLinks(browser, data),
-      markdownFallback,
+      textOnlyExport,
       performance: checkPerformanceContract(),
       note: "Reduced-data and no-SVG cases use deterministic media/type shims because Chromium cannot emulate those preferences directly."
     };

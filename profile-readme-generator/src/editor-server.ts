@@ -11,7 +11,7 @@ import {
   validateProfileData,
   type ProfileData
 } from "./model.ts";
-import { renderReadmeSnippet, renderTextFallback, TEXT_FALLBACK_MARKER } from "./renderer.ts";
+import { renderReadmeSnippet } from "./renderer.ts";
 
 const execFileAsync = promisify(execFile);
 const EDITOR_ROOT = path.join(PROJECT_ROOT, "editor");
@@ -208,26 +208,16 @@ function staticFile(response: ServerResponse, root: string, relativePath: string
   fs.createReadStream(filePath).pipe(response);
 }
 
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
-}
-
 function previewHtml(data: ProfileData): string {
   // The editor preview is an iframe with its own viewport. Eager loading is
   // intentional here so every generated fragment is visible for inspection;
   // the published README keeps its lazy-loading policy unchanged.
   const imageLayer = renderReadmeSnippet(data, { assetPrefix: "/generated/" })
-    .split(`\n\n${TEXT_FALLBACK_MARKER}`, 1)[0]
     .replaceAll('loading="lazy"', 'loading="eager"');
-  const fallback = escapeHtml(renderTextFallback(data));
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>README preview</title><style>
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:#fff;color:#132238}main{width:100%;max-width:941px;margin:0 auto}#image-layer{width:100%}#image-layer>div{width:100%;text-align:center}#image-layer>div>a,#image-layer>div>picture{vertical-align:top}img{max-width:100%;height:auto}#text-fallback{margin:24px 0 0;padding:16px;white-space:pre-wrap;overflow-wrap:anywhere;font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;color:#53627a;border-top:1px solid #d6dee8}
-</style></head><body><main><section id="image-layer">${imageLayer}</section><pre id="text-fallback">${fallback}</pre></main></body></html>`;
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:#fff;color:#132238}main{width:100%;max-width:941px;margin:0 auto}#image-layer{width:100%}#image-layer>div{width:100%;text-align:center}#image-layer>div>a,#image-layer>div>picture{vertical-align:top}img{max-width:100%;height:auto}
+</style></head><body><main><section id="image-layer">${imageLayer}</section></main></body></html>`;
 }
 
 export function createEditorServer(options: { host?: string; port?: number } = {}): Promise<EditorServer> {

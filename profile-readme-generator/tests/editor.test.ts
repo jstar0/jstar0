@@ -46,6 +46,8 @@ try {
   const preview = await previewResponse.text();
   assert.match(preview, /Personal project CodexFold/);
   assert.match(preview, /profile-wide-split-header\.svg/);
+  assert.doesNotMatch(preview, /id="text-fallback"/);
+  assert.doesNotMatch(preview, /profile-text-fallback/);
   assert.doesNotMatch(preview, /loading="lazy"/, "local iframe preview must eagerly load every fragment");
 } finally {
   await editor.close();
