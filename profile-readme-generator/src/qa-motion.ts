@@ -17,27 +17,33 @@ interface AssetServer {
 }
 
 function contentType(filename: string): string {
-  return filename.endsWith(".svg") ? "image/svg+xml" : "application/octet-stream";
+  if (filename.endsWith(".html")) return "text/html; charset=utf-8";
+  if (filename.endsWith(".svg")) return "image/svg+xml";
+  return "application/octet-stream";
 }
 
 async function startAssetServer(): Promise<AssetServer> {
   const server = http.createServer((request, response) => {
     const pathname = new URL(request.url || "/", "http://127.0.0.1").pathname;
-    const prefix = "/generated/";
-    if (!pathname.startsWith(prefix)) {
+    const route = pathname.startsWith("/generated/")
+      ? { prefix: "/generated/", root: generatedDir }
+      : pathname.startsWith("/harness/")
+        ? { prefix: "/harness/", root: outputDir }
+        : undefined;
+    if (!route) {
       response.writeHead(404);
       response.end();
       return;
     }
 
-    const filename = pathname.slice(prefix.length);
+    const filename = pathname.slice(route.prefix.length);
     if (!/^[A-Za-z0-9._-]+$/.test(filename)) {
       response.writeHead(400);
       response.end();
       return;
     }
 
-    const filePath = path.join(generatedDir, filename);
+    const filePath = path.join(route.root, filename);
     if (!fs.existsSync(filePath)) {
       response.writeHead(404);
       response.end();
@@ -64,6 +70,10 @@ async function startAssetServer(): Promise<AssetServer> {
       server.close((error) => error ? reject(error) : resolve());
     })
   };
+}
+
+function harnessUrl(baseUrl: string, htmlPath: string): string {
+  return `${baseUrl}/harness/${path.basename(htmlPath)}`;
 }
 
 function readSvg(filename: string): string {
@@ -177,7 +187,7 @@ async function renderExternalMotion(
 ): Promise<{ initial: string; snapshot: string }> {
   const htmlPath = writeExternalHtml(prefix, `${assetBaseUrl}/generated/${svgFilename}`);
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
-  await page.goto(`file://${htmlPath}`, { waitUntil: "load" });
+  await page.goto(harnessUrl(assetBaseUrl, htmlPath), { waitUntil: "load" });
   await waitForExternalImage(page);
   await page.waitForTimeout(20);
   const initial = path.join(outputDir, `${prefix}-load.png`);
@@ -201,7 +211,7 @@ async function renderExternalSnapshot(
   const htmlPath = writeExternalHtml(prefix, `${assetBaseUrl}/generated/${svgFilename}`);
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
   if (reducedMotion) await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto(`file://${htmlPath}`, { waitUntil: "load" });
+  await page.goto(harnessUrl(assetBaseUrl, htmlPath), { waitUntil: "load" });
   await waitForExternalImage(page);
   await page.waitForTimeout(1300);
   const screenshotPath = path.join(outputDir, `${prefix}.png`);
@@ -226,7 +236,7 @@ async function renderReducedMotionPicture(
   );
   const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto(`file://${htmlPath}`, { waitUntil: "load" });
+  await page.goto(harnessUrl(assetBaseUrl, htmlPath), { waitUntil: "load" });
   await waitForExternalImage(page);
   await page.waitForTimeout(1300);
   const screenshotPath = path.join(outputDir, `${prefix}.png`);
