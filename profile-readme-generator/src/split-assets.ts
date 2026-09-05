@@ -4,6 +4,7 @@ import { createRequire } from "node:module";
 import type { ProfileData } from "./model.ts";
 import { computeSplitLayouts, splitAssetFilename, splitFragmentHasMotion, type SplitFragment } from "./split-layout.ts";
 import { renderSplitFragmentSvg } from "./renderer.ts";
+import type { ThemeMode } from "./theme.ts";
 
 const require = createRequire(import.meta.url);
 const { PNG } = require("pngjs") as {
@@ -47,14 +48,14 @@ function cropPng(source: CropSource, fragment: SplitFragment): Buffer {
   return PNG.sync.write({ width: fragment.width, height: fragment.height, data });
 }
 
-function writeSvgAssets(data: ProfileData, outputDir: string, motion: boolean): number {
+function writeSvgAssets(data: ProfileData, outputDir: string, motion: boolean, theme: ThemeMode): number {
   const layouts = computeSplitLayouts(data);
   let count = 0;
   for (const fragment of [...layouts.wide.fragments, ...layouts.narrow.fragments]) {
-    const staticFilename = splitAssetFilename(fragment, "static", "svg");
+    const staticFilename = splitAssetFilename(fragment, "static", "svg", theme);
     fs.writeFileSync(
       path.join(outputDir, staticFilename),
-      renderSplitFragmentSvg(data, fragment, false),
+      renderSplitFragmentSvg(data, fragment, false, theme),
       "utf8"
     );
     count += 1;
@@ -64,10 +65,10 @@ function writeSvgAssets(data: ProfileData, outputDir: string, motion: boolean): 
     // explicit static build; the normal aliases are emitted by the publish
     // build only.
     if (motion) {
-      const normalFilename = splitAssetFilename(fragment, "motion", "svg");
+      const normalFilename = splitAssetFilename(fragment, "motion", "svg", theme);
       fs.writeFileSync(
         path.join(outputDir, normalFilename),
-        renderSplitFragmentSvg(data, fragment, splitFragmentHasMotion(fragment)),
+        renderSplitFragmentSvg(data, fragment, splitFragmentHasMotion(fragment), theme),
         "utf8"
       );
       count += 1;
@@ -79,7 +80,8 @@ function writeSvgAssets(data: ProfileData, outputDir: string, motion: boolean): 
 function writePngAssets(
   data: ProfileData,
   outputDir: string,
-  sourcePaths: { wide: string; narrow: string }
+  sourcePaths: { wide: string; narrow: string },
+  theme: ThemeMode
 ): number {
   const layouts = computeSplitLayouts(data);
   const sources = {
@@ -89,7 +91,7 @@ function writePngAssets(
   let count = 0;
   for (const mode of ["wide", "narrow"] as const) {
     for (const fragment of layouts[mode].fragments) {
-      const filename = splitAssetFilename(fragment, "static", "png");
+      const filename = splitAssetFilename(fragment, "static", "png", theme);
       fs.writeFileSync(path.join(outputDir, filename), cropPng(sources[mode], fragment));
       count += 1;
     }
@@ -103,12 +105,14 @@ export function writeSplitAssets(
   options: {
     motion: boolean;
     pngSources?: { wide: string; narrow: string };
+    theme?: ThemeMode;
   }
 ): { svgCount: number; pngCount: number } {
   fs.mkdirSync(outputDir, { recursive: true });
-  const svgCount = writeSvgAssets(data, outputDir, options.motion);
+  const theme = options.theme ?? "light";
+  const svgCount = writeSvgAssets(data, outputDir, options.motion, theme);
   const pngCount = options.pngSources
-    ? writePngAssets(data, outputDir, options.pngSources)
+    ? writePngAssets(data, outputDir, options.pngSources, theme)
     : 0;
   return { svgCount, pngCount };
 }

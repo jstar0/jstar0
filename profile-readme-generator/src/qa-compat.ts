@@ -221,15 +221,19 @@ function assertReadmeContract(readme: string, data: ReturnType<typeof loadProfil
   }), "every published image must have a non-empty native alt fallback");
   assert.doesNotMatch(readme, /profile-text-fallback/, "full Markdown fallback must not be visible in the published README");
   assert.deepEqual(anchors, expectedUrls, "README image-link order changed");
-  assert.equal(sources.length, 2 * 8 + (expectedFragments - 2) * 2, "README source count changed");
+  assert.equal(sources.length, 2 * 16 + (expectedFragments - 2) * 12, "README source count changed");
   assert.match(pictures[0], /prefers-reduced-data: reduce[^>]*type="image\/png"/);
   assert.match(pictures[0], /prefers-reduced-motion: reduce[^>]*profile-narrow-split-header-static\.svg/);
   assert.match(pictures[0], /srcset="\.\/assets\/profile-wide-split-header\.svg"/);
+  assert.match(pictures[0], /prefers-color-scheme: dark[^>]*profile-wide-dark-split-header\.svg/);
+  assert.match(pictures[0], /prefers-color-scheme: light[^>]*profile-wide-split-header\.svg/);
   assert.match(pictures.at(-2) || "", /srcset="\.\/assets\/profile-wide-split-metrics\.svg"/);
-  assert.doesNotMatch(pictures[1], /profile-(?:wide|narrow)-split-overview\.svg/);
+  assert.match(pictures.at(-2) || "", /prefers-color-scheme: dark[^>]*profile-wide-dark-split-metrics\.svg/);
+  assert.match(pictures[1], /profile-wide-split-overview-static\.svg/);
+  assert.match(pictures[1], /profile-narrow-split-overview-static\.svg/);
   assert.match(pictures[1], /profile-wide-split-overview-static\.png/);
   assert.match(pictures[1], /profile-narrow-split-overview-static\.png/);
-  assert.equal((pictures[1].match(/<source\b/g) || []).length, 2);
+  assert.equal((pictures[1].match(/<source\b/g) || []).length, 12);
   assert.match(pictures[0], /<img src="\.\/assets\/profile-wide-split-header-static\.png" width="100%"[^>]*loading="eager"[^>]*decoding="async"/);
 
   const rows = [...readme.matchAll(/<div align="center">([\s\S]*?)<\/div>/g)].map((match) => match[1]);
@@ -403,7 +407,7 @@ async function checkSplitGeometry(
           const expectedAnimated = expectedKey === "header" || expectedKey === "metrics";
           const expectedFilename = expectedAnimated
             ? `profile-${expectedMode}-split-${expectedKey}.svg`
-            : `profile-${expectedMode}-split-${expectedKey}-static.png`;
+            : `profile-${expectedMode}-split-${expectedKey}-static.svg`;
           assert.equal(basename(image.src), expectedFilename, `${width}px selected the wrong asset for ${expectedKey}`);
           assert.ok(image.naturalWidth > 0 && image.naturalHeight > 0, `${width}px ${expectedKey} image did not load`);
           assert.ok(image.width > 0 && image.height > 0, `${width}px ${expectedKey} has no rendered box`);
@@ -675,14 +679,12 @@ async function checkNormalRequestPlan(
       assert.equal(requests.length, expectedImageCount, `${width}px normal mode made an unexpected number of image requests`);
       const svgRequests = requests.filter((filename) => filename.endsWith(".svg"));
       const pngRequests = requests.filter((filename) => filename.endsWith(".png"));
-      assert.equal(svgRequests.length, 2, `${width}px normal mode requested more than the two animated SVG units`);
-      assert.equal(pngRequests.length, expectedImageCount - 2, `${width}px normal mode did not use PNG for the static units`);
+      assert.equal(svgRequests.length, expectedImageCount, `${width}px normal mode did not use SVG for every unit`);
+      assert.equal(pngRequests.length, 0, `${width}px normal mode requested PNG instead of SVG`);
       const mode = width <= 640 ? "narrow" : "wide";
-      assert.deepEqual(new Set(svgRequests), new Set([
-        `profile-${mode}-split-header.svg`,
-        `profile-${mode}-split-metrics.svg`
-      ]));
-      assert.ok(pngRequests.every((filename) => filename.includes(`profile-${mode}-split-`) && filename.endsWith("-static.png")));
+      assert.ok(svgRequests.every((filename) => filename.startsWith(`profile-${mode}-split-`)));
+      assert.ok(svgRequests.includes(`profile-${mode}-split-header.svg`));
+      assert.ok(svgRequests.includes(`profile-${mode}-split-metrics.svg`));
       requestsByWidth[String(width)] = requests;
     } finally {
       await page.close();

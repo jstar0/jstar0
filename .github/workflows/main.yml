@@ -62,6 +62,11 @@ jobs:
           cache: pnpm
           cache-dependency-path: profile-readme-generator/pnpm-lock.yaml
 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
       - name: Install generator dependencies
         run: pnpm --dir "$GENERATOR_DIR" install --frozen-lockfile
 
@@ -111,6 +116,11 @@ jobs:
           node-version: "22.x"
           cache: pnpm
           cache-dependency-path: profile-readme-generator/pnpm-lock.yaml
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
 
       - name: Install generator dependencies
         run: pnpm --dir "$GENERATOR_DIR" install --frozen-lockfile

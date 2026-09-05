@@ -1,7 +1,7 @@
 import type { ProfileData } from "./model.ts";
 import { computeLayouts } from "./layout.ts";
 import { computeSplitLayouts, splitAssetFilename, type SplitFragment } from "./split-layout.ts";
-import { layout } from "./theme.ts";
+import { colors, layout, setTheme, type ThemeMode } from "./theme.ts";
 import { escapeXml, rect, svgDocument, element } from "./svg.ts";
 import {
   renderDefs,
@@ -26,6 +26,7 @@ export type RenderMode = "wide" | "narrow";
 export interface ReadmeSnippetOptions {
   assetPrefix?: string;
   includePngFallback?: boolean;
+  theme?: ThemeMode;
 }
 
 export const TEXT_FALLBACK_MARKER = "<!-- profile-text-fallback -->";
@@ -42,7 +43,8 @@ function description(data: ProfileData): string {
   ].join(" ");
 }
 
-export function renderProfile(data: ProfileData, mode: RenderMode, motion: boolean): string {
+export function renderProfile(data: ProfileData, mode: RenderMode, motion: boolean, theme: ThemeMode = "light"): string {
+  setTheme(theme);
   const coordinates = computeLayouts(data)[mode];
   const content = mode === "wide"
     ? renderWideContent(data, motion, coordinates)
@@ -52,7 +54,7 @@ export function renderProfile(data: ProfileData, mode: RenderMode, motion: boole
     width: coordinates.width,
     height: coordinates.height,
     body: [
-      rect(0, 0, coordinates.width, coordinates.height, { fill: "#ffffff" }),
+      rect(0, 0, coordinates.width, coordinates.height, { fill: colors.background }),
       renderDefs(coordinates, motion),
       content
     ].join(""),
@@ -62,7 +64,8 @@ export function renderProfile(data: ProfileData, mode: RenderMode, motion: boole
   });
 }
 
-export function renderWideMockup(data: ProfileData, motion: boolean): string {
+export function renderWideMockup(data: ProfileData, motion: boolean, theme: ThemeMode = "light"): string {
+  setTheme(theme);
   const coordinates = computeLayouts(data).wide;
   const width = coordinates.width;
   const height = coordinates.height + layout.githubChromeHeight;
@@ -72,7 +75,7 @@ export function renderWideMockup(data: ProfileData, motion: boolean): string {
     width,
     height,
     body: [
-      rect(0, 0, width, height, { fill: "#ffffff" }),
+      rect(0, 0, width, height, { fill: colors.background }),
       renderDefs(coordinates, motion),
       renderGithubChrome(height),
       element("g", { transform: `translate(0 ${layout.githubChromeHeight})` }, content)
@@ -257,12 +260,30 @@ function renderSplitFragmentContent(data: ProfileData, fragment: SplitFragment, 
   }
 }
 
+export function renderSplitFragmentText(data: ProfileData, fragment: SplitFragment): string {
+  const content = renderSplitFragmentContent(data, fragment, false);
+  return [...content.matchAll(/<text\b[^>]*>([\s\S]*?)<\/text>/g)]
+    .map((match) => match[1].replace(/<[^>]+>/g, ""))
+    .join("")
+    .replaceAll("&amp;", "&")
+    .replaceAll("&lt;", "<")
+    .replaceAll("&gt;", ">")
+    .replaceAll("&quot;", '"')
+    .replaceAll("&apos;", "'");
+}
+
 /**
  * Render one independently publishable SVG crop. The content keeps its
  * original full-canvas coordinates while the root viewBox exposes only the
  * fragment rectangle, so the crop does not introduce a second layout system.
  */
-export function renderSplitFragmentSvg(data: ProfileData, fragment: SplitFragment, motion: boolean): string {
+export function renderSplitFragmentSvg(
+  data: ProfileData,
+  fragment: SplitFragment,
+  motion: boolean,
+  theme: ThemeMode = "light"
+): string {
+  setTheme(theme);
   const coordinates = computeLayouts(data)[fragment.mode];
   const content = renderSplitFragmentContent(data, fragment, motion);
   return svgDocument({
@@ -274,13 +295,14 @@ export function renderSplitFragmentSvg(data: ProfileData, fragment: SplitFragmen
     // different coverage grid in Chromium.
     viewBox: { x: 0, y: 0, width: fragment.width, height: fragment.height },
     body: [
-      rect(0, 0, coordinates.width, coordinates.height, { fill: "#ffffff" }),
+      rect(0, 0, coordinates.width, coordinates.height, { fill: colors.background }),
       renderDefs(coordinates, motion),
       element("g", { transform: `translate(${-fragment.x} ${-fragment.y})` }, content)
     ].join(""),
     title: `${fragment.label} for ${data.identity.name}`,
     description: description(data),
-    motion
+    motion,
+    fontSubsetKey: `profile-${fragment.mode}-split-${fragment.key}`
   });
 }
 
@@ -300,48 +322,83 @@ function renderSplitPicture(
 ): string {
   const prefix = normalizedAssetPrefix(options.assetPrefix);
   const includePngFallback = options.includePngFallback ?? true;
-  const wideStaticSvg = asset(prefix, splitAssetFilename(wide, "static", "svg"));
-  const narrowStaticSvg = asset(prefix, splitAssetFilename(narrow, "static", "svg"));
+  const wideStaticSvg = asset(prefix, splitAssetFilename(wide, "static", "svg", "light"));
+  const narrowStaticSvg = asset(prefix, splitAssetFilename(narrow, "static", "svg", "light"));
+  const wideDarkStaticSvg = asset(prefix, splitAssetFilename(wide, "static", "svg", "dark"));
+  const narrowDarkStaticSvg = asset(prefix, splitAssetFilename(narrow, "static", "svg", "dark"));
   const useMotionSvg = animated && includePngFallback;
-  const wideNormalSvg = asset(prefix, splitAssetFilename(wide, useMotionSvg ? "motion" : "static", "svg"));
-  const narrowNormalSvg = asset(prefix, splitAssetFilename(narrow, useMotionSvg ? "motion" : "static", "svg"));
-  const widePng = asset(prefix, splitAssetFilename(wide, "static", "png"));
-  const narrowPng = asset(prefix, splitAssetFilename(narrow, "static", "png"));
+  const wideNormalSvg = asset(prefix, splitAssetFilename(wide, useMotionSvg ? "motion" : "static", "svg", "light"));
+  const narrowNormalSvg = asset(prefix, splitAssetFilename(narrow, useMotionSvg ? "motion" : "static", "svg", "light"));
+  const wideDarkNormalSvg = asset(prefix, splitAssetFilename(wide, useMotionSvg ? "motion" : "static", "svg", "dark"));
+  const narrowDarkNormalSvg = asset(prefix, splitAssetFilename(narrow, useMotionSvg ? "motion" : "static", "svg", "dark"));
+  const widePng = asset(prefix, splitAssetFilename(wide, "static", "png", "light"));
+  const narrowPng = asset(prefix, splitAssetFilename(narrow, "static", "png", "light"));
+  const wideDarkPng = asset(prefix, splitAssetFilename(wide, "static", "png", "dark"));
+  const narrowDarkPng = asset(prefix, splitAssetFilename(narrow, "static", "png", "dark"));
   const fallback = includePngFallback ? widePng : wideStaticSvg;
   const width = splitImageWidth(wide, canvasWidths.wide);
+
+  // The editor uses this explicit mode for side-by-side review. Publication
+  // keeps the default auto mode below, where GitHub chooses by color scheme.
+  if (options.theme) {
+    const forcedWideStatic = options.theme === "dark" ? wideDarkStaticSvg : wideStaticSvg;
+    const forcedNarrowStatic = options.theme === "dark" ? narrowDarkStaticSvg : narrowStaticSvg;
+    const forcedWideNormal = options.theme === "dark" ? wideDarkNormalSvg : wideNormalSvg;
+    const forcedNarrowNormal = options.theme === "dark" ? narrowDarkNormalSvg : narrowNormalSvg;
+    const forcedWidePng = options.theme === "dark" ? wideDarkPng : widePng;
+    const forcedNarrowPng = options.theme === "dark" ? narrowDarkPng : narrowPng;
+    const forcedWideSource = animated ? forcedWideNormal : forcedWideStatic;
+    const forcedNarrowSource = animated ? forcedNarrowNormal : forcedNarrowStatic;
+    return [
+      "<picture>",
+      compactSourceTag("(max-width: 640px)", "image/svg+xml", forcedNarrowSource),
+      compactSourceTag("(min-width: 641px)", "image/svg+xml", forcedWideSource),
+      ...(includePngFallback ? [
+        compactSourceTag("(max-width: 640px)", "image/png", forcedNarrowPng),
+        compactSourceTag("(min-width: 641px)", "image/png", forcedWidePng)
+      ] : []),
+      `<img src="${escapeHtml(includePngFallback ? forcedWidePng : forcedWideStatic)}" width="${escapeHtml(width)}" alt="${escapeHtml(wide.label)}" loading="${wide.kind === "header" ? "eager" : "lazy"}" decoding="async" align="top">`,
+      "</picture>"
+    ].join("");
+  }
 
   // Keep the two half-row pictures adjacent with no text nodes between them.
   // GitHub's README renderer lays these inline; even one newline can move the
   // second half onto a new line when the available width is rounded down.
   const sources = ["<picture>"];
-  if (includePngFallback && !animated) {
+  if (includePngFallback) {
     sources.push(
-      compactSourceTag("(max-width: 640px)", "image/png", narrowPng),
-      compactSourceTag("(min-width: 641px)", "image/png", widePng)
+      compactSourceTag("(prefers-color-scheme: dark) and (max-width: 640px) and (prefers-reduced-data: reduce)", "image/png", narrowDarkPng),
+      compactSourceTag("(prefers-color-scheme: dark) and (min-width: 641px) and (prefers-reduced-data: reduce)", "image/png", wideDarkPng),
+      compactSourceTag("(prefers-color-scheme: light) and (max-width: 640px) and (prefers-reduced-data: reduce)", "image/png", narrowPng),
+      compactSourceTag("(prefers-color-scheme: light) and (min-width: 641px) and (prefers-reduced-data: reduce)", "image/png", widePng)
     );
-  } else if (includePngFallback) {
+  }
+  if (animated && includePngFallback) {
     sources.push(
-      compactSourceTag("(max-width: 640px) and (prefers-reduced-data: reduce)", "image/png", narrowPng),
-      compactSourceTag("(min-width: 641px) and (prefers-reduced-data: reduce)", "image/png", widePng)
+      compactSourceTag("(prefers-color-scheme: dark) and (max-width: 640px) and (prefers-reduced-motion: reduce)", "image/svg+xml", narrowDarkStaticSvg),
+      compactSourceTag("(prefers-color-scheme: dark) and (min-width: 641px) and (prefers-reduced-motion: reduce)", "image/svg+xml", wideDarkStaticSvg),
+      compactSourceTag("(prefers-color-scheme: light) and (max-width: 640px) and (prefers-reduced-motion: reduce)", "image/svg+xml", narrowStaticSvg),
+      compactSourceTag("(prefers-color-scheme: light) and (min-width: 641px) and (prefers-reduced-motion: reduce)", "image/svg+xml", wideStaticSvg),
+      compactSourceTag("(prefers-color-scheme: dark) and (max-width: 640px)", "image/svg+xml", narrowDarkNormalSvg),
+      compactSourceTag("(prefers-color-scheme: dark) and (min-width: 641px)", "image/svg+xml", wideDarkNormalSvg),
+      compactSourceTag("(prefers-color-scheme: light) and (max-width: 640px)", "image/svg+xml", narrowNormalSvg),
+      compactSourceTag("(prefers-color-scheme: light) and (min-width: 641px)", "image/svg+xml", wideNormalSvg)
     );
   } else {
     sources.push(
-      compactSourceTag("(max-width: 640px)", "image/svg+xml", narrowStaticSvg),
-      compactSourceTag("(min-width: 641px)", "image/svg+xml", wideStaticSvg)
+      compactSourceTag("(prefers-color-scheme: dark) and (max-width: 640px)", "image/svg+xml", narrowDarkStaticSvg),
+      compactSourceTag("(prefers-color-scheme: dark) and (min-width: 641px)", "image/svg+xml", wideDarkStaticSvg),
+      compactSourceTag("(prefers-color-scheme: light) and (max-width: 640px)", "image/svg+xml", narrowStaticSvg),
+      compactSourceTag("(prefers-color-scheme: light) and (min-width: 641px)", "image/svg+xml", wideStaticSvg)
     );
   }
-  if (includePngFallback && animated) {
+  if (includePngFallback) {
     sources.push(
-      compactSourceTag("(max-width: 640px) and (prefers-reduced-motion: reduce)", "image/svg+xml", narrowStaticSvg),
-      compactSourceTag("(min-width: 641px) and (prefers-reduced-motion: reduce)", "image/svg+xml", wideStaticSvg),
-      compactSourceTag("(max-width: 640px)", "image/svg+xml", narrowNormalSvg),
-      compactSourceTag("(min-width: 641px)", "image/svg+xml", wideNormalSvg)
-    );
-  }
-  if (includePngFallback && animated) {
-    sources.push(
-      compactSourceTag("(max-width: 640px)", "image/png", narrowPng),
-      compactSourceTag("(min-width: 641px)", "image/png", widePng)
+      compactSourceTag("(prefers-color-scheme: dark) and (max-width: 640px)", "image/png", narrowDarkPng),
+      compactSourceTag("(prefers-color-scheme: dark) and (min-width: 641px)", "image/png", wideDarkPng),
+      compactSourceTag("(prefers-color-scheme: light) and (max-width: 640px)", "image/png", narrowPng),
+      compactSourceTag("(prefers-color-scheme: light) and (min-width: 641px)", "image/png", widePng)
     );
   }
   const alt = escapeHtml(wide.label);

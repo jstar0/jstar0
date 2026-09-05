@@ -8,6 +8,8 @@ This directory contains the data-driven generator for the JSTAR GitHub profile R
 pnpm generate
 pnpm generate:static
 pnpm generate:svg
+pnpm fonts:subset
+pnpm fonts:fragment
 pnpm editor -- --port 4173
 pnpm sync:github
 pnpm qa
@@ -28,11 +30,13 @@ pnpm typecheck
 pnpm test:github-sync
 ```
 
-`pnpm generate` is the normal publish build. It writes both motion and static SVG variants, the static PNG compatibility assets, and the generated README snippet in one run. `pnpm generate:static` refreshes the static variants explicitly. `pnpm generate:svg` produces an SVG-only README and skips PNG generation; use it only when a PNG fallback is not required.
+`pnpm generate` is the normal publish build. It rebuilds the global and per-fragment font subsets, writes both motion and static SVG variants, the static PNG compatibility assets, and the generated README snippet in one run. `pnpm generate:static` refreshes the static variants explicitly. `pnpm generate:svg` produces an SVG-only README and skips PNG generation; use it only when a PNG fallback is not required.
+
+`pnpm fonts:subset` rebuilds the global small WOFF2 files used by tests and full-canvas outputs. `pnpm fonts:fragment` rebuilds the global files plus the per-fragment WOFF2 files used by split assets. Both commands use the pinned FontTools and Brotli versions through `uv`; changing visible text is handled automatically by `pnpm generate` and the editor's generate action.
 
 `pnpm editor -- --port 4173` starts the local white-box editor at `http://127.0.0.1:4173`. The editor reads the checked-in profile data, shows the current GitHub snapshot status, lets you add/remove/edit personal-project rows, and regenerates the README and split assets after saving. It binds to loopback only; it does not expose a public server.
 
-`pnpm qa:ci` is the production check used by GitHub Actions. It only depends on the package lockfile and a Chromium installation supplied by Playwright. The public workflow uses the pinned `macos-14` runner family so browser-rasterized PNG artifacts stay aligned with the canonical macOS render. `pnpm qa` additionally runs the optional local design-reference collage and preservation diff; those checks use reference files maintained outside this public repository.
+`pnpm qa:ci` is the production check used by GitHub Actions. It uses the package lockfile, `uv` for the pinned FontTools/Brotli font-subset build, and a Chromium installation supplied by Playwright. The public workflow uses the pinned `macos-14` runner family so browser-rasterized PNG artifacts stay aligned with the canonical macOS render. `pnpm qa` additionally runs the optional local design-reference collage and preservation diff; those checks use reference files maintained outside this public repository.
 
 `pnpm publish:profile -- --destination <profile-repository>` validates the generated README's local asset references, copies all referenced assets, writes the root README, and records the managed asset manifest. Copies are staged file-by-file with atomic renames. Add `--prune-managed` to remove only assets listed by a previous manifest that are no longer generated. `pnpm check:published -- --destination <profile-repository>` performs the same validation without changing files.
 
@@ -96,11 +100,11 @@ The wide and narrow body assets contain only the profile content. The `profile-*
 
 The current README snippet uses 19 independent `<picture>` blocks. The five repository/PR rows use two adjacent image units, so the repository and pull request have separate HTML hit areas while the pixels remain one seamless row. The source policy is:
 
-1. For Header and Metrics, static narrow or wide PNG when `prefers-reduced-data: reduce` matches.
-2. For Header and Metrics, static narrow or wide SVG when `prefers-reduced-motion: reduce` matches.
-3. For Header and Metrics, motion narrow or wide SVG for the normal case.
-4. For all other units, every normal and preference path is a precise static PNG crop.
-5. A static PNG `<img>` fallback with a meaningful `alt` attribute; SVG-only mode uses two responsive static-SVG sources instead.
+1. Static narrow or wide PNG when `prefers-reduced-data: reduce` matches.
+2. Static narrow or wide SVG when `prefers-reduced-motion: reduce` matches for animated units.
+3. Motion narrow or wide SVG for the normal case on animated units.
+4. Static narrow or wide SVG for the normal case on non-animated units.
+5. A static PNG `<img>` fallback with a meaningful `alt` attribute, plus explicit PNG sources for browsers that cannot use SVG sources.
 
 The published README intentionally contains no permanently visible Markdown text layer. GitHub's sanitized Markdown environment has no reliable native mechanism to reveal an arbitrary second Markdown document only after an image request fails; JavaScript event handlers and CSS-based workarounds are not a production contract there. Every published `<img>` therefore carries a non-empty `alt` value, which the browser displays natively when that image cannot be loaded or decoded. The complete text-only export remains available through `renderTextFallback(data)` for an explicit text view or downstream export; it is not appended to the normal visual README. A project row becomes clickable only when its `url` is a valid HTTPS URL; a draft row without a URL stays plain text instead of receiving a fake link.
 
@@ -146,11 +150,12 @@ Without a sync, the checked-in `data/profile.json` remains the source used for d
 - `data/profile.json` is the source of truth for identity, statistics, selected upstream examples, projects, languages, and contribution series.
 - The layout composer recalculates following section positions from the array lengths. Projects with real URLs have independent links; placeholders deliberately have no links.
 - Motion is a continuous left-to-right masthead signal: a broad, rounded crest followed by a shallow tail recovery travels across one uninterrupted baseline, while a restrained blue/cyan/mint color field follows the same path. The contribution ridgeline uses a short settle on load. Static and reduced-motion outputs use the centered storyboard frame.
+- Light and dark themes share the same geometry, content, data, and link map. Dark assets use GitHub's exact Markdown canvas color `#0d1117` as their full SVG/PNG background; the current dark visual reference is kept outside the generated runtime assets.
 - The visual generator is data-driven and the live refresh is explicit: run `pnpm sync:github`, then `pnpm generate` and review the output before publishing.
 
 ## Performance Contract
 
-The published SVG has no runtime `<script>`, `<foreignObject>`, or `<filter>`. Only the header and metrics split units use motion SVGs in the normal README path; the other 17 units request compact raster crops. The motion units contain three small SMIL animation nodes for the wave path and its moving gradient; static units contain zero animation nodes. The contribution settle uses CSS keyframes embedded in the metrics SVG and is disabled under reduced motion. No network request is needed to animate an already-rendered asset.
+The published SVG has no runtime `<script>`, `<foreignObject>`, or `<filter>`. Only the header and metrics split units use motion SVGs in the normal README path; the other 17 units use static SVGs. Both light and dark assets are generated from the same reusable inline SVG geometry. The avatar is drawn as reusable inline SVG geometry using the theme's blue, cyan and mint colors. The header embeds the display and body subsets; every other split unit embeds only the body subset, and none embeds the complete font files. The motion units contain three small SMIL animation nodes for the wave path and its moving gradient; static units contain zero animation nodes. The contribution settle uses CSS keyframes embedded in the metrics SVG and is disabled under reduced motion. No network request is needed to animate an already-rendered asset.
 
 ## GitHub Actions
 
@@ -165,9 +170,11 @@ The repository or organization Actions setting must allow workflows to write rep
 - TypeScript, layout/readme, and offline GitHub-calendar parser tests.
 - Regeneration of motion, static, and PNG assets.
 - Wide, narrow, boundary-width, reduced-motion, reduced-data, and no-SVG source selection.
+- `prefers-color-scheme` selection for light/dark assets, exact dark-canvas corner pixels, and light/dark geometry parity.
 - No duplicate text layer during normal or delayed image loading, plus native `alt` visibility after a broken-image failure.
 - Standalone SVG link count and HTTPS target validation.
 - Static SVG to generated PNG pixel comparison.
+- Reference-avatar shape comparison at `128px`, `114px`, `88px`, and `28px`, including DPR 1/2 screenshots and a reference/previous/current overlay.
 - Motion direction, constant travel speed, flat entry/exit frames, single-stroke geometry, and reduced-motion pixel equality.
 
 `pnpm qa:visual` adds the local design-reference collage and preservation diff when the external reference files are available. On a public clone without those files it reports an explicit skip and exits successfully. `pnpm qa` runs both `qa:ci` and `qa:visual`; the public repository workflow uses `qa:ci` on the pinned macOS runner and checks the generated publication contract.
@@ -180,6 +187,9 @@ qa/output/motion-keyframes/motion-report.json
 qa/output/wide-diff.json
 qa/output/wide-body.png
 qa/output/narrow-body.png
+qa/output/avatar-compare/avatar-comparison.png
+qa/output/avatar-compare/report.json
+qa/output/dark-mode/dark-report.json
 ```
 
 The browser-level checks currently run in local Chromium with a local HTTP test server. They verify all 19 pictures, the 5 seamless half-row pairs, responsive source selection, independent hit areas, exact PNG reassembly, absence of a default text layer, and native `alt` rendering after a broken image. GitHub's sanitizer behavior should be rechecked after any markup change: it may insert a `<themed-picture>` wrapper and strip progressive attributes such as `loading` and `decoding`, so those attributes are not treated as part of the fallback contract.

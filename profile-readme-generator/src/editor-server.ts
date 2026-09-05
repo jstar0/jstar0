@@ -12,6 +12,7 @@ import {
   type ProfileData
 } from "./model.ts";
 import { renderReadmeSnippet } from "./renderer.ts";
+import type { ThemeMode } from "./theme.ts";
 
 const execFileAsync = promisify(execFile);
 const EDITOR_ROOT = path.join(PROJECT_ROOT, "editor");
@@ -208,15 +209,16 @@ function staticFile(response: ServerResponse, root: string, relativePath: string
   fs.createReadStream(filePath).pipe(response);
 }
 
-function previewHtml(data: ProfileData): string {
+function previewHtml(data: ProfileData, theme?: ThemeMode): string {
   // The editor preview is an iframe with its own viewport. Eager loading is
   // intentional here so every generated fragment is visible for inspection;
   // the published README keeps its lazy-loading policy unchanged.
-  const imageLayer = renderReadmeSnippet(data, { assetPrefix: "/generated/" })
+  const imageLayer = renderReadmeSnippet(data, { assetPrefix: "/generated/", theme })
     .replaceAll('loading="lazy"', 'loading="eager"');
+  const dark = theme === "dark";
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>README preview</title><style>
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:#fff;color:#132238}main{width:100%;max-width:941px;margin:0 auto}#image-layer{width:100%}#image-layer>div{width:100%;text-align:center}#image-layer>div>a,#image-layer>div>picture{vertical-align:top}img{max-width:100%;height:auto}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:${dark ? "#0d1117" : "#fff"};color:${dark ? "#f0f6fc" : "#132238"}}main{width:100%;max-width:941px;margin:0 auto}#image-layer{width:100%}#image-layer>div{width:100%;text-align:center}#image-layer>div>a,#image-layer>div>picture{vertical-align:top}img{max-width:100%;height:auto}
 </style></head><body><main><section id="image-layer">${imageLayer}</section></main></body></html>`;
 }
 
@@ -245,7 +247,9 @@ export function createEditorServer(options: { host?: string; port?: number } = {
         return;
       }
       if (request.method === "GET" && pathname === "/preview") {
-        send(response, 200, previewHtml(loadProfileData()), "text/html; charset=utf-8");
+        const requestedTheme = requestUrl.searchParams.get("theme");
+        const theme = requestedTheme === "dark" || requestedTheme === "light" ? requestedTheme : undefined;
+        send(response, 200, previewHtml(loadProfileData(), theme), "text/html; charset=utf-8");
         return;
       }
       if (request.method === "GET" && pathname.startsWith("/generated/")) {

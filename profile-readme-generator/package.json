@@ -9,9 +9,11 @@
     "pnpm": ">=10.15.0"
   },
   "scripts": {
+    "fonts:subset": "uv run --with fonttools==4.59.0 --with brotli==1.1.0 --no-project python scripts/subset-fonts.py",
     "generate": "node --experimental-strip-types src/cli.ts",
     "generate:static": "node --experimental-strip-types src/cli.ts --static",
     "generate:svg": "node --experimental-strip-types src/cli.ts --no-png",
+    "fonts:fragment": "node --experimental-strip-types src/prepare-font-subsets.ts",
     "editor": "node --experimental-strip-types src/editor-server.ts",
     "sync:github": "node --experimental-strip-types src/github-sync.ts",
     "qa:render": "node --experimental-strip-types src/qa-render.ts",
@@ -20,8 +22,10 @@
     "qa:diff": "node --experimental-strip-types src/qa-diff.ts",
     "qa:compat": "node --experimental-strip-types src/qa-compat.ts",
     "qa:pixel-edges": "node --experimental-strip-types src/qa-pixel-edges.ts",
+    "qa:avatar": "node --experimental-strip-types src/qa-avatar.ts",
+    "qa:dark": "node --experimental-strip-types src/qa-dark.ts",
     "qa": "pnpm qa:ci && pnpm qa:visual",
-    "qa:ci": "pnpm typecheck && pnpm test:layout && pnpm test:readme && pnpm test:editor && pnpm test:data && pnpm test:github-sync && pnpm generate && pnpm generate:static && pnpm test:publish && pnpm qa:render && pnpm qa:motion && pnpm qa:compat && pnpm qa:pixel-edges",
+    "qa:ci": "pnpm typecheck && pnpm test:layout && pnpm test:readme && pnpm test:editor && pnpm test:data && pnpm test:github-sync && pnpm generate && pnpm generate:static && pnpm test:publish && pnpm qa:render && pnpm qa:motion && pnpm qa:compat && pnpm qa:pixel-edges && pnpm qa:avatar && pnpm qa:dark",
     "qa:visual": "pnpm qa:wave-collage && pnpm qa:diff",
     "test:readme": "node --experimental-strip-types tests/readme.test.ts",
     "test:editor": "node --experimental-strip-types tests/editor.test.ts",

@@ -182,7 +182,7 @@ export function fitText(value: string, maxChars: number): string {
   return `${value.slice(0, Math.max(1, maxChars - 1)).trimEnd()}…`;
 }
 
-export function documentStyles(motion: boolean): string {
+export function documentStyles(motion: boolean, fontSubsetKey?: string): string {
   const animation = motion ? `
     .motion-wave-fallback { display: none; }
     .motion-wave-live { display: inline; }
@@ -229,7 +229,7 @@ export function documentStyles(motion: boolean): string {
   ` : "";
 
   return [
-    embeddedFontCss(),
+    embeddedFontCss(fontSubsetKey),
     "svg { shape-rendering: geometricPrecision; text-rendering: geometricPrecision; }",
     "text { font-kerning: normal; }",
     animation.trim()
@@ -244,14 +244,15 @@ export function svgDocument(options: {
   title: string;
   description: string;
   motion: boolean;
+  fontSubsetKey?: string;
 }): string {
   const viewBox = options.viewBox ?? { x: 0, y: 0, width: options.width, height: options.height };
   return [
     `<?xml version="1.0" encoding="UTF-8"?>`,
-    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${options.width}" height="${options.height}" viewBox="${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}" role="img" aria-labelledby="svg-title svg-description" style="background:#ffffff">`,
+    `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${options.width}" height="${options.height}" viewBox="${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}" role="img" aria-labelledby="svg-title svg-description" style="background:${colors.background}">`,
     element("title", { id: "svg-title" }, options.title),
     element("desc", { id: "svg-description" }, options.description),
-    element("style", {}, documentStyles(options.motion)),
+    element("style", {}, documentStyles(options.motion, options.fontSubsetKey)),
     options.body,
     `</svg>`
   ].join("\n");

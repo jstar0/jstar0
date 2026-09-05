@@ -1,6 +1,6 @@
 import type { ProfileData } from "./model.ts";
 import type { LayoutCoordinates } from "./layout.ts";
-import { colors, embeddedAvatarHref, fonts, layout, type ThemeColor } from "./theme.ts";
+import { colors, fonts, layout, type ThemeColor } from "./theme.ts";
 import {
   anchor,
   circle,
@@ -19,8 +19,6 @@ import {
 
 const wide = layout.wide;
 const narrow = layout.narrow;
-const avatarHref = embeddedAvatarHref();
-
 interface WaveFrame {
   centerX: number;
   crestHeight: number;
@@ -54,35 +52,45 @@ const WAVE_CENTER_FRACTIONS = [
   1 - WAVE_TAIL_DISTANCE / WAVE_REFERENCE_WIDTH
 ] as const;
 
-const headingStyle = {
-  "font-size": 20,
-  "font-weight": 600,
-  "letter-spacing": 2.1,
-  fill: colors.ink
-};
+function headingStyle() {
+  return {
+    "font-size": 20,
+    "font-weight": 600,
+    "letter-spacing": 2.1,
+    fill: colors.ink
+  };
+}
 
-const eyebrowStyle = {
-  "font-size": 13,
-  "font-weight": 500,
-  "letter-spacing": 1.45,
-  fill: colors.muted
-};
+function eyebrowStyle() {
+  return {
+    "font-size": 13,
+    "font-weight": 500,
+    "letter-spacing": 1.45,
+    fill: colors.muted
+  };
+}
 
-const bodyStyle = {
-  "font-size": 15,
-  "font-weight": 400,
-  fill: colors.muted
-};
+function bodyStyle() {
+  return {
+    "font-size": 15,
+    "font-weight": 400,
+    fill: colors.muted
+  };
+}
 
-const wideBodyStyle = {
-  ...bodyStyle,
+function wideBodyStyle() {
+  return {
+    ...bodyStyle(),
   "letter-spacing": 0.55
-};
+  };
+}
 
-const wideEyebrowStyle = {
-  ...eyebrowStyle,
+function wideEyebrowStyle() {
+  return {
+    ...eyebrowStyle(),
   "letter-spacing": 1.1
-};
+  };
+}
 
 function waveMotionSpec(startX: number, endX: number, wideMode: boolean): WaveMotionSpec {
   const width = endX - startX;
@@ -183,31 +191,22 @@ function renderWaveGradient(
   ].join(""));
 }
 
-export function renderDefs(coordinates: LayoutCoordinates, motion = false): string {
+export function renderDefs(
+  coordinates: LayoutCoordinates,
+  motion = false
+): string {
   const clipId = coordinates.mode === "wide" ? "language-clip-wide" : "language-clip-narrow";
   const wideMode = coordinates.mode === "wide";
   const waveSpec = waveMotionSpec(coordinates.margin, coordinates.right, wideMode);
   const waveGradientId = `wave-accent-line-${coordinates.mode}`;
   const waveClipLeft = wideMode ? coordinates.margin : coordinates.margin - WAVE_NARROW_CLIP_BLEED;
   return element("defs", {}, [
-    avatarHref
-      ? selfClosing("image", {
-        id: "jstar-avatar-image",
-        x: 0,
-        y: 0,
-        width: 128,
-        height: 128,
-        href: avatarHref,
-        "xlink:href": avatarHref,
-        preserveAspectRatio: "none"
-      })
-      : "",
     element("linearGradient", { id: "avatar-ring", x1: "0%", y1: "0%", x2: "0%", y2: "100%" }, [
       selfClosing("stop", { offset: "0%", "stop-color": colors.blue }),
       selfClosing("stop", { offset: "52%", "stop-color": colors.cyan }),
       selfClosing("stop", { offset: "100%", "stop-color": colors.mint })
     ].join("")),
-    element("linearGradient", { id: "avatar-fill", x1: "0%", y1: "0%", x2: "0%", y2: "100%" }, [
+    element("linearGradient", { id: "avatar-fill", x1: 0, y1: 12, x2: 0, y2: 104, gradientUnits: "userSpaceOnUse" }, [
       selfClosing("stop", { offset: "0%", "stop-color": colors.blue }),
       selfClosing("stop", { offset: "54%", "stop-color": colors.cyan }),
       selfClosing("stop", { offset: "100%", "stop-color": colors.mint })
@@ -255,30 +254,24 @@ function linkedSvgContent(href: string | undefined, label: string, content: stri
   return href ? anchor(href, content, { "aria-label": label }) : content;
 }
 
-function sectionHeading(label: string, x: number, y: number, style: Parameters<typeof text>[3] = headingStyle): string {
+function sectionHeading(label: string, x: number, y: number, style: Parameters<typeof text>[3] = headingStyle()): string {
   return text(label, x, y, style);
 }
 
-function avatar(x: number, y: number, size: number): string {
-  const scale = size / 100;
-  const star = "M50 10 L63 40 L95 42 L71 61 L80 92 L50 75 L20 92 L29 61 L5 42 L37 40 Z";
-  const upperBand = "M14 57 C34 53 57 42 85 26 L76 40 C54 53 34 62 14 66 Z";
-  const lowerBand = "M27 69 C44 65 63 56 78 46 L71 56 C57 67 42 73 27 77 Z";
+export function avatar(x: number, y: number, size: number): string {
+  const scale = size / 128;
+  // Trace the reference's three colored regions; the gaps are negative space,
+  // not generic diagonal bands laid over a regular five-point star.
+  const upper = "M27.50 58.40 C21.45 53.15 16.36 48.45 16.18 47.96 C15.73 46.72 18.49 46.28 34.50 45.02 C51.31 43.70 50.01 44.71 56.97 27.50 C59.86 20.35 62.70 13.91 63.29 13.19 C64.65 11.51 64.64 11.49 71.51 28.12 L76.97 41.33 L73.47 45.60 C66.89 53.64 45.50 68.05 40.28 67.97 C39.30 67.96 33.55 63.65 27.50 58.40 Z";
+  const middle = "M41 72.42 C41 70.67 41.80 69.63 43.75 68.84 C58.41 62.86 68.74 56.72 78.07 48.44 C83.18 43.90 83.73 43.70 87.91 44.87 L90.32 45.55 L85.41 49.90 C74.18 59.85 59.68 68.47 46.56 72.98 L41 74.89 Z";
+  const lower = "M34.05 102.75 C34.08 102.06 35.36 96.10 36.90 89.50 L39.68 77.50 L48.39 74.36 C65.01 68.37 83.72 58.27 94.67 49.38 C98.84 46.00 105.68 44.79 110.42 46.61 C113.02 47.60 112.48 48.25 100.61 58.34 C94.35 63.67 88.68 68.68 88.02 69.48 C87.06 70.64 87.58 74.22 90.58 86.96 C92.66 95.77 94.08 103.25 93.75 103.58 C93.42 103.91 86.60 100.27 78.60 95.48 L64.06 86.77 L49.72 95.38 C34.67 104.43 33.97 104.76 34.05 102.75 Z";
 
-  const artwork = avatarHref
-    ? selfClosing("use", {
-      href: "#jstar-avatar-image",
-      "xlink:href": "#jstar-avatar-image",
-      transform: `scale(${size / 128})`
-    })
-    : [
-      circle(50, 50, 46, { fill: "none", stroke: "url(#avatar-ring)", "stroke-width": 3.2 }),
-      path(star, { fill: "url(#avatar-fill)", "stroke": "none" }),
-      path(upperBand, { fill: colors.paper, opacity: 0.96 }),
-      path(lowerBand, { fill: colors.paper, opacity: 0.96 })
-    ].join("");
+  const artwork = [
+    circle(64.2, 63.6, 60.15, { fill: "none", stroke: "url(#avatar-ring)", "stroke-width": 4.5 }),
+    path(`${upper} ${middle} ${lower}`, { fill: "url(#avatar-fill)" })
+  ].join("");
 
-  return group(artwork, { transform: `translate(${x} ${y}) scale(${avatarHref ? 1 : scale})` });
+  return group(artwork, { transform: `translate(${x} ${y}) scale(${scale})` });
 }
 
 function repoGlyph(x: number, y: number, accent: ThemeColor, index: number): string {
@@ -593,18 +586,18 @@ export function renderWorkWide(data: ProfileData): string {
 
   return [
     sectionHeading("WHAT I WORK ON", 66, 220, {
-      ...headingStyle,
+      ...headingStyle(),
       "textLength": 185,
       "lengthAdjust": "spacingAndGlyphs"
     }),
-    text(data.identity.intro, wide.margin, 254, wideBodyStyle),
+    text(data.identity.intro, wide.margin, 254, wideBodyStyle()),
     rows
   ].join("");
 }
 
 export function renderWorkNarrow(data: ProfileData): string {
   const introLines = wrapText(data.identity.intro, 66);
-  const intro = multilineText(introLines, narrow.margin, 254, 20, bodyStyle);
+  const intro = multilineText(introLines, narrow.margin, 254, 20, bodyStyle());
   const top = 300 + (introLines.length - 1) * 20;
   const rowHeight = 84;
   const rows = data.workstreams.map((stream, index) => {
@@ -666,7 +659,7 @@ export function renderOpenSourceWide(data: ProfileData, coordinates: LayoutCoord
 
   return [
     sectionHeading("OPEN-SOURCE RECORD", wide.margin, coordinates.openTitleY, {
-      ...headingStyle,
+      ...headingStyle(),
       "textLength": 252,
       "lengthAdjust": "spacingAndGlyphs"
     }),
@@ -745,7 +738,7 @@ export function renderProjectsWide(data: ProfileData, coordinates: LayoutCoordin
   const top = coordinates.projectsRowsTop;
   return [
     sectionHeading("PERSONAL PROJECTS", 66, coordinates.projectsTitleY, {
-      ...headingStyle,
+      ...headingStyle(),
       "textLength": 227,
       "lengthAdjust": "spacingAndGlyphs"
     }),
@@ -1002,14 +995,14 @@ export function renderMetricsWide(data: ProfileData, motion: boolean, coordinate
   const rightX = 460;
   return [
     sectionHeading("JSTAR PROFILE METRICS", wide.margin, coordinates.metricsTitleY - 1, {
-      ...headingStyle,
+      ...headingStyle(),
       "font-size": 18,
       "letter-spacing": 1.6,
       "textLength": 236,
       "lengthAdjust": "spacingAndGlyphs"
     }),
     line(425, coordinates.metricsTop, 425, coordinates.metricsDividerBottom, { stroke: colors.rule }),
-    text("LANGUAGE COMPOSITION", leftX, coordinates.languageTitleY, wideEyebrowStyle),
+    text("LANGUAGE COMPOSITION", leftX, coordinates.languageTitleY, wideEyebrowStyle()),
     renderLanguageBar(leftX, coordinates.languageBarY, leftWidth, coordinates.languageBarHeight, "language-clip-wide", data),
     renderLanguageRows(data, leftX, coordinates.languageRowsY, leftWidth, coordinates.languageRowHeight),
     text("Based on lines of code across active owned repositories", leftX, coordinates.languageNoteY - 2, {
@@ -1017,7 +1010,7 @@ export function renderMetricsWide(data: ProfileData, motion: boolean, coordinate
       "letter-spacing": 0.75,
       fill: colors.muted
     }),
-    text("CONTRIBUTION FIELD", rightX, coordinates.contributionTitleY, wideEyebrowStyle),
+    text("CONTRIBUTION FIELD", rightX, coordinates.contributionTitleY, wideEyebrowStyle()),
     text(contributionSubtitle(data), rightX, coordinates.contributionSubtitleY, {
       "font-size": 11.5,
       "letter-spacing": 0.35,
@@ -1030,14 +1023,14 @@ export function renderMetricsWide(data: ProfileData, motion: boolean, coordinate
 export function renderMetricsNarrow(data: ProfileData, motion: boolean, coordinates: LayoutCoordinates): string {
   return [
     sectionHeading("JSTAR PROFILE METRICS", narrow.margin, coordinates.metricsTitleY),
-    text("LANGUAGE COMPOSITION", narrow.margin, coordinates.languageTitleY, eyebrowStyle),
+    text("LANGUAGE COMPOSITION", narrow.margin, coordinates.languageTitleY, eyebrowStyle()),
     renderLanguageBar(narrow.margin, coordinates.languageBarY, 596, coordinates.languageBarHeight, "language-clip-narrow", data),
     renderLanguageRows(data, narrow.margin, coordinates.languageRowsY, 596, coordinates.languageRowHeight),
     text("Based on lines of code across active owned repositories", narrow.margin, coordinates.languageNoteY, {
       "font-size": 10.5,
       fill: colors.muted
     }),
-    text("CONTRIBUTION FIELD", narrow.margin, coordinates.contributionTitleY, eyebrowStyle),
+    text("CONTRIBUTION FIELD", narrow.margin, coordinates.contributionTitleY, eyebrowStyle()),
     text(contributionSubtitle(data), narrow.margin, coordinates.contributionSubtitleY, {
       "font-size": 11.5,
       fill: colors.muted

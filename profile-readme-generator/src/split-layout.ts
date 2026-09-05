@@ -1,5 +1,6 @@
 import type { ProfileData } from "./model.ts";
 import { computeLayouts, type LayoutCoordinates } from "./layout.ts";
+import type { ThemeMode } from "./theme.ts";
 
 export type SplitFragmentKind =
   | "header"
@@ -39,17 +40,18 @@ function keyPart(index: number): string {
   return String(index + 1).padStart(2, "0");
 }
 
-function fragmentFileStem(fragment: Pick<SplitFragment, "mode" | "key">): string {
-  return `profile-${fragment.mode}-split-${fragment.key}`;
+function fragmentFileStem(fragment: Pick<SplitFragment, "mode" | "key">, theme: ThemeMode = "light"): string {
+  return `profile-${fragment.mode}${theme === "dark" ? "-dark" : ""}-split-${fragment.key}`;
 }
 
 export function splitAssetFilename(
   fragment: Pick<SplitFragment, "mode" | "key">,
   variant: "motion" | "static",
-  extension: "svg" | "png"
+  extension: "svg" | "png",
+  theme: ThemeMode = "light"
 ): string {
   const suffix = variant === "static" ? "-static" : "";
-  return `${fragmentFileStem(fragment)}${suffix}.${extension}`;
+  return `${fragmentFileStem(fragment, theme)}${suffix}.${extension}`;
 }
 
 export function splitFragmentHasMotion(fragment: Pick<SplitFragment, "kind">): boolean {

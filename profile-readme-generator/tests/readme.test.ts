@@ -67,12 +67,15 @@ assert.ok(pictureBlocks.every((block) => block.includes('type="image/png"') || b
 
 const headerBlock = pictureBlocks[0];
 const metricsBlock = pictureBlocks.at(-2) || "";
-assert.equal((imageLayer.match(/<source\b/g) || []).length, 2 * 8 + (expectedFragments - 2) * 2);
+assert.equal((imageLayer.match(/<source\b/g) || []).length, 2 * 16 + (expectedFragments - 2) * 12);
 assert.match(headerBlock, /prefers-reduced-data: reduce[^>]*" type="image\/png"/);
 assert.match(headerBlock, /prefers-reduced-motion: reduce[^>]*profile-narrow-split-header-static\.svg/);
 assert.match(headerBlock, /srcset="\.\/assets\/profile-wide-split-header\.svg"/);
+assert.match(headerBlock, /prefers-color-scheme: dark[^>]*profile-wide-dark-split-header\.svg/);
+assert.match(headerBlock, /prefers-color-scheme: light[^>]*profile-wide-split-header\.svg/);
 assert.match(headerBlock, /src="\.\/assets\/profile-wide-split-header-static\.png"[^>]*loading="eager"/);
 assert.match(metricsBlock, /srcset="\.\/assets\/profile-wide-split-metrics\.svg"/);
+assert.match(metricsBlock, /prefers-color-scheme: dark[^>]*profile-wide-dark-split-metrics\.svg/);
 
 // The narrow work heading crosses a fragment boundary with the header wave;
 // keep its SVG anchor on the same baseline as the body and horizontal rules.
@@ -83,15 +86,17 @@ assert.match(
   narrowOverviewSvg,
   new RegExp(`<text x="${layouts.narrow.coordinates.margin}" y="220"[^>]*>WHAT I WORK ON</text>`)
 );
+assert.doesNotMatch(narrowOverviewSvg, /data:image\/png;base64/, "split SVG must not embed the raster avatar");
+assert.doesNotMatch(narrowOverviewSvg, /font-family:'JstarDisplay'/, "non-header split SVG must not embed the display font");
 
-// Non-animated fragments use only PNG for their normal path. Their SVG files
-// remain generated for explicit SVG-only publication and QA, but are not a
-// default request on the GitHub page.
+// Non-animated fragments use static SVG for their normal path. PNG remains
+// available for reduced-data mode and browsers that cannot use SVG sources.
 const overviewBlock = pictureBlocks[1];
-assert.doesNotMatch(overviewBlock, /profile-(?:wide|narrow)-split-overview\.svg/);
+assert.match(overviewBlock, /profile-wide-split-overview-static\.svg/);
+assert.match(overviewBlock, /profile-narrow-split-overview-static\.svg/);
 assert.match(overviewBlock, /profile-wide-split-overview-static\.png/);
 assert.match(overviewBlock, /profile-narrow-split-overview-static\.png/);
-assert.equal((overviewBlock.match(/<source\b/g) || []).length, 2);
+assert.equal((overviewBlock.match(/<source\b/g) || []).length, 12);
 
 for (const item of data.upstreamExamples) {
   assert.ok(item.repositoryUrl);
@@ -147,7 +152,7 @@ assert.match(customPrefix, /src="\/profile-assets\/profile-wide-split-header-sta
 
 const svgOnly = renderReadmeSnippet(data, { includePngFallback: false });
 assert.equal((svgOnly.match(/<picture>/g) || []).length, expectedFragments);
-assert.equal((svgOnly.match(/<source\b/g) || []).length, expectedFragments * 2);
+assert.equal((svgOnly.match(/<source\b/g) || []).length, expectedFragments * 4);
 assert.ok(!svgOnly.includes(".png"));
 const svgOnlyFiles = [...svgOnly.matchAll(/(?:src|srcset)="([^"]+\.svg)"/g)].map((match) => match[1]);
 assert.ok(svgOnlyFiles.length > 0 && svgOnlyFiles.every((file) => file.includes("-static.svg")));
