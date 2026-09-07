@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-09-06T07:10:15.281Z",
+  "fetchedAt": "2026-09-07T07:22:52.395Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 117,
+    "mergedPrs": 122,
     "publicRepositories": 204,
-    "mergedThisYear": 104,
+    "mergedThisYear": 109,
     "repositoriesOver1kStars": 44,
     "year": 2026,
-    "asOf": "06 Sep 2026",
-    "contributionsLastYear": 1371
+    "asOf": "07 Sep 2026",
+    "contributionsLastYear": 1383
   },
   "languages": [
     {
@@ -66,7 +66,7 @@
           34,
           68,
           52,
-          8
+          10
         ]
       },
       {
@@ -83,7 +83,7 @@
           63,
           63,
           68,
-          14
+          16
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1371,
+    "total": 1383,
     "days": [
       {
         "date": "2025-09-07",
@@ -370,8 +370,8 @@
       },
       {
         "date": "2026-09-06",
-        "count": 5,
-        "level": 1
+        "count": 13,
+        "level": 2
       },
       {
         "date": "2025-09-08",
@@ -631,6 +631,11 @@
       {
         "date": "2026-08-31",
         "count": 8,
+        "level": 1
+      },
+      {
+        "date": "2026-09-07",
+        "count": 5,
         "level": 1
       },
       {
@@ -1937,10 +1942,24 @@
   },
   "languageRepositoryCount": 18,
   "mergedPullRequests": {
-    "total": 117,
-    "thisYear": 104,
+    "total": 122,
+    "thisYear": 109,
     "repositoriesOver1kStars": 44,
     "sample": [
+      {
+        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
+        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10658",
+        "number": 10658,
+        "title": "fix(plugins): reject expired dial budgets",
+        "closed_at": "2026-09-06T17:06:12Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
+        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10657",
+        "number": 10657,
+        "title": "test(plugins): escape fixture config paths",
+        "closed_at": "2026-09-06T16:58:55Z"
+      },
       {
         "repository_url": "https://api.github.com/repos/agentgateway/agentgateway",
         "html_url": "https://github.com/agentgateway/agentgateway/pull/3244",
@@ -1968,6 +1987,13 @@
         "number": 10399,
         "title": "fix(ci): typecheck generated dashboard contract",
         "closed_at": "2026-08-29T06:41:55Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/modelcontextprotocol/conformance",
+        "html_url": "https://github.com/modelcontextprotocol/conformance/pull/468",
+        "number": 468,
+        "title": "fix(validation): accept extension result envelopes",
+        "closed_at": "2026-09-06T20:27:50Z"
       },
       {
         "repository_url": "https://api.github.com/repos/agentgateway/agentgateway",
@@ -2003,27 +2029,6 @@
         "number": 10253,
         "title": "fix(cron): preserve scheduler workspace policy",
         "closed_at": "2026-08-25T12:22:23Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
-        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10250",
-        "number": 10250,
-        "title": "fix(security): contain plugin private egress carveouts",
-        "closed_at": "2026-08-25T07:22:32Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/open-telemetry/opentelemetry-go",
-        "html_url": "https://github.com/open-telemetry/opentelemetry-go/pull/8840",
-        "number": 8840,
-        "title": "fix(trace): ignore unknown span processor unregisters",
-        "closed_at": "2026-08-27T14:06:33Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/open-telemetry/opentelemetry-go",
-        "html_url": "https://github.com/open-telemetry/opentelemetry-go/pull/8839",
-        "number": 8839,
-        "title": "fix(prometheus): report invalid histogram scale errors",
-        "closed_at": "2026-09-03T18:56:37Z"
       }
     ]
   },
