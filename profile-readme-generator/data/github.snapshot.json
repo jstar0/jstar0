@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-09-09T07:26:07.445Z",
+  "fetchedAt": "2026-09-10T07:21:37.028Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,33 +10,33 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 122,
-    "publicRepositories": 206,
-    "mergedThisYear": 109,
+    "mergedPrs": 125,
+    "publicRepositories": 207,
+    "mergedThisYear": 112,
     "repositoriesOver1kStars": 44,
     "year": 2026,
-    "asOf": "09 Sep 2026",
-    "contributionsLastYear": 1405
+    "asOf": "10 Sep 2026",
+    "contributionsLastYear": 1423
   },
   "languages": [
     {
       "name": "TypeScript",
-      "percentage": 74.64,
+      "percentage": 73.87,
       "accent": "blue"
     },
     {
-      "name": "JavaScript",
-      "percentage": 9.42,
-      "accent": "yellow"
-    },
-    {
       "name": "Go",
-      "percentage": 8.81,
+      "percentage": 9.73,
       "accent": "cyan"
     },
     {
+      "name": "JavaScript",
+      "percentage": 9.33,
+      "accent": "yellow"
+    },
+    {
       "name": "Other",
-      "percentage": 7.13,
+      "percentage": 7.07,
       "accent": "orange"
     }
   ],
@@ -66,7 +66,7 @@
           33,
           68,
           51,
-          15
+          19
         ]
       },
       {
@@ -83,7 +83,7 @@
           63,
           63,
           68,
-          21
+          23
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1405,
+    "total": 1423,
     "days": [
       {
         "date": "2025-09-07",
@@ -1165,8 +1165,8 @@
       },
       {
         "date": "2026-09-09",
-        "count": 7,
-        "level": 1
+        "count": 16,
+        "level": 2
       },
       {
         "date": "2025-09-11",
@@ -1429,6 +1429,11 @@
         "level": 1
       },
       {
+        "date": "2026-09-10",
+        "count": 11,
+        "level": 1
+      },
+      {
         "date": "2025-09-12",
         "count": 0,
         "level": 0
@@ -1630,7 +1635,7 @@
       },
       {
         "date": "2026-06-19",
-        "count": 15,
+        "count": 14,
         "level": 2
       },
       {
@@ -1890,7 +1895,7 @@
       },
       {
         "date": "2026-06-20",
-        "count": 15,
+        "count": 14,
         "level": 2
       },
       {
@@ -1950,10 +1955,10 @@
       }
     ]
   },
-  "languageRepositoryCount": 18,
+  "languageRepositoryCount": 19,
   "mergedPullRequests": {
-    "total": 122,
-    "thisYear": 109,
+    "total": 125,
+    "thisYear": 112,
     "repositoriesOver1kStars": 44,
     "sample": [
       {
@@ -2006,6 +2011,13 @@
         "closed_at": "2026-09-06T20:27:50Z"
       },
       {
+        "repository_url": "https://api.github.com/repos/modelcontextprotocol/csharp-sdk",
+        "html_url": "https://github.com/modelcontextprotocol/csharp-sdk/pull/1837",
+        "number": 1837,
+        "title": "fix(aspnetcore): make SEP-2575 status mapping deterministic",
+        "closed_at": "2026-09-09T19:25:55Z"
+      },
+      {
         "repository_url": "https://api.github.com/repos/agentgateway/agentgateway",
         "html_url": "https://github.com/agentgateway/agentgateway/pull/3162",
         "number": 3162,
@@ -2027,18 +2039,11 @@
         "closed_at": "2026-08-30T05:33:39Z"
       },
       {
-        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
-        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10256",
-        "number": 10256,
-        "title": "fix(gateway): redact duplicate idempotency keys from logs",
-        "closed_at": "2026-08-29T06:42:44Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
-        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10253",
-        "number": 10253,
-        "title": "fix(cron): preserve scheduler workspace policy",
-        "closed_at": "2026-08-25T12:22:23Z"
+        "repository_url": "https://api.github.com/repos/open-telemetry/opentelemetry-go",
+        "html_url": "https://github.com/open-telemetry/opentelemetry-go/pull/8849",
+        "number": 8849,
+        "title": "fix(semconv): avoid duplicate metric recording without attributes",
+        "closed_at": "2026-09-09T23:29:34Z"
       }
     ]
   },
