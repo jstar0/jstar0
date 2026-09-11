@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-09-10T07:21:37.028Z",
+  "fetchedAt": "2026-09-11T07:19:56.179Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 125,
-    "publicRepositories": 207,
-    "mergedThisYear": 112,
-    "repositoriesOver1kStars": 44,
+    "mergedPrs": 126,
+    "publicRepositories": 208,
+    "mergedThisYear": 113,
+    "repositoriesOver1kStars": 45,
     "year": 2026,
-    "asOf": "10 Sep 2026",
-    "contributionsLastYear": 1423
+    "asOf": "11 Sep 2026",
+    "contributionsLastYear": 1430
   },
   "languages": [
     {
@@ -66,7 +66,7 @@
           33,
           68,
           51,
-          19
+          20
         ]
       },
       {
@@ -83,7 +83,7 @@
           63,
           63,
           68,
-          23
+          26
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1423,
+    "total": 1430,
     "days": [
       {
         "date": "2025-09-07",
@@ -1430,8 +1430,8 @@
       },
       {
         "date": "2026-09-10",
-        "count": 11,
-        "level": 1
+        "count": 14,
+        "level": 2
       },
       {
         "date": "2025-09-12",
@@ -1694,6 +1694,11 @@
         "level": 2
       },
       {
+        "date": "2026-09-11",
+        "count": 5,
+        "level": 1
+      },
+      {
         "date": "2025-09-13",
         "count": 1,
         "level": 1
@@ -1895,7 +1900,7 @@
       },
       {
         "date": "2026-06-20",
-        "count": 14,
+        "count": 13,
         "level": 2
       },
       {
@@ -1957,10 +1962,17 @@
   },
   "languageRepositoryCount": 19,
   "mergedPullRequests": {
-    "total": 125,
-    "thisYear": 112,
-    "repositoriesOver1kStars": 44,
+    "total": 126,
+    "thisYear": 113,
+    "repositoriesOver1kStars": 45,
     "sample": [
+      {
+        "repository_url": "https://api.github.com/repos/vercel/ai",
+        "html_url": "https://github.com/vercel/ai/pull/20577",
+        "number": 20577,
+        "title": "fix(harness-codex): preserve web search metadata",
+        "closed_at": "2026-09-10T14:20:59Z"
+      },
       {
         "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
         "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10658",
@@ -2037,13 +2049,6 @@
         "number": 6969,
         "title": "fix: retry connection pool prewarm after failure",
         "closed_at": "2026-08-30T05:33:39Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/open-telemetry/opentelemetry-go",
-        "html_url": "https://github.com/open-telemetry/opentelemetry-go/pull/8849",
-        "number": 8849,
-        "title": "fix(semconv): avoid duplicate metric recording without attributes",
-        "closed_at": "2026-09-09T23:29:34Z"
       }
     ]
   },
