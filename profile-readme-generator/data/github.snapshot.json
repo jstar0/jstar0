@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-09-11T07:19:56.179Z",
+  "fetchedAt": "2026-09-12T07:12:42.786Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 126,
+    "mergedPrs": 127,
     "publicRepositories": 208,
-    "mergedThisYear": 113,
+    "mergedThisYear": 114,
     "repositoriesOver1kStars": 45,
     "year": 2026,
-    "asOf": "11 Sep 2026",
-    "contributionsLastYear": 1430
+    "asOf": "12 Sep 2026",
+    "contributionsLastYear": 1447
   },
   "languages": [
     {
@@ -66,7 +66,7 @@
           33,
           68,
           51,
-          20
+          23
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1430,
+    "total": 1447,
     "days": [
       {
         "date": "2025-09-07",
@@ -895,8 +895,8 @@
       },
       {
         "date": "2026-09-01",
-        "count": 10,
-        "level": 1
+        "count": 12,
+        "level": 2
       },
       {
         "date": "2026-09-08",
@@ -1695,7 +1695,7 @@
       },
       {
         "date": "2026-09-11",
-        "count": 5,
+        "count": 10,
         "level": 1
       },
       {
@@ -1955,15 +1955,20 @@
       },
       {
         "date": "2026-09-05",
-        "count": 4,
-        "level": 1
+        "count": 14,
+        "level": 2
+      },
+      {
+        "date": "2026-09-12",
+        "count": 0,
+        "level": 0
       }
     ]
   },
   "languageRepositoryCount": 19,
   "mergedPullRequests": {
-    "total": 126,
-    "thisYear": 113,
+    "total": 127,
+    "thisYear": 114,
     "repositoriesOver1kStars": 45,
     "sample": [
       {
@@ -1986,6 +1991,13 @@
         "number": 10657,
         "title": "test(plugins): escape fixture config paths",
         "closed_at": "2026-09-06T16:58:55Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/agentgateway/website",
+        "html_url": "https://github.com/agentgateway/website/pull/1000",
+        "number": 1000,
+        "title": "docs: add Braintrust observability guides",
+        "closed_at": "2026-09-11T14:01:29Z"
       },
       {
         "repository_url": "https://api.github.com/repos/agentgateway/agentgateway",
@@ -2042,13 +2054,6 @@
         "number": 1211,
         "title": "fix(transport): fall back after sessionless HTTP discover rejections",
         "closed_at": "2026-08-25T16:16:50Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/livekit/agents",
-        "html_url": "https://github.com/livekit/agents/pull/6969",
-        "number": 6969,
-        "title": "fix: retry connection pool prewarm after failure",
-        "closed_at": "2026-08-30T05:33:39Z"
       }
     ]
   },
