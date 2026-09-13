@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-09-12T07:12:42.786Z",
+  "fetchedAt": "2026-09-13T07:30:37.434Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 127,
+    "mergedPrs": 129,
     "publicRepositories": 208,
-    "mergedThisYear": 114,
+    "mergedThisYear": 116,
     "repositoriesOver1kStars": 45,
     "year": 2026,
-    "asOf": "12 Sep 2026",
-    "contributionsLastYear": 1447
+    "asOf": "13 Sep 2026",
+    "contributionsLastYear": 1466
   },
   "languages": [
     {
@@ -65,8 +65,8 @@
           20,
           33,
           68,
-          51,
-          23
+          53,
+          25
         ]
       },
       {
@@ -83,7 +83,7 @@
           63,
           63,
           68,
-          26
+          30
         ]
       },
       {
@@ -106,13 +106,8 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1447,
+    "total": 1466,
     "days": [
-      {
-        "date": "2025-09-07",
-        "count": 1,
-        "level": 1
-      },
       {
         "date": "2025-09-14",
         "count": 0,
@@ -374,9 +369,9 @@
         "level": 2
       },
       {
-        "date": "2025-09-08",
-        "count": 0,
-        "level": 0
+        "date": "2026-09-13",
+        "count": 9,
+        "level": 1
       },
       {
         "date": "2025-09-15",
@@ -639,11 +634,6 @@
         "level": 1
       },
       {
-        "date": "2025-09-09",
-        "count": 0,
-        "level": 0
-      },
-      {
         "date": "2025-09-16",
         "count": 0,
         "level": 0
@@ -902,11 +892,6 @@
         "date": "2026-09-08",
         "count": 19,
         "level": 2
-      },
-      {
-        "date": "2025-09-10",
-        "count": 1,
-        "level": 1
       },
       {
         "date": "2025-09-17",
@@ -1169,11 +1154,6 @@
         "level": 2
       },
       {
-        "date": "2025-09-11",
-        "count": 1,
-        "level": 1
-      },
-      {
         "date": "2025-09-18",
         "count": 0,
         "level": 0
@@ -1415,7 +1395,7 @@
       },
       {
         "date": "2026-08-20",
-        "count": 28,
+        "count": 30,
         "level": 3
       },
       {
@@ -1432,11 +1412,6 @@
         "date": "2026-09-10",
         "count": 14,
         "level": 2
-      },
-      {
-        "date": "2025-09-12",
-        "count": 0,
-        "level": 0
       },
       {
         "date": "2025-09-19",
@@ -1680,7 +1655,7 @@
       },
       {
         "date": "2026-08-21",
-        "count": 8,
+        "count": 11,
         "level": 1
       },
       {
@@ -1696,11 +1671,6 @@
       {
         "date": "2026-09-11",
         "count": 10,
-        "level": 1
-      },
-      {
-        "date": "2025-09-13",
-        "count": 1,
         "level": 1
       },
       {
@@ -1945,7 +1915,7 @@
       },
       {
         "date": "2026-08-22",
-        "count": 18,
+        "count": 21,
         "level": 2
       },
       {
@@ -1960,15 +1930,15 @@
       },
       {
         "date": "2026-09-12",
-        "count": 0,
-        "level": 0
+        "count": 2,
+        "level": 1
       }
     ]
   },
   "languageRepositoryCount": 19,
   "mergedPullRequests": {
-    "total": 127,
-    "thisYear": 114,
+    "total": 129,
+    "thisYear": 116,
     "repositoriesOver1kStars": 45,
     "sample": [
       {
@@ -2000,6 +1970,13 @@
         "closed_at": "2026-09-11T14:01:29Z"
       },
       {
+        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
+        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10524",
+        "number": 10524,
+        "title": "fix(plugins): cap root config schema properties",
+        "closed_at": "2026-09-13T05:44:54Z"
+      },
+      {
         "repository_url": "https://api.github.com/repos/agentgateway/agentgateway",
         "html_url": "https://github.com/agentgateway/agentgateway/pull/3244",
         "number": 3244,
@@ -2012,6 +1989,13 @@
         "number": 10459,
         "title": "fix(mcp): preserve persistent SSE event boundaries",
         "closed_at": "2026-09-02T15:47:54Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
+        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10449",
+        "number": 10449,
+        "title": "fix(channels): create Edge TTS artifact with owner-only permissions",
+        "closed_at": "2026-09-12T20:23:14Z"
       },
       {
         "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
@@ -2040,20 +2024,6 @@
         "number": 1837,
         "title": "fix(aspnetcore): make SEP-2575 status mapping deterministic",
         "closed_at": "2026-09-09T19:25:55Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/agentgateway/agentgateway",
-        "html_url": "https://github.com/agentgateway/agentgateway/pull/3162",
-        "number": 3162,
-        "title": "fix(pii): keep phone matches within one line",
-        "closed_at": "2026-08-26T17:42:49Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/modelcontextprotocol/rust-sdk",
-        "html_url": "https://github.com/modelcontextprotocol/rust-sdk/pull/1211",
-        "number": 1211,
-        "title": "fix(transport): fall back after sessionless HTTP discover rejections",
-        "closed_at": "2026-08-25T16:16:50Z"
       }
     ]
   },
