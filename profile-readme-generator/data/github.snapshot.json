@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-09-13T07:30:37.434Z",
+  "fetchedAt": "2026-09-14T07:57:15.906Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 129,
-    "publicRepositories": 208,
-    "mergedThisYear": 116,
+    "mergedPrs": 131,
+    "publicRepositories": 209,
+    "mergedThisYear": 118,
     "repositoriesOver1kStars": 45,
     "year": 2026,
-    "asOf": "13 Sep 2026",
-    "contributionsLastYear": 1466
+    "asOf": "14 Sep 2026",
+    "contributionsLastYear": 1471
   },
   "languages": [
     {
@@ -66,7 +66,7 @@
           33,
           68,
           53,
-          25
+          27
         ]
       },
       {
@@ -83,7 +83,7 @@
           63,
           63,
           68,
-          30
+          33
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1466,
+    "total": 1471,
     "days": [
       {
         "date": "2025-09-14",
@@ -370,8 +370,8 @@
       },
       {
         "date": "2026-09-13",
-        "count": 9,
-        "level": 1
+        "count": 18,
+        "level": 2
       },
       {
         "date": "2025-09-15",
@@ -631,6 +631,11 @@
       {
         "date": "2026-09-07",
         "count": 6,
+        "level": 1
+      },
+      {
+        "date": "2026-09-14",
+        "count": 1,
         "level": 1
       },
       {
@@ -1870,7 +1875,7 @@
       },
       {
         "date": "2026-06-20",
-        "count": 13,
+        "count": 12,
         "level": 2
       },
       {
@@ -1937,8 +1942,8 @@
   },
   "languageRepositoryCount": 19,
   "mergedPullRequests": {
-    "total": 129,
-    "thisYear": 116,
+    "total": 131,
+    "thisYear": 118,
     "repositoriesOver1kStars": 45,
     "sample": [
       {
@@ -1961,6 +1966,13 @@
         "number": 10657,
         "title": "test(plugins): escape fixture config paths",
         "closed_at": "2026-09-06T16:58:55Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
+        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10646",
+        "number": 10646,
+        "title": "ci(docs): check all authored internal links",
+        "closed_at": "2026-09-13T15:52:23Z"
       },
       {
         "repository_url": "https://api.github.com/repos/agentgateway/website",
@@ -2006,24 +2018,17 @@
       },
       {
         "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
+        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10414",
+        "number": 10414,
+        "title": "fix(cron): guard agent manual trigger and history",
+        "closed_at": "2026-09-13T17:53:11Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
         "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10399",
         "number": 10399,
         "title": "fix(ci): typecheck generated dashboard contract",
         "closed_at": "2026-08-29T06:41:55Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/modelcontextprotocol/conformance",
-        "html_url": "https://github.com/modelcontextprotocol/conformance/pull/468",
-        "number": 468,
-        "title": "fix(validation): accept extension result envelopes",
-        "closed_at": "2026-09-06T20:27:50Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/modelcontextprotocol/csharp-sdk",
-        "html_url": "https://github.com/modelcontextprotocol/csharp-sdk/pull/1837",
-        "number": 1837,
-        "title": "fix(aspnetcore): make SEP-2575 status mapping deterministic",
-        "closed_at": "2026-09-09T19:25:55Z"
       }
     ]
   },
