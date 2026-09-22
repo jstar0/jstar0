@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-09-21T08:00:39.401Z",
+  "fetchedAt": "2026-09-22T07:46:08.806Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 134,
+    "mergedPrs": 135,
     "publicRepositories": 209,
-    "mergedThisYear": 121,
+    "mergedThisYear": 122,
     "repositoriesOver1kStars": 46,
     "year": 2026,
-    "asOf": "21 Sep 2026",
-    "contributionsLastYear": 1488
+    "asOf": "22 Sep 2026",
+    "contributionsLastYear": 1495
   },
   "languages": [
     {
@@ -66,7 +66,7 @@
           32,
           68,
           53,
-          30
+          31
         ]
       },
       {
@@ -83,7 +83,7 @@
           63,
           63,
           68,
-          49
+          52
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1488,
+    "total": 1495,
     "days": [
       {
         "date": "2025-09-21",
@@ -635,7 +635,7 @@
       },
       {
         "date": "2026-09-21",
-        "count": 5,
+        "count": 8,
         "level": 1
       },
       {
@@ -896,6 +896,11 @@
       {
         "date": "2026-09-15",
         "count": 2,
+        "level": 1
+      },
+      {
+        "date": "2026-09-22",
+        "count": 4,
         "level": 1
       },
       {
@@ -1942,8 +1947,8 @@
   },
   "languageRepositoryCount": 19,
   "mergedPullRequests": {
-    "total": 134,
-    "thisYear": 121,
+    "total": 135,
+    "thisYear": 122,
     "repositoriesOver1kStars": 46,
     "sample": [
       {
@@ -2018,17 +2023,17 @@
       },
       {
         "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
+        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10450",
+        "number": 10450,
+        "title": "feat(gateway): stream webhook chat turns over Server-Sent Events",
+        "closed_at": "2026-09-22T05:20:13Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
         "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10449",
         "number": 10449,
         "title": "fix(channels): create Edge TTS artifact with owner-only permissions",
         "closed_at": "2026-09-12T20:23:14Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
-        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10416",
-        "number": 10416,
-        "title": "fix(runtime): detect context overflow through error causes",
-        "closed_at": "2026-08-28T05:59:39Z"
       }
     ]
   },
