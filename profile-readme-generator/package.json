@@ -44,7 +44,7 @@
     "pngjs": "^7.0.0"
   },
   "devDependencies": {
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.6.2",
     "playwright": "^1.60.0",
     "typescript": "^5.9.3"
   }
