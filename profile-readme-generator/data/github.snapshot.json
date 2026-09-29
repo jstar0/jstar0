@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-09-28T08:45:34.003Z",
+  "fetchedAt": "2026-09-29T08:38:14.698Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 136,
+    "mergedPrs": 137,
     "publicRepositories": 218,
-    "mergedThisYear": 123,
+    "mergedThisYear": 124,
     "repositoriesOver1kStars": 46,
     "year": 2026,
-    "asOf": "28 Sep 2026",
-    "contributionsLastYear": 1520
+    "asOf": "29 Sep 2026",
+    "contributionsLastYear": 1522
   },
   "languages": [
     {
@@ -66,7 +66,7 @@
           31,
           68,
           53,
-          37
+          38
         ]
       },
       {
@@ -83,7 +83,7 @@
           63,
           63,
           68,
-          63
+          68
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1520,
+    "total": 1522,
     "days": [
       {
         "date": "2025-09-28",
@@ -635,8 +635,8 @@
       },
       {
         "date": "2026-09-28",
-        "count": 0,
-        "level": 0
+        "count": 1,
+        "level": 1
       },
       {
         "date": "2025-09-30",
@@ -896,6 +896,11 @@
       {
         "date": "2026-09-22",
         "count": 5,
+        "level": 1
+      },
+      {
+        "date": "2026-09-29",
+        "count": 1,
         "level": 1
       },
       {
@@ -1942,10 +1947,17 @@
   },
   "languageRepositoryCount": 19,
   "mergedPullRequests": {
-    "total": 136,
-    "thisYear": 123,
+    "total": 137,
+    "thisYear": 124,
     "repositoriesOver1kStars": 46,
     "sample": [
+      {
+        "repository_url": "https://api.github.com/repos/temporalio/sdk-go",
+        "html_url": "https://github.com/temporalio/sdk-go/pull/2686",
+        "number": 2686,
+        "title": "fix(opentelemetry): keep continue-as-new spans from failing",
+        "closed_at": "2026-09-28T22:06:19Z"
+      },
       {
         "repository_url": "https://api.github.com/repos/vercel/ai",
         "html_url": "https://github.com/vercel/ai/pull/20577",
@@ -2022,13 +2034,6 @@
         "number": 10450,
         "title": "feat(gateway): stream webhook chat turns over Server-Sent Events",
         "closed_at": "2026-09-22T05:20:13Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
-        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10449",
-        "number": 10449,
-        "title": "fix(channels): create Edge TTS artifact with owner-only permissions",
-        "closed_at": "2026-09-12T20:23:14Z"
       }
     ]
   },
