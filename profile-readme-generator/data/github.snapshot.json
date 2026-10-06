@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-10-05T09:10:50.563Z",
+  "fetchedAt": "2026-10-06T09:04:12.618Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,33 +10,33 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 139,
-    "publicRepositories": 223,
-    "mergedThisYear": 126,
+    "mergedPrs": 141,
+    "publicRepositories": 224,
+    "mergedThisYear": 128,
     "repositoriesOver1kStars": 48,
     "year": 2026,
-    "asOf": "05 Oct 2026",
-    "contributionsLastYear": 1546
+    "asOf": "06 Oct 2026",
+    "contributionsLastYear": 1558
   },
   "languages": [
     {
       "name": "TypeScript",
-      "percentage": 73.87,
+      "percentage": 73.61,
       "accent": "blue"
     },
     {
       "name": "Go",
-      "percentage": 9.73,
+      "percentage": 10.06,
       "accent": "cyan"
     },
     {
       "name": "JavaScript",
-      "percentage": 9.33,
+      "percentage": 9.29,
       "accent": "yellow"
     },
     {
       "name": "Other",
-      "percentage": 7.07,
+      "percentage": 7.04,
       "accent": "orange"
     }
   ],
@@ -66,7 +66,7 @@
           68,
           53,
           38,
-          5
+          7
         ]
       },
       {
@@ -83,7 +83,7 @@
           61,
           66,
           68,
-          11
+          14
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1546,
+    "total": 1558,
     "days": [
       {
         "date": "2025-10-05",
@@ -635,7 +635,7 @@
       },
       {
         "date": "2026-10-05",
-        "count": 2,
+        "count": 7,
         "level": 1
       },
       {
@@ -896,6 +896,11 @@
       {
         "date": "2026-09-29",
         "count": 2,
+        "level": 1
+      },
+      {
+        "date": "2026-10-06",
+        "count": 8,
         "level": 1
       },
       {
@@ -1870,7 +1875,7 @@
       },
       {
         "date": "2026-07-04",
-        "count": 5,
+        "count": 4,
         "level": 1
       },
       {
@@ -1942,10 +1947,17 @@
   },
   "languageRepositoryCount": 19,
   "mergedPullRequests": {
-    "total": 139,
-    "thisYear": 126,
+    "total": 141,
+    "thisYear": 128,
     "repositoriesOver1kStars": 48,
     "sample": [
+      {
+        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
+        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11111",
+        "number": 11111,
+        "title": "docs(runtime): propose bounded SOP RPC placement exception",
+        "closed_at": "2026-10-05T13:34:58Z"
+      },
       {
         "repository_url": "https://api.github.com/repos/anchore/syft",
         "html_url": "https://github.com/anchore/syft/pull/5322",
@@ -2010,25 +2022,18 @@
         "closed_at": "2026-09-13T05:44:54Z"
       },
       {
+        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
+        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10522",
+        "number": 10522,
+        "title": "test(rpc): enforce SOP manual-run step scope",
+        "closed_at": "2026-10-05T19:25:02Z"
+      },
+      {
         "repository_url": "https://api.github.com/repos/agentgateway/agentgateway",
         "html_url": "https://github.com/agentgateway/agentgateway/pull/3244",
         "number": 3244,
         "title": "fix(llm): support Cohere Embed v4 responses",
         "closed_at": "2026-08-31T19:27:51Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/ag-ui-protocol/ag-ui",
-        "html_url": "https://github.com/ag-ui-protocol/ag-ui/pull/2576",
-        "number": 2576,
-        "title": "fix(mastra): keep replay conversion alive on malformed tool-call arguments",
-        "closed_at": "2026-09-14T15:12:32Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
-        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10459",
-        "number": 10459,
-        "title": "fix(mcp): preserve persistent SSE event boundaries",
-        "closed_at": "2026-09-02T15:47:54Z"
       }
     ]
   },
