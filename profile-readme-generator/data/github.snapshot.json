@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-10-09T09:11:51.290Z",
+  "fetchedAt": "2026-10-11T08:59:47.064Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -11,12 +11,12 @@
   },
   "stats": {
     "mergedPrs": 141,
-    "publicRepositories": 234,
+    "publicRepositories": 236,
     "mergedThisYear": 128,
     "repositoriesOver1kStars": 48,
     "year": 2026,
-    "asOf": "09 Oct 2026",
-    "contributionsLastYear": 1598
+    "asOf": "11 Oct 2026",
+    "contributionsLastYear": 1608
   },
   "languages": [
     {
@@ -65,8 +65,8 @@
           31,
           68,
           55,
-          39,
-          17
+          40,
+          19
         ]
       },
       {
@@ -83,7 +83,7 @@
           61,
           66,
           68,
-          20
+          25
         ]
       },
       {
@@ -93,26 +93,21 @@
         ],
         "accent": "mint",
         "values": [
-          34,
+          35,
           10,
           26,
           23,
           68,
-          62,
+          64,
           27,
-          28
+          29
         ]
       }
     ]
   },
   "contributionCalendar": {
-    "total": 1598,
+    "total": 1608,
     "days": [
-      {
-        "date": "2025-10-05",
-        "count": 0,
-        "level": 0
-      },
       {
         "date": "2025-10-12",
         "count": 0,
@@ -374,9 +369,9 @@
         "level": 2
       },
       {
-        "date": "2025-10-06",
-        "count": 0,
-        "level": 0
+        "date": "2026-10-11",
+        "count": 2,
+        "level": 1
       },
       {
         "date": "2025-10-13",
@@ -575,7 +570,7 @@
       },
       {
         "date": "2026-07-13",
-        "count": 48,
+        "count": 47,
         "level": 4
       },
       {
@@ -637,11 +632,6 @@
         "date": "2026-10-05",
         "count": 7,
         "level": 1
-      },
-      {
-        "date": "2025-10-07",
-        "count": 0,
-        "level": 0
       },
       {
         "date": "2025-10-14",
@@ -904,11 +894,6 @@
         "level": 2
       },
       {
-        "date": "2025-10-08",
-        "count": 0,
-        "level": 0
-      },
-      {
         "date": "2025-10-15",
         "count": 1,
         "level": 1
@@ -1167,11 +1152,6 @@
         "date": "2026-10-07",
         "count": 20,
         "level": 2
-      },
-      {
-        "date": "2025-10-09",
-        "count": 0,
-        "level": 0
       },
       {
         "date": "2025-10-16",
@@ -1434,11 +1414,6 @@
         "level": 2
       },
       {
-        "date": "2025-10-10",
-        "count": 1,
-        "level": 1
-      },
-      {
         "date": "2025-10-17",
         "count": 0,
         "level": 0
@@ -1695,13 +1670,8 @@
       },
       {
         "date": "2026-10-09",
-        "count": 11,
-        "level": 1
-      },
-      {
-        "date": "2025-10-11",
-        "count": 0,
-        "level": 0
+        "count": 14,
+        "level": 2
       },
       {
         "date": "2025-10-18",
@@ -1895,7 +1865,7 @@
       },
       {
         "date": "2026-07-11",
-        "count": 32,
+        "count": 31,
         "level": 3
       },
       {
@@ -1956,6 +1926,11 @@
       {
         "date": "2026-10-03",
         "count": 4,
+        "level": 1
+      },
+      {
+        "date": "2026-10-10",
+        "count": 7,
         "level": 1
       }
     ]
