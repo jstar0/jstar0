@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-10-13T09:30:13.924Z",
+  "fetchedAt": "2026-10-14T07:43:51.324Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 141,
+    "mergedPrs": 142,
     "publicRepositories": 236,
-    "mergedThisYear": 128,
-    "repositoriesOver1kStars": 48,
+    "mergedThisYear": 129,
+    "repositoriesOver1kStars": 49,
     "year": 2026,
-    "asOf": "13 Oct 2026",
-    "contributionsLastYear": 1610
+    "asOf": "14 Oct 2026",
+    "contributionsLastYear": 1612
   },
   "languages": [
     {
@@ -83,7 +83,7 @@
           61,
           66,
           68,
-          27
+          32
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1610,
+    "total": 1612,
     "days": [
       {
         "date": "2025-10-12",
@@ -900,8 +900,8 @@
       },
       {
         "date": "2026-10-13",
-        "count": 0,
-        "level": 0
+        "count": 1,
+        "level": 1
       },
       {
         "date": "2025-10-15",
@@ -1162,6 +1162,11 @@
         "date": "2026-10-07",
         "count": 20,
         "level": 2
+      },
+      {
+        "date": "2026-10-14",
+        "count": 1,
+        "level": 1
       },
       {
         "date": "2025-10-16",
@@ -1947,10 +1952,17 @@
   },
   "languageRepositoryCount": 21,
   "mergedPullRequests": {
-    "total": 141,
-    "thisYear": 128,
-    "repositoriesOver1kStars": 48,
+    "total": 142,
+    "thisYear": 129,
+    "repositoriesOver1kStars": 49,
     "sample": [
+      {
+        "repository_url": "https://api.github.com/repos/ai-dynamo/dynamo",
+        "html_url": "https://github.com/ai-dynamo/dynamo/pull/15865",
+        "number": 15865,
+        "title": "fix(vllm): honor image output format",
+        "closed_at": "2026-10-13T22:01:32Z"
+      },
       {
         "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
         "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/11111",
@@ -2027,13 +2039,6 @@
         "number": 10522,
         "title": "test(rpc): enforce SOP manual-run step scope",
         "closed_at": "2026-10-05T19:25:02Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/agentgateway/agentgateway",
-        "html_url": "https://github.com/agentgateway/agentgateway/pull/3244",
-        "number": 3244,
-        "title": "fix(llm): support Cohere Embed v4 responses",
-        "closed_at": "2026-08-31T19:27:51Z"
       }
     ]
   },
