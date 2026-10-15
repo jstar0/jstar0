@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-10-14T07:43:51.324Z",
+  "fetchedAt": "2026-10-15T07:31:33.522Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 142,
-    "publicRepositories": 236,
-    "mergedThisYear": 129,
+    "mergedPrs": 143,
+    "publicRepositories": 237,
+    "mergedThisYear": 130,
     "repositoriesOver1kStars": 49,
     "year": 2026,
-    "asOf": "14 Oct 2026",
-    "contributionsLastYear": 1612
+    "asOf": "15 Oct 2026",
+    "contributionsLastYear": 1622
   },
   "languages": [
     {
@@ -66,7 +66,7 @@
           68,
           55,
           40,
-          20
+          22
         ]
       },
       {
@@ -83,7 +83,7 @@
           61,
           66,
           68,
-          32
+          34
         ]
       },
       {
@@ -95,18 +95,18 @@
         "values": [
           35,
           10,
-          26,
-          23,
-          68,
-          64,
           27,
-          29
+          24,
+          68,
+          65,
+          28,
+          30
         ]
       }
     ]
   },
   "contributionCalendar": {
-    "total": 1612,
+    "total": 1622,
     "days": [
       {
         "date": "2025-10-12",
@@ -370,7 +370,7 @@
       },
       {
         "date": "2026-10-11",
-        "count": 3,
+        "count": 2,
         "level": 1
       },
       {
@@ -570,7 +570,7 @@
       },
       {
         "date": "2026-07-13",
-        "count": 47,
+        "count": 46,
         "level": 4
       },
       {
@@ -1165,7 +1165,7 @@
       },
       {
         "date": "2026-10-14",
-        "count": 1,
+        "count": 5,
         "level": 1
       },
       {
@@ -1427,6 +1427,11 @@
         "date": "2026-10-08",
         "count": 16,
         "level": 2
+      },
+      {
+        "date": "2026-10-15",
+        "count": 8,
+        "level": 1
       },
       {
         "date": "2025-10-17",
@@ -1952,10 +1957,17 @@
   },
   "languageRepositoryCount": 21,
   "mergedPullRequests": {
-    "total": 142,
-    "thisYear": 129,
+    "total": 143,
+    "thisYear": 130,
     "repositoriesOver1kStars": 49,
     "sample": [
+      {
+        "repository_url": "https://api.github.com/repos/a2aproject/a2a-rs",
+        "html_url": "https://github.com/a2aproject/a2a-rs/pull/359",
+        "number": 359,
+        "title": "a2a: serialize security requirements in v1.0 shape",
+        "closed_at": "2026-10-15T07:06:43Z"
+      },
       {
         "repository_url": "https://api.github.com/repos/ai-dynamo/dynamo",
         "html_url": "https://github.com/ai-dynamo/dynamo/pull/15865",
@@ -2032,13 +2044,6 @@
         "number": 10524,
         "title": "fix(plugins): cap root config schema properties",
         "closed_at": "2026-09-13T05:44:54Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
-        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10522",
-        "number": 10522,
-        "title": "test(rpc): enforce SOP manual-run step scope",
-        "closed_at": "2026-10-05T19:25:02Z"
       }
     ]
   },
