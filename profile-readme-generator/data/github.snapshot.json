@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-10-15T07:31:33.522Z",
+  "fetchedAt": "2026-10-16T07:16:35.003Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 143,
+    "mergedPrs": 146,
     "publicRepositories": 237,
-    "mergedThisYear": 130,
+    "mergedThisYear": 133,
     "repositoriesOver1kStars": 49,
     "year": 2026,
-    "asOf": "15 Oct 2026",
-    "contributionsLastYear": 1622
+    "asOf": "16 Oct 2026",
+    "contributionsLastYear": 1626
   },
   "languages": [
     {
@@ -66,7 +66,7 @@
           68,
           55,
           40,
-          22
+          23
         ]
       },
       {
@@ -83,7 +83,7 @@
           61,
           66,
           68,
-          34
+          36
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1622,
+    "total": 1626,
     "days": [
       {
         "date": "2025-10-12",
@@ -1430,7 +1430,7 @@
       },
       {
         "date": "2026-10-15",
-        "count": 8,
+        "count": 11,
         "level": 1
       },
       {
@@ -1692,6 +1692,11 @@
         "date": "2026-10-09",
         "count": 14,
         "level": 2
+      },
+      {
+        "date": "2026-10-16",
+        "count": 1,
+        "level": 1
       },
       {
         "date": "2025-10-18",
@@ -1957,8 +1962,8 @@
   },
   "languageRepositoryCount": 21,
   "mergedPullRequests": {
-    "total": 143,
-    "thisYear": 130,
+    "total": 146,
+    "thisYear": 133,
     "repositoriesOver1kStars": 49,
     "sample": [
       {
@@ -1969,11 +1974,25 @@
         "closed_at": "2026-10-15T07:06:43Z"
       },
       {
+        "repository_url": "https://api.github.com/repos/open-telemetry/opentelemetry-python-genai",
+        "html_url": "https://github.com/open-telemetry/opentelemetry-python-genai/pull/870",
+        "number": 870,
+        "title": "fix(bedrock): accept tuple inputs",
+        "closed_at": "2026-10-15T22:00:15Z"
+      },
+      {
         "repository_url": "https://api.github.com/repos/ai-dynamo/dynamo",
         "html_url": "https://github.com/ai-dynamo/dynamo/pull/15865",
         "number": 15865,
         "title": "fix(vllm): honor image output format",
         "closed_at": "2026-10-13T22:01:32Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/ai-dynamo/dynamo",
+        "html_url": "https://github.com/ai-dynamo/dynamo/pull/15816",
+        "number": 15816,
+        "title": "fix(llm): derive video duration from selected packets",
+        "closed_at": "2026-10-15T22:54:03Z"
       },
       {
         "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
@@ -2030,20 +2049,6 @@
         "number": 10646,
         "title": "ci(docs): check all authored internal links",
         "closed_at": "2026-09-13T15:52:23Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/agentgateway/website",
-        "html_url": "https://github.com/agentgateway/website/pull/1000",
-        "number": 1000,
-        "title": "docs: add Braintrust observability guides",
-        "closed_at": "2026-09-11T14:01:29Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
-        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10524",
-        "number": 10524,
-        "title": "fix(plugins): cap root config schema properties",
-        "closed_at": "2026-09-13T05:44:54Z"
       }
     ]
   },
