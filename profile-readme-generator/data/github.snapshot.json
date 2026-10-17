@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-10-16T07:16:35.003Z",
+  "fetchedAt": "2026-10-17T07:01:14.956Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 146,
+    "mergedPrs": 147,
     "publicRepositories": 237,
-    "mergedThisYear": 133,
-    "repositoriesOver1kStars": 49,
+    "mergedThisYear": 134,
+    "repositoriesOver1kStars": 50,
     "year": 2026,
-    "asOf": "16 Oct 2026",
-    "contributionsLastYear": 1626
+    "asOf": "17 Oct 2026",
+    "contributionsLastYear": 1636
   },
   "languages": [
     {
@@ -66,7 +66,7 @@
           68,
           55,
           40,
-          23
+          25
         ]
       },
       {
@@ -83,7 +83,7 @@
           61,
           66,
           68,
-          36
+          39
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1626,
+    "total": 1636,
     "days": [
       {
         "date": "2025-10-12",
@@ -1695,7 +1695,7 @@
       },
       {
         "date": "2026-10-16",
-        "count": 1,
+        "count": 4,
         "level": 1
       },
       {
@@ -1957,14 +1957,19 @@
         "date": "2026-10-10",
         "count": 7,
         "level": 1
+      },
+      {
+        "date": "2026-10-17",
+        "count": 7,
+        "level": 1
       }
     ]
   },
   "languageRepositoryCount": 21,
   "mergedPullRequests": {
-    "total": 146,
-    "thisYear": 133,
-    "repositoriesOver1kStars": 49,
+    "total": 147,
+    "thisYear": 134,
+    "repositoriesOver1kStars": 50,
     "sample": [
       {
         "repository_url": "https://api.github.com/repos/a2aproject/a2a-rs",
@@ -1993,6 +1998,13 @@
         "number": 15816,
         "title": "fix(llm): derive video duration from selected packets",
         "closed_at": "2026-10-15T22:54:03Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/truera/trulens",
+        "html_url": "https://github.com/truera/trulens/pull/2910",
+        "number": 2910,
+        "title": "feat(feedback): add requirement satisfaction metric",
+        "closed_at": "2026-10-16T15:32:26Z"
       },
       {
         "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
@@ -2042,13 +2054,6 @@
         "number": 10657,
         "title": "test(plugins): escape fixture config paths",
         "closed_at": "2026-09-06T16:58:55Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
-        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10646",
-        "number": 10646,
-        "title": "ci(docs): check all authored internal links",
-        "closed_at": "2026-09-13T15:52:23Z"
       }
     ]
   },
