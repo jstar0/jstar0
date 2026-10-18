@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-10-17T07:01:14.956Z",
+  "fetchedAt": "2026-10-18T07:17:06.086Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -11,22 +11,22 @@
   },
   "stats": {
     "mergedPrs": 147,
-    "publicRepositories": 237,
+    "publicRepositories": 238,
     "mergedThisYear": 134,
     "repositoriesOver1kStars": 50,
     "year": 2026,
-    "asOf": "17 Oct 2026",
-    "contributionsLastYear": 1636
+    "asOf": "18 Oct 2026",
+    "contributionsLastYear": 1650
   },
   "languages": [
     {
       "name": "TypeScript",
-      "percentage": 72.22,
+      "percentage": 72.18,
       "accent": "blue"
     },
     {
       "name": "Go",
-      "percentage": 10.88,
+      "percentage": 10.87,
       "accent": "cyan"
     },
     {
@@ -36,7 +36,7 @@
     },
     {
       "name": "Other",
-      "percentage": 7.1,
+      "percentage": 7.15,
       "accent": "orange"
     }
   ],
@@ -59,14 +59,14 @@
         ],
         "accent": "blue",
         "values": [
-          17,
+          18,
           7,
           21,
           31,
           68,
           55,
           40,
-          25
+          28
         ]
       },
       {
@@ -83,7 +83,7 @@
           61,
           66,
           68,
-          39
+          41
         ]
       },
       {
@@ -93,26 +93,21 @@
         ],
         "accent": "mint",
         "values": [
-          35,
-          10,
+          36,
+          11,
           27,
           24,
           68,
-          65,
-          28,
+          66,
+          29,
           30
         ]
       }
     ]
   },
   "contributionCalendar": {
-    "total": 1636,
+    "total": 1650,
     "days": [
-      {
-        "date": "2025-10-12",
-        "count": 0,
-        "level": 0
-      },
       {
         "date": "2025-10-19",
         "count": 0,
@@ -374,8 +369,8 @@
         "level": 1
       },
       {
-        "date": "2025-10-13",
-        "count": 10,
+        "date": "2026-10-18",
+        "count": 9,
         "level": 1
       },
       {
@@ -570,7 +565,7 @@
       },
       {
         "date": "2026-07-13",
-        "count": 46,
+        "count": 45,
         "level": 4
       },
       {
@@ -637,11 +632,6 @@
         "date": "2026-10-12",
         "count": 2,
         "level": 1
-      },
-      {
-        "date": "2025-10-14",
-        "count": 0,
-        "level": 0
       },
       {
         "date": "2025-10-21",
@@ -900,11 +890,6 @@
       },
       {
         "date": "2026-10-13",
-        "count": 1,
-        "level": 1
-      },
-      {
-        "date": "2025-10-15",
         "count": 1,
         "level": 1
       },
@@ -1169,11 +1154,6 @@
         "level": 1
       },
       {
-        "date": "2025-10-16",
-        "count": 0,
-        "level": 0
-      },
-      {
         "date": "2025-10-23",
         "count": 0,
         "level": 0
@@ -1432,11 +1412,6 @@
         "date": "2026-10-15",
         "count": 11,
         "level": 1
-      },
-      {
-        "date": "2025-10-17",
-        "count": 0,
-        "level": 0
       },
       {
         "date": "2025-10-24",
@@ -1699,11 +1674,6 @@
         "level": 1
       },
       {
-        "date": "2025-10-18",
-        "count": 0,
-        "level": 0
-      },
-      {
         "date": "2025-10-25",
         "count": 0,
         "level": 0
@@ -1960,12 +1930,12 @@
       },
       {
         "date": "2026-10-17",
-        "count": 7,
-        "level": 1
+        "count": 13,
+        "level": 2
       }
     ]
   },
-  "languageRepositoryCount": 21,
+  "languageRepositoryCount": 22,
   "mergedPullRequests": {
     "total": 147,
     "thisYear": 134,
