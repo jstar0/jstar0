@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-10-19T07:52:30.669Z",
+  "fetchedAt": "2026-10-20T07:40:43.272Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 147,
+    "mergedPrs": 148,
     "publicRepositories": 238,
-    "mergedThisYear": 134,
+    "mergedThisYear": 135,
     "repositoriesOver1kStars": 50,
     "year": 2026,
-    "asOf": "19 Oct 2026",
-    "contributionsLastYear": 1644
+    "asOf": "20 Oct 2026",
+    "contributionsLastYear": 1646
   },
   "languages": [
     {
@@ -83,7 +83,7 @@
           61,
           66,
           68,
-          41
+          45
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 1644,
+    "total": 1646,
     "days": [
       {
         "date": "2025-10-19",
@@ -635,8 +635,8 @@
       },
       {
         "date": "2026-10-19",
-        "count": 0,
-        "level": 0
+        "count": 1,
+        "level": 1
       },
       {
         "date": "2025-10-21",
@@ -895,6 +895,11 @@
       },
       {
         "date": "2026-10-13",
+        "count": 1,
+        "level": 1
+      },
+      {
+        "date": "2026-10-20",
         "count": 1,
         "level": 1
       },
@@ -1942,8 +1947,8 @@
   },
   "languageRepositoryCount": 22,
   "mergedPullRequests": {
-    "total": 147,
-    "thisYear": 134,
+    "total": 148,
+    "thisYear": 135,
     "repositoriesOver1kStars": 50,
     "sample": [
       {
@@ -1959,6 +1964,13 @@
         "number": 870,
         "title": "fix(bedrock): accept tuple inputs",
         "closed_at": "2026-10-15T22:00:15Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/temporalio/sdk-go",
+        "html_url": "https://github.com/temporalio/sdk-go/pull/2756",
+        "number": 2756,
+        "title": "Recommend module-scoped workflowcheck usage",
+        "closed_at": "2026-10-19T17:35:15Z"
       },
       {
         "repository_url": "https://api.github.com/repos/ai-dynamo/dynamo",
@@ -2022,13 +2034,6 @@
         "number": 10658,
         "title": "fix(plugins): reject expired dial budgets",
         "closed_at": "2026-09-06T17:06:12Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/zeroclaw-labs/zeroclaw",
-        "html_url": "https://github.com/zeroclaw-labs/zeroclaw/pull/10657",
-        "number": 10657,
-        "title": "test(plugins): escape fixture config paths",
-        "closed_at": "2026-09-06T16:58:55Z"
       }
     ]
   },
