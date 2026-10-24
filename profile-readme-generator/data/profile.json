@@ -29,13 +29,13 @@
     }
   ],
   "stats": {
-    "mergedPrs": 149,
-    "publicRepositories": 238,
-    "mergedThisYear": 136,
-    "repositoriesOver1kStars": 50,
+    "mergedPrs": 152,
+    "publicRepositories": 254,
+    "mergedThisYear": 139,
+    "repositoriesOver1kStars": 51,
     "year": 2026,
-    "asOf": "22 Oct 2026",
-    "contributionsLastYear": 1659
+    "asOf": "24 Oct 2026",
+    "contributionsLastYear": 2082
   },
   "upstreamExamples": [
     {
@@ -103,22 +103,22 @@
   "languages": [
     {
       "name": "TypeScript",
-      "percentage": 72.18,
+      "percentage": 65.52,
       "accent": "blue"
     },
     {
       "name": "Go",
-      "percentage": 10.87,
+      "percentage": 9.62,
       "accent": "cyan"
     },
     {
-      "name": "JavaScript",
-      "percentage": 9.8,
-      "accent": "yellow"
+      "name": "Python",
+      "percentage": 8.96,
+      "accent": "mint"
     },
     {
       "name": "Other",
-      "percentage": 7.15,
+      "percentage": 15.9,
       "accent": "orange"
     }
   ],
@@ -141,14 +141,14 @@
         ],
         "accent": "blue",
         "values": [
-          18,
-          7,
-          21,
-          31,
+          22,
+          10,
+          24,
+          35,
           68,
+          59,
           55,
-          40,
-          32
+          47
         ]
       },
       {
@@ -158,14 +158,14 @@
         ],
         "accent": "cyan",
         "values": [
-          23,
-          18,
-          41,
-          61,
-          61,
-          66,
+          55,
+          44,
+          50,
+          59,
+          64,
           68,
-          50
+          66,
+          53
         ]
       },
       {
@@ -176,13 +176,13 @@
         "accent": "mint",
         "values": [
           36,
-          11,
+          13,
+          30,
           27,
-          24,
           68,
-          66,
-          29,
-          30
+          64,
+          33,
+          64
         ]
       }
     ]
@@ -190,7 +190,7 @@
   "dataSource": {
     "provider": "github",
     "username": "jstar0",
-    "fetchedAt": "2026-10-22T07:40:25.570Z",
+    "fetchedAt": "2026-10-24T07:22:19.313Z",
     "contributionSource": "public contribution calendar",
     "languageScope": "active owned public repositories"
   }
