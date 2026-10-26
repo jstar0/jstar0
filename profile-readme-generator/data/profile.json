@@ -34,8 +34,8 @@
     "mergedThisYear": 139,
     "repositoriesOver1kStars": 51,
     "year": 2026,
-    "asOf": "25 Oct 2026",
-    "contributionsLastYear": 2084
+    "asOf": "26 Oct 2026",
+    "contributionsLastYear": 2082
   },
   "upstreamExamples": [
     {
@@ -148,7 +148,7 @@
           68,
           59,
           55,
-          47
+          48
         ]
       },
       {
@@ -165,7 +165,7 @@
           64,
           68,
           66,
-          53
+          57
         ]
       },
       {
@@ -190,7 +190,7 @@
   "dataSource": {
     "provider": "github",
     "username": "jstar0",
-    "fetchedAt": "2026-10-25T07:38:48.002Z",
+    "fetchedAt": "2026-10-26T07:52:25.685Z",
     "contributionSource": "public contribution calendar",
     "languageScope": "active owned public repositories"
   }
