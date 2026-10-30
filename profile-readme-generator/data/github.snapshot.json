@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "username": "jstar0",
-  "fetchedAt": "2026-10-29T08:36:50.229Z",
+  "fetchedAt": "2026-10-30T08:43:35.075Z",
   "sources": {
     "profile": "https://api.github.com/users/jstar0",
     "repositories": "https://api.github.com/users/jstar0/repos?type=owner&per_page=100",
@@ -10,13 +10,13 @@
     "languageScope": "active owned public repositories"
   },
   "stats": {
-    "mergedPrs": 152,
+    "mergedPrs": 153,
     "publicRepositories": 254,
-    "mergedThisYear": 139,
+    "mergedThisYear": 140,
     "repositoriesOver1kStars": 51,
     "year": 2026,
-    "asOf": "29 Oct 2026",
-    "contributionsLastYear": 2102
+    "asOf": "30 Oct 2026",
+    "contributionsLastYear": 2105
   },
   "languages": [
     {
@@ -83,7 +83,7 @@
           64,
           68,
           66,
-          61
+          66
         ]
       },
       {
@@ -106,7 +106,7 @@
     ]
   },
   "contributionCalendar": {
-    "total": 2102,
+    "total": 2105,
     "days": [
       {
         "date": "2025-10-26",
@@ -1430,8 +1430,8 @@
       },
       {
         "date": "2026-10-29",
-        "count": 0,
-        "level": 0
+        "count": 2,
+        "level": 1
       },
       {
         "date": "2025-10-31",
@@ -1692,6 +1692,11 @@
         "date": "2026-10-23",
         "count": 16,
         "level": 2
+      },
+      {
+        "date": "2026-10-30",
+        "count": 1,
+        "level": 1
       },
       {
         "date": "2025-11-01",
@@ -1957,8 +1962,8 @@
   },
   "languageRepositoryCount": 37,
   "mergedPullRequests": {
-    "total": 152,
-    "thisYear": 139,
+    "total": 153,
+    "thisYear": 140,
     "repositoriesOver1kStars": 51,
     "sample": [
       {
@@ -1995,6 +2000,13 @@
         "number": 15816,
         "title": "fix(llm): derive video duration from selected packets",
         "closed_at": "2026-10-15T22:54:03Z"
+      },
+      {
+        "repository_url": "https://api.github.com/repos/temporalio/sdk-typescript",
+        "html_url": "https://github.com/temporalio/sdk-typescript/pull/2488",
+        "number": 2488,
+        "title": "fix(workflow): make Temporal.Now use workflow time",
+        "closed_at": "2026-10-29T15:15:38Z"
       },
       {
         "repository_url": "https://api.github.com/repos/a2aproject/a2a-tck",
@@ -2037,13 +2049,6 @@
         "number": 20577,
         "title": "fix(harness-codex): preserve web search metadata",
         "closed_at": "2026-09-10T14:20:59Z"
-      },
-      {
-        "repository_url": "https://api.github.com/repos/ag-ui-protocol/ag-ui",
-        "html_url": "https://github.com/ag-ui-protocol/ag-ui/pull/2694",
-        "number": 2694,
-        "title": "fix(crew-ai): preserve context in CopilotKitState",
-        "closed_at": "2026-09-14T09:54:00Z"
       }
     ]
   },
