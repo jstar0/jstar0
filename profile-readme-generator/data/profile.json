@@ -34,8 +34,8 @@
     "mergedThisYear": 140,
     "repositoriesOver1kStars": 51,
     "year": 2026,
-    "asOf": "31 Oct 2026",
-    "contributionsLastYear": 2106
+    "asOf": "01 Nov 2026",
+    "contributionsLastYear": 2109
   },
   "upstreamExamples": [
     {
@@ -124,14 +124,14 @@
   ],
   "contribution": {
     "months": [
-      "MAR",
       "APR",
       "MAY",
       "JUN",
       "JUL",
       "AUG",
       "SEP",
-      "OCT"
+      "OCT",
+      "NOV"
     ],
     "streams": [
       {
@@ -141,14 +141,14 @@
         ],
         "accent": "blue",
         "values": [
-          22,
           10,
           24,
           35,
           68,
           59,
           55,
-          52
+          53,
+          0
         ]
       },
       {
@@ -158,14 +158,14 @@
         ],
         "accent": "cyan",
         "values": [
-          55,
           44,
           50,
           59,
           64,
           68,
           66,
-          66
+          68,
+          2
         ]
       },
       {
@@ -175,14 +175,14 @@
         ],
         "accent": "mint",
         "values": [
-          36,
           13,
           30,
           27,
           68,
           64,
           33,
-          64
+          64,
+          1
         ]
       }
     ]
@@ -190,7 +190,7 @@
   "dataSource": {
     "provider": "github",
     "username": "jstar0",
-    "fetchedAt": "2026-10-31T08:29:31.708Z",
+    "fetchedAt": "2026-11-01T09:21:11.710Z",
     "contributionSource": "public contribution calendar",
     "languageScope": "active owned public repositories"
   }
